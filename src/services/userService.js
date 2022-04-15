@@ -1,6 +1,11 @@
 import axios from "../axios";
-const handleLogin = (data) => {
-  console.log(data);
+const handleSignUp = (data) => {
   return axios.post("/dang-ky", data);
 };
-export { handleLogin };
+const handleLogin = (data) => {
+  return axios.post("/dang-nhap", data);
+};
+const getUserInfor = () => {
+  return axios.get("/xem-tai-khoan");
+};
+export { handleSignUp, handleLogin, getUserInfor };

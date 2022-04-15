@@ -7,9 +7,9 @@ const instance = axios.create({
 instance.interceptors.response.use((response) => {
   return response.data;
 });
-// instance.interceptors.request.use(function (config) {
-//   const token = localStorage.getItem("token");
-//   config.headers.Authorization = token ? `Bearer ${token}` : "";
-//   return config;
-// });
+instance.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  return config;
+});
 export default instance;

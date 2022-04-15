@@ -7,18 +7,16 @@ const initState = {
 const userReducer = (state = initState, action) => {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      state.userInfor = action.userData;
-      state.loginInfor = action.loginInfor;
+      state.userInfor = action.userInfor;
       state.isLogin = true;
       return { ...state };
     case "LOGIN_FAILED":
-      state.userData = action.userData;
+      state.userData = action.userInfor;
       state.isLogin = false;
       return { ...state };
     case "LOGOUT_SUCCESS":
       localStorage.removeItem("token");
-      state.userInfor = action.userData;
-      state.loginInfor = action.loginInfor;
+      state.userInfor = action.userInfor;
       state.isLogin = false;
       return { ...state };
     case "EDIT_USER_SUCCESS":

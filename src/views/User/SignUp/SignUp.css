@@ -59,7 +59,8 @@ button:hover {
     .addressInput,
     .phonenumberInput,
     .nameInput,
-    .genderInput {
+    .genderInput,
+    .fullNameInput {
         width: 100%;
     }
 }

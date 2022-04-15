@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import "./HomeHeader.css";
+import { logOutSuccess } from "../../store/actions/AppAction";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -77,18 +78,71 @@ class HomePage extends Component {
                   />
                 </div>
               </form>
-              <span className="navbar-text">
-                <NavLink to="/login" exact={true} className="login">
-                  Đăng nhập
-                </NavLink>
-              </span>
-              <NavLink
-                to="/sign-up"
-                exact
-                className="btn btn-light action-button"
-              >
-                Đăng kí
-              </NavLink>
+              {this.props.isLogin === true ? (
+                <span className="user-infor d-flex">
+                  <div
+                    className="avatar"
+                    style={{
+                      backgroundImage: `url(${this.props.userInfor.image})`,
+                      backgroundRepeat: "none",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      height: "25px",
+                      width: "25px",
+                      borderRadius: "50%",
+                    }}
+                  ></div>
+                  <li className="dropdown">
+                    <a
+                      className="dropdown-toggle  dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-expanded="false"
+                      href="#"
+                    >
+                      {this.props.userInfor && this.props.userInfor.fullName
+                        ? this.props.userInfor.fullName
+                        : ""}
+                    </a>
+                    <div className="dropdown-menu" role="menu">
+                      <NavLink
+                        to="/profile"
+                        exact={true}
+                        className="dropdown-item"
+                        role="presentation"
+                      >
+                        Thông tin cá nhân
+                      </NavLink>
+
+                      <a className="dropdown-item" role="presentation" href="#">
+                        Đổi mật khẩu
+                      </a>
+                      <a
+                        className="dropdown-item"
+                        role="presentation"
+                        href="#"
+                        onClick={() => this.props.handleLogOutRedux()}
+                      >
+                        Đăng xuất
+                      </a>
+                    </div>
+                  </li>
+                </span>
+              ) : (
+                <>
+                  <span className="navbar-text">
+                    <NavLink to="/login" exact={true} className="login">
+                      Đăng nhập
+                    </NavLink>
+                  </span>
+                  <NavLink
+                    to="/sign-up"
+                    exact
+                    className="btn btn-light action-button"
+                  >
+                    Đăng kí
+                  </NavLink>
+                </>
+              )}
             </div>
           </div>
         </nav>
@@ -104,6 +158,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    handleLogOutRedux: () => dispatch(logOutSuccess()),
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

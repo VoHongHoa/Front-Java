@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import HomeHeader from "./HomeHeader";
 import Slider from "./Slider";
 import SectionBook from "./SectionBook";
+import Footer from "../../components/Footer";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ class HomePage extends Component {
 
         <Slider />
         <SectionBook></SectionBook>
+        <Footer />
       </div>
     );
   }

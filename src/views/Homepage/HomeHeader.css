@@ -4,6 +4,20 @@
     padding-bottom: 10px;
 }
 
+.user-infor {
+    align-items: center;
+    gap: 5px;
+}
+
+.user-infor li {
+    list-style: none;
+}
+
+.user-infor a {
+    text-decoration: none;
+    color: white;
+}
+
 @media (min-width:768px) {
     .header-dark {
         padding-bottom: 10px;

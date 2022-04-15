@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Select from "react-select";
 import CommonUtils from "../../../utils/CommonUtils";
-import { handleLogin } from "../../../services/userService";
+import { handleSignUp } from "../../../services/userService";
 import "./SignUp.css";
+import { toast } from "react-toastify";
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -13,9 +14,9 @@ class SignUp extends Component {
       password: "",
       repeatPassword: "",
       userName: "",
+      fullName: "",
       address: "",
       phoneNumber: "",
-      userName: "",
       img: "",
       gender: "",
     };
@@ -52,16 +53,22 @@ class SignUp extends Component {
   };
   handleSignUpUser = async () => {
     let data = {
-      NameUser: this.state.userName,
-      Password: this.state.password,
-      Email: this.state.email,
-      Address: this.state.address,
-      Telephone: this.state.phoneNumber,
-      Sex: this.state.gender.value,
+      nameUser: this.state.userName,
+      password: this.state.password,
+      email: this.state.email,
+      address: this.state.address,
+      telephone: this.state.phoneNumber,
+      sex: this.state.gender.value,
       image: this.state.img,
+      fullName: this.state.fullName,
     };
-    let res = await handleLogin(data);
-    console.log(res);
+    let res = await handleSignUp(data);
+    if (res) {
+      toast.success("Đăng kí thành công! Vui lòng đăng nhập");
+      this.props.history.push("/login");
+    } else {
+      toast.error("Đăng kí không thành công! Vui lòng kiểm tra lại");
+    }
   };
   render() {
     const options = [
@@ -69,14 +76,13 @@ class SignUp extends Component {
       { value: "Nữ", label: "Nữ" },
       { value: "Khác", label: "Khác" },
     ];
-    console.log(this.state);
     return (
       <div className="container">
         <h1>Đăng kí</h1>
         <p>Điền đầy đủ thông tin để đăng kí tài khoản</p>
         <hr />
         <div className="row">
-          <div className="col-12 emailInput">
+          <div className="col-6 emailInput">
             <label htmlFor="email">
               <b>Email</b>
             </label>
@@ -89,14 +95,27 @@ class SignUp extends Component {
               onChange={(event) => this.handleOnchangeInput(event, "email")}
             />
           </div>
+          <div className="col-6 fullNameInput">
+            <label htmlFor="fullName">
+              <b>FullName</b>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter Fullname"
+              name="fullName"
+              required
+              onChange={(event) => this.handleOnchangeInput(event, "fullName")}
+            />
+          </div>
           <div className="col-6 nameInput mt-2">
             <label htmlFor="username">
-              <b>Your Name</b>
+              <b>UserName</b>
             </label>
             <input
               type="text"
               placeholder="Your Name"
-              class="form-control"
+              className="form-control"
               name="username"
               onChange={(event) => this.handleOnchangeInput(event, "userName")}
               required
@@ -121,7 +140,7 @@ class SignUp extends Component {
             <input
               type="password"
               placeholder="Enter Password"
-              class="form-control"
+              className="form-control"
               name="psw"
               onChange={(event) => this.handleOnchangeInput(event, "password")}
               required
@@ -135,7 +154,7 @@ class SignUp extends Component {
             <input
               type="password"
               placeholder="Repeat Password"
-              class="form-control"
+              className="form-control"
               name="psw-repeat"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "repeatPassword")
@@ -150,7 +169,7 @@ class SignUp extends Component {
             <input
               type="text"
               placeholder="Enter Address"
-              class="form-control"
+              className="form-control"
               name="address"
               onChange={(event) => this.handleOnchangeInput(event, "address")}
               required
@@ -163,7 +182,7 @@ class SignUp extends Component {
             <input
               type="text"
               placeholder="Enter PhoneNumber"
-              class="form-control"
+              className="form-control"
               name="phonenumber"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "phoneNumber")

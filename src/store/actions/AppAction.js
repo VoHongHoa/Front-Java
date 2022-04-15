@@ -1,8 +1,4 @@
-import {
-  handleLoginService,
-  handlegetUserInfor,
-  handleEditUser,
-} from "../../services/UserService";
+import { handleLogin, getUserInfor } from "../../services/userService";
 import { toast } from "react-toastify";
 //------------------cart action------------------------------
 export const addToCart = (item) => {
@@ -55,16 +51,17 @@ export const deleteCart = () => ({
 
 //------------------user action------------------------------
 
-export const handleLogin = (data) => {
+export const handleLoginRedux = (data) => {
   return async (dispatch, getState) => {
     try {
-      let respone = await handleLoginService(data);
-      if (respone && respone.success === true) {
-        localStorage.setItem("token", respone.tokens.accessToken);
-        let userData = await handlegetUserInfor();
-        dispatch(loginSuccess(userData, respone));
+      let respone = await handleLogin(data);
+      // console.log(respone);
+      if (respone) {
+        localStorage.setItem("token", respone.accessToken);
+        let userInfor = await getUserInfor();
+        // console.log("check userinfor", userInfor);
+        dispatch(loginSuccess(userInfor));
       } else {
-        toast.error(respone.message);
         dispatch(loginFailed());
       }
     } catch (e) {
@@ -74,43 +71,41 @@ export const handleLogin = (data) => {
   };
 };
 
-export const loginSuccess = (data, loginInfor) => ({
+export const loginSuccess = (userInfor) => ({
   type: "LOGIN_SUCCESS",
-  userData: data,
-  loginInfor: loginInfor,
+  userInfor: userInfor,
 });
 export const loginFailed = () => ({
   type: "LOGIN_FAILED",
-  userData: {},
+  userInfor: {},
 });
 
 export const logOutSuccess = () => ({
   type: "LOGOUT_SUCCESS",
-  userData: {},
-  loginInfor: {},
+  userInfor: {},
 });
 
-export const editUser = (data) => {
-  return async (dispatch, getState) => {
-    try {
-      let respone = await handleEditUser(data);
-      if (respone && respone.success === true) {
-        toast.success(respone.message);
-        dispatch(editUserSuccess(respone));
-      } else {
-        dispatch(editUserFailed());
-      }
-    } catch (e) {
-      console.error(e);
-      dispatch(editUserFailed());
-    }
-  };
-};
-export const editUserSuccess = (data) => ({
-  type: "EDIT_USER_SUCCESS",
-  userData: data,
-});
-export const editUserFailed = () => ({
-  type: "EDIT_USER_FAILED",
-  userData: {},
-});
+// export const editUser = (data) => {
+//   return async (dispatch, getState) => {
+//     try {
+//       let respone = await handleEditUser(data);
+//       if (respone && respone.success === true) {
+//         toast.success(respone.message);
+//         dispatch(editUserSuccess(respone));
+//       } else {
+//         dispatch(editUserFailed());
+//       }
+//     } catch (e) {
+//       console.error(e);
+//       dispatch(editUserFailed());
+//     }
+//   };
+// };
+// export const editUserSuccess = (data) => ({
+//   type: "EDIT_USER_SUCCESS",
+//   userData: data,
+// });
+// export const editUserFailed = () => ({
+//   type: "EDIT_USER_FAILED",
+//   userData: {},
+// });

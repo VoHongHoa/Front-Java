@@ -2,16 +2,35 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import logo from "../../../assets/images/img_avatar2.png";
 import { withRouter } from "react-router";
+// import { handleLogin } from "../../../services/userService";
 import "./Login.css";
+import { handleLoginRedux } from "../../../store/actions/AppAction";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      nameUser: "",
+      password: "",
+    };
   }
   componentDidMount() {}
   handleCancelLogin = () => {
     this.props.history.push("/");
-    console.log(this.props.history);
+    // console.log(this.props.history);
+  };
+  handleOnchangeInput = (event, id) => {
+    let copyState = { ...this.state };
+    copyState[id] = event.target.value;
+    this.setState({
+      ...copyState,
+    });
+  };
+  handleLogin = () => {
+    let data = {
+      nameUser: this.state.nameUser,
+      password: this.state.password,
+    };
+    this.props.handleLoginRedux(data);
   };
   render() {
     return (
@@ -27,8 +46,9 @@ class Login extends Component {
           <input
             type="text"
             placeholder="Enter Username"
-            class="form-control"
+            className="form-control"
             name="uname"
+            onChange={(event) => this.handleOnchangeInput(event, "nameUser")}
             required
           />
           <div className="form-group mt-2">
@@ -38,13 +58,16 @@ class Login extends Component {
             <input
               type="password"
               placeholder="Enter Password"
-              class="form-control"
+              onChange={(event) => this.handleOnchangeInput(event, "password")}
+              className="form-control"
               name="psw"
               required
             />
           </div>
 
-          <button type="submit">Đăng nhập</button>
+          <button type="submit" onClick={() => this.handleLogin()}>
+            Đăng nhập
+          </button>
           {/* <label>
             <input type="checkbox" checked="checked" name="remember" />
             Lưu thông tin
@@ -72,6 +95,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return { handleLoginRedux: (data) => dispatch(handleLoginRedux(data)) };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

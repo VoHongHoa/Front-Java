@@ -3,6 +3,8 @@ import "./HomePage.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import HomeHeader from "./HomeHeader";
+import Slider from "./Slider";
+import SectionBook from "./SectionBook";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +12,16 @@ class HomePage extends Component {
   }
   componentDidMount() {}
   render() {
-    return <HomeHeader></HomeHeader>;
+    return (
+      <div className="container">
+        <div className="mb-2">
+          <HomeHeader></HomeHeader>
+        </div>
+
+        <Slider />
+        <SectionBook></SectionBook>
+      </div>
+    );
   }
 }
 const mapStateToProps = (state) => {

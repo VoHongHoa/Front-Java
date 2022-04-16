@@ -9,6 +9,8 @@ import HomePage from "./Homepage/HomePage.js";
 import Login from "./User/Login/Login";
 import SignUp from "./User/SignUp/SignUp";
 import Profile from "./User/Profile";
+import Adminpage from "./Admin/AdminPage/Adminpage";
+import UserManage from "./Admin/AdminPage/UserManage";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +36,13 @@ class App extends Component {
 
             <Route path="/profile" exact>
               {isLogin === false ? <Redirect to="/login" /> : <Profile />}
+            </Route>
+
+            <Route path="/admin" exact>
+              {isLogin === false ? <Redirect to="/login" /> : <Adminpage />}
+            </Route>
+            <Route path="/admin/user" exact>
+              {isLogin === false ? <Redirect to="/login" /> : <UserManage />}
             </Route>
           </Switch>
           <ToastContainer

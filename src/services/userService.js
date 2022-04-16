@@ -10,6 +10,10 @@ const getUserInfor = () => {
 };
 
 const editUserInfor = (data) => {
-  return axios.post(`/sua-thong-tin/${data.userId}`, data);
+  return axios.post(`/sua-thong-tin/`, data);
 };
-export { handleSignUp, handleLogin, getUserInfor, editUserInfor };
+
+const getAllUser = (currentPage) => {
+  return axios.get(`/admin/xem-tat-ca-user/${currentPage}`);
+};
+export { handleSignUp, handleLogin, getUserInfor, editUserInfor, getAllUser };

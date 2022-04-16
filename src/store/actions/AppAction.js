@@ -96,14 +96,16 @@ export const editUser = (data) => {
     try {
       let respone = await editUserInfor(data);
       console.log("check res", respone);
-      // if (respone && respone.success === true) {
-      //   toast.success(respone.message);
-      //   dispatch(editUserSuccess(respone));
-      // } else {
-      //   dispatch(editUserFailed());
-      // }
+      if (respone) {
+        toast.success("Thay đổi thông tin  thành công");
+        dispatch(editUserSuccess(respone));
+      } else {
+        toast.error("Thay đổi không thành công!!");
+        dispatch(editUserFailed());
+      }
     } catch (e) {
       console.error(e);
+      toast.error("Lỗi server!!");
       dispatch(editUserFailed());
     }
   };

@@ -1,4 +1,8 @@
-import { handleLogin, getUserInfor } from "../../services/userService";
+import {
+  handleLogin,
+  getUserInfor,
+  editUserInfor,
+} from "../../services/userService";
 import { toast } from "react-toastify";
 //------------------cart action------------------------------
 export const addToCart = (item) => {
@@ -62,9 +66,11 @@ export const handleLoginRedux = (data) => {
         // console.log("check userinfor", userInfor);
         dispatch(loginSuccess(userInfor));
       } else {
+        toast.success("Tên Đăng nhập hoặc mật khẩu không chính xác!!");
         dispatch(loginFailed());
       }
     } catch (e) {
+      toast.error("Lỗi server!!!");
       console.error(e);
       dispatch(loginFailed());
     }
@@ -85,27 +91,28 @@ export const logOutSuccess = () => ({
   userInfor: {},
 });
 
-// export const editUser = (data) => {
-//   return async (dispatch, getState) => {
-//     try {
-//       let respone = await handleEditUser(data);
-//       if (respone && respone.success === true) {
-//         toast.success(respone.message);
-//         dispatch(editUserSuccess(respone));
-//       } else {
-//         dispatch(editUserFailed());
-//       }
-//     } catch (e) {
-//       console.error(e);
-//       dispatch(editUserFailed());
-//     }
-//   };
-// };
-// export const editUserSuccess = (data) => ({
-//   type: "EDIT_USER_SUCCESS",
-//   userData: data,
-// });
-// export const editUserFailed = () => ({
-//   type: "EDIT_USER_FAILED",
-//   userData: {},
-// });
+export const editUser = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let respone = await editUserInfor(data);
+      console.log("check res", respone);
+      // if (respone && respone.success === true) {
+      //   toast.success(respone.message);
+      //   dispatch(editUserSuccess(respone));
+      // } else {
+      //   dispatch(editUserFailed());
+      // }
+    } catch (e) {
+      console.error(e);
+      dispatch(editUserFailed());
+    }
+  };
+};
+export const editUserSuccess = (data) => ({
+  type: "EDIT_USER_SUCCESS",
+  userData: data,
+});
+export const editUserFailed = () => ({
+  type: "EDIT_USER_FAILED",
+  userData: {},
+});

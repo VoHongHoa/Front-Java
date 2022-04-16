@@ -8,4 +8,8 @@ const handleLogin = (data) => {
 const getUserInfor = () => {
   return axios.get("/xem-tai-khoan");
 };
-export { handleSignUp, handleLogin, getUserInfor };
+
+const editUserInfor = (data) => {
+  return axios.post(`/sua-thong-tin/${data.userId}`, data);
+};
+export { handleSignUp, handleLogin, getUserInfor, editUserInfor };

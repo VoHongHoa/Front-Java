@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { editUser } from "../../store/actions/AppAction";
 import HomeHeader from "../Homepage/HomeHeader";
 import "./Profile.css";
 class Profile extends Component {
@@ -14,6 +15,7 @@ class Profile extends Component {
       phoneNumber: "",
       img: "",
       gender: "",
+      userId: "",
     };
   }
   componentDidMount() {
@@ -26,6 +28,7 @@ class Profile extends Component {
         phoneNumber: this.props.userInfor.telephone,
         img: this.props.userInfor.image,
         gender: this.props.userInfor.sex,
+        userId: this.props.userInfor.userId,
       });
     }
   }
@@ -40,7 +43,20 @@ class Profile extends Component {
       ...copyState,
     });
   };
+  handleChangeProfile = () => {
+    let data = {
+      userId: this.state.userId,
+      nameUser: this.state.userName,
+      email: this.state.email,
+      address: this.state.address,
+      telephone: this.state.phoneNumber,
+      sex: this.state.gender,
+      fullName: this.state.fullName,
+    };
+    this.props.editUser(data);
+  };
   render() {
+    // console.log(this.state);
     return (
       <>
         <HomeHeader />
@@ -53,6 +69,7 @@ class Profile extends Component {
                   width="150px"
                   height="150px"
                   src={this.state.img}
+                  alt="Avatar"
                 />
                 <span className="font-weight-bold">{this.state.userName}</span>
                 <span className="text-black-50">{this.state.email}</span>
@@ -72,6 +89,9 @@ class Profile extends Component {
                       className="form-control"
                       placeholder="first name"
                       defaultValue={this.state.fullName}
+                      onChange={(event) =>
+                        this.handleOnchangeInput(event, "fullName")
+                      }
                     />
                   </div>
                   <div className="col-md-6">
@@ -81,6 +101,9 @@ class Profile extends Component {
                       className="form-control"
                       placeholder="enter email id"
                       defaultValue={this.state.email}
+                      onChange={(event) =>
+                        this.handleOnchangeInput(event, "email")
+                      }
                     />
                   </div>
                 </div>
@@ -92,6 +115,9 @@ class Profile extends Component {
                       className="form-control"
                       placeholder="enter phone number"
                       defaultValue={this.state.phoneNumber}
+                      onChange={(event) =>
+                        this.handleOnchangeInput(event, "phoneNumber")
+                      }
                     />
                   </div>
 
@@ -102,6 +128,9 @@ class Profile extends Component {
                       className="form-control"
                       placeholder="enter address line 2"
                       defaultValue={this.state.address}
+                      onChange={(event) =>
+                        this.handleOnchangeInput(event, "address")
+                      }
                     />
                   </div>
 
@@ -112,6 +141,9 @@ class Profile extends Component {
                       className="form-control"
                       placeholder="education"
                       defaultValue={this.state.gender}
+                      onChange={(event) =>
+                        this.handleOnchangeInput(event, "gender")
+                      }
                     />
                   </div>
                 </div>
@@ -120,6 +152,7 @@ class Profile extends Component {
                   <button
                     className="btn btn-primary profile-button"
                     type="button"
+                    onClick={() => this.handleChangeProfile()}
                   >
                     Save Profile
                   </button>
@@ -167,7 +200,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    editUser: (data) => dispatch(editUser(data)),
+  };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import Select from "react-select";
 import CommonUtils from "../../../utils/CommonUtils";
 import { handleSignUp } from "../../../services/userService";
-import "./SignUp.css";
+import "./SignUp.scss";
 import { toast } from "react-toastify";
 class SignUp extends Component {
   constructor(props) {
@@ -77,7 +77,7 @@ class SignUp extends Component {
       { value: "Khác", label: "Khác" },
     ];
     return (
-      <div className="container">
+      <div className="sign-up-container container">
         <h1>Đăng kí</h1>
         <p>Điền đầy đủ thông tin để đăng kí tài khoản</p>
         <hr />

@@ -30,13 +30,16 @@ class AdminHeader extends Component {
         <NavLink to={"/admin/user"} exact={true} activeClassName="active">
           Người dùng
         </NavLink>
-        <NavLink to={"/book"} exact={true} activeClassName="active">
+        <NavLink to={"/admin/categories"} exact={true} activeClassName="active">
+          Loại sách
+        </NavLink>
+        <NavLink to={"/admin/books"} exact={true} activeClassName="active">
           Sách
         </NavLink>
         <NavLink to={"/quydinh"} exact={true} activeClassName="active">
           Quy định
         </NavLink>
-        <a className="icon" onClick={() => this.myFuntion()}>
+        <a className="icon" onClick={() => this.myFuntion()} href="false">
           <i className="fa fa-bars"></i>
         </a>
       </div>

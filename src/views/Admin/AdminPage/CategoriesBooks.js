@@ -1,24 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { getAllUser, deleteUser } from "../../../services/userService";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import { toast } from "react-toastify";
-import "./UserManage.css";
-class UserManage extends Component {
+import {
+  addNewCategoriesBooks,
+  deleteCategories,
+  getAllCategoriesBooks,
+} from "../../../services/CategoriesBooksService";
+import "./CategoriesBook.scss";
+class CategoriesBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numOfUser: 0,
-      allUser: [],
-      numOfPage: 0,
+      newCategories: "",
+      allCategories: [],
       currentPage: 0,
-      isOpenModal: false,
-      currentUserEdit: {},
+      numOfCategories: 0,
+      numOfPage: 0,
     };
   }
-  getUserPaging = async (currentPage) => {
-    let res = await getAllUser(currentPage);
+  getCategoriesPaging = async (currentPage) => {
+    let res = await getAllCategoriesBooks(currentPage);
     // console.log(res);
     if (res) {
       let numOfPage = 0;
@@ -28,8 +31,8 @@ class UserManage extends Component {
         numOfPage = (res.count - (res.count % 4)) / 4 + 1;
       }
       this.setState({
-        numOfUser: res.count,
-        allUser: res.userList,
+        numOfCategories: res.count,
+        allCategories: res.categoriesList,
         numOfPage: numOfPage,
       });
     } else {
@@ -39,55 +42,89 @@ class UserManage extends Component {
     }
   };
   componentDidMount() {
-    this.getUserPaging(0);
+    this.getCategoriesPaging(0);
   }
   handleChangePage = (item) => {
-    this.getUserPaging(item);
+    this.getCategoriesPaging(item);
     this.setState({
       currentPage: item,
     });
   };
   handleDeleteUser = async (userId) => {
-    let res = await deleteUser(userId);
+    let res = await deleteCategories(userId);
     console.log(res);
     if (res) {
       toast.success("Xóa thành công!");
     }
-    this.getUserPaging(0);
+    this.getCategoriesPaging(0);
+  };
+  handleOnchangeInput = (event) => {
+    this.setState({
+      newCategories: event.target.value,
+    });
+  };
+  handleAddNewCategoriesBook = async () => {
+    let data = {
+      nameCate: this.state.newCategories,
+    };
+    let res = await addNewCategoriesBooks(data);
+    if (res) {
+      toast.success("Thêm thành công");
+      this.setState({
+        newCategories: "",
+      });
+      this.getCategoriesPaging(0);
+    } else {
+      toast.error("Thêm không thành công");
+    }
   };
   render() {
-    let { numOfPage, allUser, currentPage } = this.state;
+    let { numOfPage, allCategories, currentPage } = this.state;
     let arr = [];
     for (let i = 0; i < numOfPage; i++) {
       arr.push(i);
     }
-    //console.log(arr);
     return (
-      <div className="container">
+      <div className="categories-manage-container container">
         <AdminHeader></AdminHeader>
+        <h2 className="title mt-3">Quản lý loại sách</h2>
+        <div className="form-groud mt-3 mb-3">
+          <label>Thêm mới loại sách</label>
+          <input
+            className="form-control"
+            type={"text"}
+            value={this.state.newCategories}
+            onChange={(event) => this.handleOnchangeInput(event)}
+          />
+          <button
+            className="btn btn-primary mt-2"
+            onClick={() => this.handleAddNewCategoriesBook()}
+          >
+            Thêm mới
+          </button>
+        </div>
+
         <div className="container">
           <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Họ và Tên</th>
-                <th scope="col">Email</th>
+                <th scope="col">Loại sách và Tên</th>
                 <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              {allUser &&
-                allUser.length > 0 &&
-                allUser.map((item, index) => {
+              {allCategories &&
+                allCategories.length > 0 &&
+                allCategories.map((item, index) => {
                   return (
-                    <tr key={item.userId}>
+                    <tr key={item.categoryId}>
                       <th scope="row">{index}</th>
-                      <td>{item.fullName}</td>
-                      <td>{item.email}</td>
-                      <td className="">
+                      <td>{item.nameCate}</td>
+                      <td>
                         <i
                           className="fas fa-trash "
-                          onClick={() => this.handleDeleteUser(item.userId)}
+                          onClick={() => this.handleDeleteUser(item.categoryId)}
                         ></i>
                       </td>
                     </tr>
@@ -126,5 +163,5 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(UserManage)
+  connect(mapStateToProps, mapDispatchToProps)(CategoriesBooks)
 );

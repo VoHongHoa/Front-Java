@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import logo from "../../../assets/images/img_avatar2.png";
 import { withRouter } from "react-router";
 // import { handleLogin } from "../../../services/userService";
-import "./Login.css";
+import "./Login.scss";
 import { handleLoginRedux } from "../../../store/actions/AppAction";
 class Login extends Component {
   constructor(props) {

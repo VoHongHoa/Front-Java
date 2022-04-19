@@ -11,6 +11,8 @@ import SignUp from "./User/SignUp/SignUp";
 import Profile from "./User/Profile";
 import Adminpage from "./Admin/AdminPage/Adminpage";
 import UserManage from "./Admin/AdminPage/UserManage";
+import CategoriesBooks from "./Admin/AdminPage/CategoriesBooks";
+import BooksManage from "./Admin/AdminPage/BooksManage";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +45,18 @@ class App extends Component {
             </Route>
             <Route path="/admin/user" exact>
               {isLogin === false ? <Redirect to="/login" /> : <UserManage />}
+            </Route>
+
+            <Route path="/admin/categories" exact>
+              {isLogin === false ? (
+                <Redirect to="/login" />
+              ) : (
+                <CategoriesBooks />
+              )}
+            </Route>
+
+            <Route path="/admin/books" exact>
+              {isLogin === false ? <Redirect to="/login" /> : <BooksManage />}
             </Route>
           </Switch>
           <ToastContainer

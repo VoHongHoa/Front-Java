@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import "./HomeHeader.css";
+import "./HomeHeader.scss";
 import { logOutSuccess } from "../../store/actions/AppAction";
 class HomePage extends Component {
   constructor(props) {
@@ -93,16 +93,15 @@ class HomePage extends Component {
                     }}
                   ></div>
                   <li className="dropdown">
-                    <a
+                    <span
                       className="dropdown-toggle  dropdown-toggle"
                       data-toggle="dropdown"
                       aria-expanded="false"
-                      href="#"
                     >
                       {this.props.userInfor && this.props.userInfor.fullName
                         ? this.props.userInfor.fullName
                         : ""}
-                    </a>
+                    </span>
                     <div className="dropdown-menu" role="menu">
                       <NavLink
                         to="/profile"

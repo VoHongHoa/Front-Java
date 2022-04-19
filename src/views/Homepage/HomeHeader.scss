@@ -2,67 +2,98 @@
     background: #444;
     background-size: cover;
     padding-bottom: 10px;
+
+    .navbar {
+        .container {
+            .user-infor {
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+
+                li {
+                    list-style: none;
+                }
+
+
+            }
+        }
+    }
 }
 
-.user-infor {
-    align-items: center;
-    gap: 5px;
-}
-
-.user-infor li {
-    list-style: none;
-}
-
-.user-infor a {
-    text-decoration: none;
-    color: white;
-}
 
 @media (min-width:768px) {
     .header-dark {
         padding-bottom: 10px;
+
+        .navbar {
+            background: transparent;
+            padding-top: 0;
+            padding-bottom: 0;
+            color: #fff;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+        }
     }
 }
 
-.header-dark .navbar {
-    background: transparent;
-    padding-top: 0;
-    padding-bottom: 0;
-    color: #fff;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-}
 
 @media (min-width:768px) {
-    .header-dark .navbar {
-        padding-top: .75rem;
-        padding-bottom: .75rem;
+    .header-dark {
+        .navbar {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+
+            .navbar-brand {
+                font-weight: bold;
+                color: inherit;
+
+                &:hover {
+                    color: #f0f0f0;
+                }
+            }
+        }
+
+        .navbar-collapse {
+            span {
+                margin-top: 5px;
+
+                .login {
+                    color: #d9d9d9;
+                    margin-right: .5rem;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .navbar-toggler {
+            border-color: #747474;
+        }
     }
 }
 
-.header-dark .navbar .navbar-brand {
-    font-weight: bold;
-    color: inherit;
-}
 
-.header-dark .navbar .navbar-brand:hover {
-    color: #f0f0f0;
-}
+// .header-dark .navbar .navbar-brand:hover {
+//     color: #f0f0f0;
+// }
 
-.header-dark .navbar .navbar-collapse span {
-    margin-top: 5px;
-}
+// .header-dark .navbar .navbar-collapse span {
+//     margin-top: 5px;
+// }
 
-.header-dark .navbar .navbar-collapse span .login {
-    color: #d9d9d9;
-    margin-right: .5rem;
-    text-decoration: none;
-}
+// .header-dark .navbar .navbar-collapse span .login {
+//     color: #d9d9d9;
+//     margin-right: .5rem;
+//     text-decoration: none;
+// }
 
-.header-dark .navbar .navbar-collapse span .login:hover {
-    color: #fff;
-}
+// .header-dark .navbar .navbar-collapse span .login:hover {
+//     color: #fff;
+// }
 
 .header-dark .navbar .navbar-toggler {
     border-color: #747474;

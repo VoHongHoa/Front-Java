@@ -16,4 +16,14 @@ const editUserInfor = (data) => {
 const getAllUser = (currentPage) => {
   return axios.get(`/admin/xem-tat-ca-user/${currentPage}`);
 };
-export { handleSignUp, handleLogin, getUserInfor, editUserInfor, getAllUser };
+const deleteUser = (userId) => {
+  return axios.delete(`/admin/xoa-user/${userId}`);
+};
+export {
+  handleSignUp,
+  handleLogin,
+  getUserInfor,
+  editUserInfor,
+  getAllUser,
+  deleteUser,
+};

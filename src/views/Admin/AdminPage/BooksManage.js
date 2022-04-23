@@ -3,82 +3,71 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import { toast } from "react-toastify";
-import {
-  addNewCategoriesBooks,
-  deleteCategories,
-  getAllCategoriesBooks,
-} from "../../../services/CategoriesBooksService";
 import ModalAddNewBook from "./ModalAddNewBook";
+import {
+  addNewBook,
+  getAllBooksPaging,
+  deleteBook,
+} from "../../../services/BookService";
 class BooksManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   newCategories: "",
-      //   allCategories: [],
-      //   currentPage: 0,
-      //   numOfCategories: 0,
-      //   numOfPage: 0,
+      allBooks: [],
+      currentPage: 0,
+      numOfBooks: 0,
+      numOfPage: 0,
       isOpenModal: false,
     };
   }
-  //   getCategoriesPaging = async (currentPage) => {
-  //     let res = await getAllCategoriesBooks(currentPage);
-  //     // console.log(res);
-  //     if (res) {
-  //       let numOfPage = 0;
-  //       if (res.count % 4 === 0) {
-  //         numOfPage = res.count / 4;
-  //       } else {
-  //         numOfPage = (res.count - (res.count % 4)) / 4 + 1;
-  //       }
-  //       this.setState({
-  //         numOfCategories: res.count,
-  //         allCategories: res.categoriesList,
-  //         numOfPage: numOfPage,
-  //       });
-  //     } else {
-  //       this.setState({
-  //         ...this.state,
-  //       });
-  //     }
-  //   };
+  getBooksPaging = async (currentPage) => {
+    try {
+      let res = await getAllBooksPaging(currentPage);
+      //console.log(res);
+      if (res) {
+        let numOfPage = 0;
+        if (res.count % 4 === 0) {
+          numOfPage = res.count / 4;
+        } else {
+          numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+        }
+        this.setState({
+          numOfBooks: res.count,
+          allBooks: res.bookList,
+          numOfPage: numOfPage,
+        });
+      } else {
+        this.setState({
+          ...this.state,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   componentDidMount() {
-    // this.getCategoriesPaging(0);
+    this.getBooksPaging(0);
   }
-  //   handleChangePage = (item) => {
-  //     this.getCategoriesPaging(item);
-  //     this.setState({
-  //       currentPage: item,
-  //     });
-  //   };
-  //   handleDeleteUser = async (userId) => {
-  //     let res = await deleteCategories(userId);
-  //     console.log(res);
-  //     if (res) {
-  //       toast.success("Xóa thành công!");
-  //     }
-  //     this.getCategoriesPaging(0);
-  //   };
-  //   handleOnchangeInput = (event) => {
-  //     this.setState({
-  //       newCategories: event.target.value,
-  //     });
-  //   };
-  //   handleAddNewCategoriesBook = async () => {
-  //     let data = {
-  //       nameCate: this.state.newCategories,
-  //     };
-  //     let res = await addNewCategoriesBooks(data);
-  //     if (res) {
-  //       toast.success("Thêm thành công");
-  //       this.setState({
-  //         newCategories: "",
-  //       });
-  //       this.getCategoriesPaging(0);
-  //     } else {
-  //       toast.error("Thêm không thành công");
-  //     }
-  //   };
+  handleChangePage = (item) => {
+    this.getBooksPaging(item);
+    this.setState({
+      currentPage: item,
+    });
+  };
+  handleDeleteBook = async (bookId) => {
+    let res = await deleteBook(bookId);
+    console.log(res);
+    if (res) {
+      toast.success("Xóa thành công!");
+    }
+    this.getBooksPaging(0);
+  };
+  // handleOnchangeInput = (event) => {
+  //   this.setState({
+  //     newCategories: event.target.value,
+  //   });
+  // };
+
   handleAddNewBook = () => {
     this.setState({
       isOpenModal: true,
@@ -89,12 +78,26 @@ class BooksManage extends Component {
       isOpenModal: false,
     });
   };
+  doAddNewBook = async (data) => {
+    let res = await addNewBook(data);
+    //console.log(res);
+    if (res) {
+      this.setState({
+        isOpenModal: false,
+      });
+      toast.success("Thêm thành công !!!");
+      this.getBooksPaging(0);
+    } else {
+      toast.error("Thêm thất bại!Vui lòng kiểm tra lại");
+    }
+  };
   render() {
-    // let { numOfPage, allCategories, currentPage } = this.state;
-    // let arr = [];
-    // for (let i = 0; i < numOfPage; i++) {
-    //   arr.push(i);
-    // }
+    let { numOfPage, allBooks, currentPage } = this.state;
+    let arr = [];
+    for (let i = 0; i < numOfPage; i++) {
+      arr.push(i);
+    }
+    console.log(this.state);
     return (
       <div className="categories-manage-container container">
         <AdminHeader></AdminHeader>
@@ -106,27 +109,31 @@ class BooksManage extends Component {
           Thêm mới
         </button>
 
-        {/* <div className="container">
+        <div className="container">
           <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Loại sách và Tên</th>
+                <th scope="col">Tên sách</th>
+                <th scope="col">Tác giả</th>
+                <th scope="col">Số lượng</th>
                 <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              {allCategories &&
-                allCategories.length > 0 &&
-                allCategories.map((item, index) => {
+              {allBooks &&
+                allBooks.length > 0 &&
+                allBooks.map((item, index) => {
                   return (
-                    <tr key={item.categoryId}>
+                    <tr key={item.bookId}>
                       <th scope="row">{index}</th>
-                      <td>{item.nameCate}</td>
+                      <td>{item.nameBook}</td>
+                      <td>{item.author}</td>
+                      <td>{item.count}</td>
                       <td>
                         <i
                           className="fas fa-trash "
-                          onClick={() => this.handleDeleteUser(item.categoryId)}
+                          onClick={() => this.handleDeleteBook(item.bookId)}
                         ></i>
                       </td>
                     </tr>
@@ -152,10 +159,11 @@ class BooksManage extends Component {
               })}
             <p>&raquo;</p>
           </div>
-        </div> */}
+        </div>
         <ModalAddNewBook
           isOpenModal={this.state.isOpenModal}
           toggle={this.toggle}
+          doAddNewBook={this.doAddNewBook}
         />
       </div>
     );

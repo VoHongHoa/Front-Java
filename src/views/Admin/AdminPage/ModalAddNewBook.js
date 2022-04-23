@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
 import CommonUtils from "../../../utils/CommonUtils";
+import { getAllCategoriesBooksRedux } from "../../../store/actions/CategoriesAction";
 class ModalAddNewBook extends Component {
   constructor(props) {
     super(props);
@@ -11,14 +12,26 @@ class ModalAddNewBook extends Component {
       author: "",
       publishYear: "",
       publishCom: "",
-      dayAdd: "",
       price: "",
       count: "",
+      description: "",
       image: "",
-      category: "",
+      allCategoriesBooks: [],
+      selectedCategory: "",
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getAllCategoriesBooksRedux();
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.allCategoriesBooks !== this.props.allCategoriesBooks) {
+      this.setState({
+        allCategoriesBooks: this.buildDataCateGories(
+          this.props.allCategoriesBooks
+        ),
+      });
+    }
+  }
   toggle = () => {
     this.props.toggle();
   };
@@ -46,30 +59,53 @@ class ModalAddNewBook extends Component {
       //let objectUrl = URL.createObjectURL(file);
       this.setState({
         //priviewImgURL: objectUrl,
-        img: base64,
+        image: base64,
       });
     }
   };
   handleSubmitAdd = () => {
-    this.props.doAddNewProduct({
-      title: this.state.tittle,
-      desc: this.state.desc,
-      img: this.state.img,
-      categories: this.state.categories.value,
-      color: this.state.color.value,
+    let data = {
+      nameBook: this.state.nameBook,
+      author: this.state.author,
+      publishYear: this.state.publishYear,
+      publishCom: this.state.publishCom,
       price: this.state.price,
-    });
+      count: this.state.count,
+      description: this.state.description,
+      image: this.state.image,
+      category: this.state.selectedCategory.value,
+    };
+    console.log(data);
+    this.props.doAddNewBook(data);
     this.setState({
-      tittle: "",
-      desc: "",
-      img: "",
-      categories: "",
-      color: "",
+      nameBook: "",
+      author: "",
+      publishYear: "",
+      publishCom: "",
       price: "",
+      count: "",
+      description: "",
+      image: "",
+      allCategoriesBooks: [],
+      selectedCategory: "",
     });
   };
-
+  buildDataCateGories = (listCategories) => {
+    let arrCategories = [];
+    for (let index = 0; index < listCategories.length; index++) {
+      let objData = {};
+      objData.label = listCategories[index].nameCate;
+      let category = {};
+      category.categoryId = listCategories[index].categoryId;
+      category.nameCate = listCategories[index].nameCate;
+      objData.value = category;
+      arrCategories.push(objData);
+    }
+    return arrCategories;
+  };
   render() {
+    //console.log(this.state);
+    let { allCategoriesBooks } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpenModal}
@@ -112,25 +148,19 @@ class ModalAddNewBook extends Component {
                 value={this.state.author}
               />
             </div>
-
-            {/* <div className="form-group mt-2 col-6">
-              <label>Loại sản phẩm</label>
-              <Select
-                options={optionsCategories}
-                value={this.state.categories}
-                onChange={this.handleOnchangeSelect}
-                name={"categories"}
+            <div className="form-group mt-2 col-6">
+              <label>Mô tả</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter book descriptions"
+                onChange={(event) => {
+                  this.handleOnchangeInput(event, "description");
+                }}
+                value={this.state.description}
               />
             </div>
-            <div className="form-group mt-2 col-6">
-              <label>Màu</label>
-              <Select
-                options={optionsColor}
-                value={this.state.color}
-                onChange={this.handleOnchangeSelect}
-                name={"color"}
-              />
-            </div> */}
+
             <div className="form-group mt-2 col-6">
               <label>Giá</label>
               <input
@@ -183,15 +213,12 @@ class ModalAddNewBook extends Component {
 
             <div className="form-group mt-2 col-6">
               <label>loại sách</label>
-              <input
+              <Select
                 type="text"
-                className="form-control"
-                placeholder="Enter product price"
-                onChange={(event) => {
-                  this.handleOnchangeInput(event, "category");
-                }}
-                value={this.state.category}
-              />
+                options={allCategoriesBooks}
+                onChange={this.handleOnchangeSelect}
+                name={"selectedCategory"}
+              ></Select>
             </div>
             <div className="form-group mt-2 col-6">
               <label>Hình ảnh</label>
@@ -206,7 +233,7 @@ class ModalAddNewBook extends Component {
               <div
                 className="mt-2"
                 style={{
-                  backgroundImage: `url(${this.state.img})`,
+                  backgroundImage: `url(${this.state.image})`,
                   backgroundRepeat: "none",
                   backgroundSize: "cover",
                   width: "80px",
@@ -243,11 +270,13 @@ class ModalAddNewBook extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return { allCategoriesBooks: state.books.allCategoriesBooks };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalAddNewBook);

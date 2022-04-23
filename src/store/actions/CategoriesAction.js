@@ -1,12 +1,13 @@
-import { getAllCategoriesBooks } from "../../services/CategoriesBooksService";
+import { getDataCategories } from "../../services/CategoriesBooksService";
 import { toast } from "react-toastify";
 //------------------cart action------------------------------
-export const getAllCategoriesBooksRedux = (page) => {
+export const getAllCategoriesBooksRedux = () => {
   return async (dispatch, getState) => {
     try {
-      let res = await getAllCategoriesBooks(page);
+      let res = await getDataCategories();
+      //console.log(res);
       if (res) {
-        dispatch(getAllCategoriesBooksSuccess(res));
+        dispatch(getAllCategoriesBooksSuccess(res.categoriesList));
       } else {
         dispatch(getAllCategoriesBooksFailed());
       }
@@ -19,9 +20,9 @@ export const getAllCategoriesBooksRedux = (page) => {
 };
 export const getAllCategoriesBooksFailed = () => ({
   type: "GET_ALL_CATEGORIES_BOOKS_FAILED",
-  item: [],
+  data: [],
 });
-export const getAllCategoriesBooksSuccess = (item) => ({
+export const getAllCategoriesBooksSuccess = (data) => ({
   type: "GET_ALL_CATEGORIES_BOOKS_SUCCESS",
-  item: item,
+  data: data,
 });

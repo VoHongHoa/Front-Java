@@ -8,4 +8,12 @@ const addNewCategoriesBooks = (data) => {
 const deleteCategories = (idCategory) => {
   return axios.delete(`/admin/xoa-loai-sach/${idCategory}`);
 };
-export { getAllCategoriesBooks, addNewCategoriesBooks, deleteCategories };
+const getDataCategories = () => {
+  return axios.get("/admin/category");
+};
+export {
+  getAllCategoriesBooks,
+  addNewCategoriesBooks,
+  deleteCategories,
+  getDataCategories,
+};

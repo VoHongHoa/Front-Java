@@ -4,13 +4,27 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { logOutSuccess } from "../../store/actions/AppAction";
+import { getAllCategoriesBooksRedux } from "../../store/actions/CategoriesAction";
 class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      allCategoriesBooks: [],
+    };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getAllCategoriesBooksRedux();
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.allCategoriesBooks !== this.props.allCategoriesBooks) {
+      this.setState({
+        allCategoriesBooks: this.props.allCategoriesBooks,
+      });
+    }
+  }
   render() {
+    let { allCategoriesBooks } = this.state;
+    console.log(allCategoriesBooks);
     return (
       <div className="header-dark">
         <nav className="navbar navbar-dark navbar-expand-md navigation-clean-search">
@@ -53,15 +67,20 @@ class HomePage extends Component {
                     Loại sách
                   </a>
                   <div className="dropdown-menu" role="menu">
-                    <a className="dropdown-item" role="presentation" href="#">
-                      Loại 1
-                    </a>
-                    <a className="dropdown-item" role="presentation" href="#">
-                      Loại 2
-                    </a>
-                    <a className="dropdown-item" role="presentation" href="#">
-                      Loại 3
-                    </a>
+                    {allCategoriesBooks &&
+                      allCategoriesBooks.length > 0 &&
+                      allCategoriesBooks.map((item, index) => {
+                        return (
+                          <a
+                            className="dropdown-item"
+                            role="presentation"
+                            href="#"
+                            key={item.categoryId}
+                          >
+                            {item.nameCate}
+                          </a>
+                        );
+                      })}
                   </div>
                 </li>
               </ul>
@@ -153,12 +172,14 @@ const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
+    allCategoriesBooks: state.books.allCategoriesBooks,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
+    getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

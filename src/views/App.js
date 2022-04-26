@@ -13,6 +13,9 @@ import Adminpage from "./Admin/AdminPage/Adminpage";
 import UserManage from "./Admin/AdminPage/UserManage";
 import CategoriesBooks from "./Admin/AdminPage/CategoriesBooks";
 import BooksManage from "./Admin/AdminPage/BooksManage";
+import ChangePassword from "./User/ChangePassword/ChangePassword";
+import ForgotPassword from "./User/ForgotPassword/ForgotPassword";
+import Cart from "./Cart/Cart";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +23,7 @@ class App extends Component {
   }
   componentDidMount() {}
   render() {
-    let { isLogin } = this.props;
+    let { isLogin, userInfor } = this.props;
     return (
       <BrowserRouter>
         <div className="App">
@@ -40,23 +43,58 @@ class App extends Component {
               {isLogin === false ? <Redirect to="/login" /> : <Profile />}
             </Route>
 
+            <Route path="/cart" exact>
+              {isLogin === false ? <Redirect to="/login" /> : <Cart />}
+            </Route>
+
             <Route path="/admin" exact>
-              {isLogin === false ? <Redirect to="/login" /> : <Adminpage />}
+              {isLogin === true &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
+                <Adminpage />
+              ) : (
+                <Redirect to="/login" />
+              )}
             </Route>
             <Route path="/admin/user" exact>
-              {isLogin === false ? <Redirect to="/login" /> : <UserManage />}
+              {isLogin === true &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
+                <UserManage />
+              ) : (
+                <Redirect to="/login" />
+              )}
             </Route>
 
             <Route path="/admin/categories" exact>
-              {isLogin === false ? (
-                <Redirect to="/login" />
-              ) : (
+              {isLogin === true &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
                 <CategoriesBooks />
+              ) : (
+                <Redirect to="/login" />
               )}
             </Route>
 
             <Route path="/admin/books" exact>
-              {isLogin === false ? <Redirect to="/login" /> : <BooksManage />}
+              {isLogin === true &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
+                <BooksManage />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
+
+            <Route path="/changepassword" exact>
+              {isLogin === false ? (
+                <Redirect to="/login" />
+              ) : (
+                <ChangePassword />
+              )}
+            </Route>
+            <Route path="/forgotpassword" exact>
+              <ForgotPassword />
             </Route>
           </Switch>
           <ToastContainer
@@ -79,6 +117,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
+    userInfor: state.user.userInfor,
   };
 };
 

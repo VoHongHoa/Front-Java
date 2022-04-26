@@ -7,6 +7,7 @@ import {
   addNewCategoriesBooks,
   deleteCategories,
   getAllCategoriesBooks,
+  getAllCategoriesBooksByLibrarian,
 } from "../../../services/CategoriesBooksService";
 import "./CategoriesBook.scss";
 class CategoriesBooks extends Component {
@@ -21,7 +22,12 @@ class CategoriesBooks extends Component {
     };
   }
   getCategoriesPaging = async (currentPage) => {
-    let res = await getAllCategoriesBooks(currentPage);
+    let res;
+    if (this.checkAdminOrLibrarian()) {
+      res = await getAllCategoriesBooks(currentPage);
+    } else {
+      res = await getAllCategoriesBooksByLibrarian(currentPage);
+    }
     // console.log(res);
     if (res) {
       let numOfPage = 0;
@@ -40,6 +46,16 @@ class CategoriesBooks extends Component {
         ...this.state,
       });
     }
+  };
+  checkAdminOrLibrarian = () => {
+    let isValid = true; // admin: true , librarian: false
+    if (
+      this.props.userInfor &&
+      this.props.userInfor.role.nameRole === "LIBRARIAN"
+    ) {
+      isValid = false;
+    }
+    return isValid;
   };
   componentDidMount() {
     this.getCategoriesPaging(0);
@@ -88,21 +104,24 @@ class CategoriesBooks extends Component {
       <div className="categories-manage-container container">
         <AdminHeader></AdminHeader>
         <h2 className="title mt-3">Quản lý loại sách</h2>
-        <div className="form-groud mt-3 mb-3">
-          <label>Thêm mới loại sách</label>
-          <input
-            className="form-control"
-            type={"text"}
-            value={this.state.newCategories}
-            onChange={(event) => this.handleOnchangeInput(event)}
-          />
-          <button
-            className="btn btn-primary mt-2"
-            onClick={() => this.handleAddNewCategoriesBook()}
-          >
-            Thêm mới
-          </button>
-        </div>
+        {this.props.userInfor &&
+          this.props.userInfor.role.nameRole === "ADMIN" && (
+            <div className="form-groud mt-3 mb-3">
+              <label>Thêm mới loại sách</label>
+              <input
+                className="form-control"
+                type={"text"}
+                value={this.state.newCategories}
+                onChange={(event) => this.handleOnchangeInput(event)}
+              />
+              <button
+                className="btn btn-primary mt-2"
+                onClick={() => this.handleAddNewCategoriesBook()}
+              >
+                Thêm mới
+              </button>
+            </div>
+          )}
 
         <div className="container">
           <table className="table table-striped">
@@ -110,7 +129,10 @@ class CategoriesBooks extends Component {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Loại sách và Tên</th>
-                <th scope="col">Thao tác</th>
+                {this.props.userInfor &&
+                  this.props.userInfor.role.nameRole === "ADMIN" && (
+                    <th scope="col">Thao tác</th>
+                  )}
               </tr>
             </thead>
             <tbody>
@@ -121,12 +143,17 @@ class CategoriesBooks extends Component {
                     <tr key={item.categoryId}>
                       <th scope="row">{index}</th>
                       <td>{item.nameCate}</td>
-                      <td>
-                        <i
-                          className="fas fa-trash "
-                          onClick={() => this.handleDeleteUser(item.categoryId)}
-                        ></i>
-                      </td>
+                      {this.props.userInfor &&
+                        this.props.userInfor.role.nameRole === "ADMIN" && (
+                          <td>
+                            <i
+                              className="fas fa-trash "
+                              onClick={() =>
+                                this.handleDeleteUser(item.categoryId)
+                              }
+                            ></i>
+                          </td>
+                        )}
                     </tr>
                   );
                 })}
@@ -156,7 +183,7 @@ class CategoriesBooks extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {};
+  return { userInfor: state.user.userInfor };
 };
 
 const mapDispatchToProps = (dispatch) => {

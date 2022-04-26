@@ -5,11 +5,12 @@ import { withRouter } from "react-router";
 // import { handleLogin } from "../../../services/userService";
 import "./Login.scss";
 import { handleLoginRedux } from "../../../store/actions/AppAction";
+import { toast } from "react-toastify";
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameUser: "",
+      userName: "",
       password: "",
     };
   }
@@ -25,12 +26,30 @@ class Login extends Component {
       ...copyState,
     });
   };
+  checkValidateInput = () => {
+    let isValid = true;
+    let arrInput = ["userName", "password"];
+    for (let i = 0; i < arrInput.length; i++) {
+      if (!this.state[arrInput[i]]) {
+        isValid = false;
+        toast.error(`Vui lòng điền thông tin ${arrInput[i]}`);
+        break;
+      }
+    }
+    return isValid;
+  };
+
   handleLogin = () => {
-    let data = {
-      nameUser: this.state.nameUser,
-      password: this.state.password,
-    };
-    this.props.handleLoginRedux(data);
+    if (this.checkValidateInput()) {
+      let data = {
+        nameUser: this.state.userName,
+        password: this.state.password,
+      };
+      this.props.handleLoginRedux(data);
+    }
+  };
+  handleForgotPassword = () => {
+    this.props.history.push("/forgotpassword");
   };
   render() {
     return (
@@ -48,7 +67,7 @@ class Login extends Component {
             placeholder="Enter Username"
             className="form-control"
             name="uname"
-            onChange={(event) => this.handleOnchangeInput(event, "nameUser")}
+            onChange={(event) => this.handleOnchangeInput(event, "userName")}
             required
           />
           <div className="form-group mt-2">
@@ -82,7 +101,7 @@ class Login extends Component {
           >
             Hủy
           </button>
-          <span className="psw">
+          <span className="psw" onClick={() => this.handleForgotPassword()}>
             Quên <a href="#">mật khẩu?</a>
           </span>
         </div>

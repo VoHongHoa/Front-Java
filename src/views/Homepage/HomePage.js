@@ -21,7 +21,9 @@ class HomePage extends Component {
 
         <Slider />
         <SectionBook></SectionBook>
-        <Footer />
+        <div className="mt-2">
+          <Footer />
+        </div>
       </div>
     );
   }

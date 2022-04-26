@@ -24,9 +24,12 @@ class AdminHeader extends Component {
         className={isReponsesive === false ? "topnav" : "topnav responsive "}
         id="myTopnav"
       >
-        <NavLink to={"/admin"} exact={true} activeClassName="active">
-          Disbash
-        </NavLink>
+        {this.props.userInfor &&
+          this.props.userInfor.role.nameRole === "ADMIN" && (
+            <NavLink to={"/admin"} exact={true} activeClassName="active">
+              Disbash
+            </NavLink>
+          )}
         <NavLink to={"/admin/user"} exact={true} activeClassName="active">
           Người dùng
         </NavLink>
@@ -36,10 +39,10 @@ class AdminHeader extends Component {
         <NavLink to={"/admin/books"} exact={true} activeClassName="active">
           Sách
         </NavLink>
-        <NavLink to={"/quydinh"} exact={true} activeClassName="active">
-          Quy định
+        <NavLink to={"/borrow"} exact={true} activeClassName="active">
+          Phiếu mượn
         </NavLink>
-        <a className="icon" onClick={() => this.myFuntion()} href="false">
+        <a className="icon" onClick={() => this.myFuntion()} href="#">
           <i className="fa fa-bars"></i>
         </a>
       </div>
@@ -47,7 +50,9 @@ class AdminHeader extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    userInfor: state.user.userInfor,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

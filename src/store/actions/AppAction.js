@@ -66,12 +66,10 @@ export const handleLoginRedux = (data) => {
         // console.log("check userinfor", userInfor);
         dispatch(loginSuccess(userInfor));
       } else {
-        toast.success("Tên Đăng nhập hoặc mật khẩu không chính xác!!");
         dispatch(loginFailed());
       }
     } catch (e) {
-      toast.error("Lỗi server!!!");
-      console.error(e);
+      toast.error("Tên Đăng nhập hoặc mật khẩu không chính xác!!");
       dispatch(loginFailed());
     }
   };

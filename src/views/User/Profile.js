@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { editUser } from "../../store/actions/AppAction";
 import HomeHeader from "../Homepage/HomeHeader";
+import CommonUtils from "../../utils/CommonUtils";
+import avatar from "../../assets/images/avatar.jpg";
 import "./Profile.css";
+import { changeAvatar } from "../../services/userService";
+import { toast } from "react-toastify";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +59,21 @@ class Profile extends Component {
     };
     this.props.editUser(data);
   };
+  handleOnchangeAvatar = async (event) => {
+    let filedata = event.target.files;
+    let file = filedata[0];
+    if (file) {
+      let base64 = await CommonUtils.getBase64(file);
+      // console.log(base64);
+      let data = {
+        image: base64,
+      };
+      let res = await changeAvatar(data);
+      console.log(res);
+    } else {
+      toast.error("Thay đổi không thành công");
+    }
+  };
   render() {
     // console.log(this.state);
     return (
@@ -64,13 +83,42 @@ class Profile extends Component {
           <div className="row">
             <div className="col-md-3 border-right">
               <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img
-                  className="rounded-circle mt-5"
-                  width="150px"
-                  height="150px"
-                  src={this.state.img}
-                  alt="Avatar"
-                />
+                <form>
+                  <div className="input-file-container">
+                    <input
+                      className="input-file"
+                      id="my-file"
+                      type="file"
+                      onChange={(event) => this.handleOnchangeAvatar(event)}
+                    />
+                    <label
+                      tabIndex="0"
+                      htmlFor="my-file"
+                      className="input-file-trigger"
+                    >
+                      Thay đổi avatar
+                    </label>
+                  </div>
+                  <p className="file-return"></p>
+                </form>
+                {this.state.img ? (
+                  <img
+                    className="rounded-circle mt-5"
+                    width="150px"
+                    height="150px"
+                    src={this.state.img}
+                    alt="Avatar"
+                  />
+                ) : (
+                  <img
+                    className="rounded-circle mt-5"
+                    width="150px"
+                    height="150px"
+                    src={avatar}
+                    alt="Avatar"
+                  />
+                )}
+
                 <span className="font-weight-bold">{this.state.userName}</span>
                 <span className="text-black-50">{this.state.email}</span>
                 <span> </span>

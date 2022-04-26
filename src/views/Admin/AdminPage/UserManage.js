@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { getAllUser, deleteUser } from "../../../services/userService";
+import {
+  getAllUser,
+  deleteUser,
+  getAllUserByLibrarian,
+  deleteUserByLibrarian,
+} from "../../../services/userService";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import { toast } from "react-toastify";
 import "./UserManage.css";
@@ -17,25 +22,43 @@ class UserManage extends Component {
       currentUserEdit: {},
     };
   }
+  checkAdminOrLibrarian = () => {
+    let isValid = true; // admin: true , librarian: false
+    if (
+      this.props.userInfor &&
+      this.props.userInfor.role.nameRole === "LIBRARIAN"
+    ) {
+      isValid = false;
+    }
+    return isValid;
+  };
   getUserPaging = async (currentPage) => {
-    let res = await getAllUser(currentPage);
-    // console.log(res);
-    if (res) {
-      let numOfPage = 0;
-      if (res.count % 4 === 0) {
-        numOfPage = res.count / 4;
+    try {
+      let res;
+      if (this.checkAdminOrLibrarian()) {
+        res = await getAllUser(currentPage);
       } else {
-        numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+        res = await getAllUserByLibrarian(currentPage);
       }
-      this.setState({
-        numOfUser: res.count,
-        allUser: res.userList,
-        numOfPage: numOfPage,
-      });
-    } else {
-      this.setState({
-        ...this.state,
-      });
+      if (res) {
+        let numOfPage = 0;
+        if (res.count % 4 === 0) {
+          numOfPage = res.count / 4;
+        } else {
+          numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+        }
+        this.setState({
+          numOfUser: res.count,
+          allUser: res.userList,
+          numOfPage: numOfPage,
+        });
+      } else {
+        this.setState({
+          ...this.state,
+        });
+      }
+    } catch (e) {
+      toast.error("Lỗi server");
     }
   };
   componentDidMount() {
@@ -48,12 +71,25 @@ class UserManage extends Component {
     });
   };
   handleDeleteUser = async (userId) => {
-    let res = await deleteUser(userId);
-    console.log(res);
-    if (res) {
-      toast.success("Xóa thành công!");
+    try {
+      let res;
+      if (this.checkAdminOrLibrarian()) {
+        res = await deleteUser(userId);
+      } else {
+        res = await deleteUserByLibrarian(userId);
+      }
+      if (res) {
+        toast.success("Xóa thành công!");
+        this.setState({
+          currentPage: 0,
+        });
+      } else {
+        toast.error("Xóa không thành công");
+      }
+      this.getUserPaging(0);
+    } catch (e) {
+      toast.error("Xóa không thành công!!!");
     }
-    this.getUserPaging(0);
   };
   render() {
     let { numOfPage, allUser, currentPage } = this.state;
@@ -119,7 +155,7 @@ class UserManage extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {};
+  return { userInfor: state.user.userInfor };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { logOutSuccess } from "../../store/actions/AppAction";
 import { getAllCategoriesBooksRedux } from "../../store/actions/CategoriesAction";
+import defaultAvatar from "../../assets/images/avatar.jpg";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -22,9 +23,10 @@ class HomePage extends Component {
       });
     }
   }
+
   render() {
     let { allCategoriesBooks } = this.state;
-    console.log(allCategoriesBooks);
+    //console.log(allCategoriesBooks);
     return (
       <div className="header-dark">
         <nav className="navbar navbar-dark navbar-expand-md navigation-clean-search">
@@ -62,7 +64,7 @@ class HomePage extends Component {
                     className="dropdown-toggle nav-link dropdown-toggle"
                     data-toggle="dropdown"
                     aria-expanded="false"
-                    href="#"
+                    href="false"
                   >
                     Loại sách
                   </a>
@@ -74,7 +76,7 @@ class HomePage extends Component {
                           <a
                             className="dropdown-item"
                             role="presentation"
-                            href="#"
+                            href="false"
                             key={item.categoryId}
                           >
                             {item.nameCate}
@@ -99,18 +101,34 @@ class HomePage extends Component {
               </form>
               {this.props.isLogin === true ? (
                 <span className="user-infor d-flex">
-                  <div
-                    className="avatar"
-                    style={{
-                      backgroundImage: `url(${this.props.userInfor.image})`,
-                      backgroundRepeat: "none",
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "25px",
-                      width: "25px",
-                      borderRadius: "50%",
-                    }}
-                  ></div>
+                  {this.props.userInfor && this.props.userInfor.image ? (
+                    <div
+                      className="avatar"
+                      style={{
+                        backgroundImage: `url(${this.props.userInfor.image})`,
+                        backgroundRepeat: "none",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        height: "25px",
+                        width: "25px",
+                        borderRadius: "50%",
+                      }}
+                    ></div>
+                  ) : (
+                    <div
+                      className="avatar"
+                      style={{
+                        backgroundImage: `url(${defaultAvatar})`,
+                        backgroundRepeat: "none",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        height: "25px",
+                        width: "25px",
+                        borderRadius: "50%",
+                      }}
+                    ></div>
+                  )}
+
                   <li className="dropdown">
                     <span
                       className="dropdown-toggle  dropdown-toggle"
@@ -131,9 +149,22 @@ class HomePage extends Component {
                         Thông tin cá nhân
                       </NavLink>
 
-                      <a className="dropdown-item" role="presentation" href="#">
+                      <NavLink
+                        to="/cart"
+                        exact={true}
+                        className="dropdown-item"
+                        role="presentation"
+                      >
+                        Cặp
+                      </NavLink>
+                      <NavLink
+                        to="/changepassword"
+                        exact={true}
+                        className="dropdown-item"
+                        role="presentation"
+                      >
                         Đổi mật khẩu
-                      </a>
+                      </NavLink>
                       <a
                         className="dropdown-item"
                         role="presentation"

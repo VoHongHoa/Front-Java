@@ -16,8 +16,26 @@ const editUserInfor = (data) => {
 const getAllUser = (currentPage) => {
   return axios.get(`/admin/xem-tat-ca-user/${currentPage}`);
 };
+
+const getAllUserByLibrarian = (currentPage) => {
+  return axios.get(`/librarian/xem-tat-ca-user/${currentPage}`);
+};
 const deleteUser = (userId) => {
   return axios.delete(`/admin/xoa-user/${userId}`);
+};
+const deleteUserByLibrarian = (userId) => {
+  return axios.delete(`/librarian/xoa-user/${userId}`);
+};
+const changePassword = (data) => {
+  return axios.post(`/sua-mat-khau/${data.curentPassword}/${data.newPassword}`);
+};
+const changeAvatar = (data) => {
+  //console.log(image);
+  return axios.post("/cap-nhat-anh", data);
+};
+const forgotPassword = (data) => {
+  console.log(data);
+  return axios.post(`/quen-mat-khau/${data.email}`);
 };
 export {
   handleSignUp,
@@ -26,4 +44,9 @@ export {
   editUserInfor,
   getAllUser,
   deleteUser,
+  changePassword,
+  changeAvatar,
+  forgotPassword,
+  getAllUserByLibrarian,
+  deleteUserByLibrarian,
 };

@@ -6,11 +6,13 @@
     /* Center the avatar image inside this container */
     .imgcontainer {
         text-align: center;
+
         margin: 24px 0 12px 0;
 
         /* Avatar image */
         img.avatar {
-            width: 15%;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
         }
 

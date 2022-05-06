@@ -7,7 +7,7 @@ const cartReducer = (state = initState, action) => {
     case "ADD_TO_CART_SUCCESS":
       let isAdd = true;
       for (let index = 0; index < state.cart.length; index++) {
-        if (state.cart[index]._id === action.item._id) {
+        if (state.cart[index].bookId === action.item.bookId) {
           isAdd = false;
           break;
         }
@@ -23,7 +23,7 @@ const cartReducer = (state = initState, action) => {
       return { ...state };
     case "DELETE_ITEM_SUCCESS":
       let cart = state.cart;
-      cart = cart.filter((item) => item._id !== action.itemDelete._id);
+      cart = cart.filter((item) => item.bookId !== action.itemDelete.bookId);
       //console.log(state.cart);
       return { ...state, cart };
     case "DELETE_CART":

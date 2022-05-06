@@ -45,15 +45,15 @@ class SignUp extends Component {
     return isValid;
   };
 
-  checkPassword = (password) => {
-    let isValid = true;
-    if (password.length < 8) {
-      isValid = false;
-    } else {
-      isValid = true;
-    }
-    return isValid;
-  };
+  // checkPassword = (password) => {
+  //   let isValid = true;
+  //   if (password.length < 8) {
+  //     isValid = false;
+  //   } else {
+  //     isValid = true;
+  //   }
+  //   return isValid;
+  // };
   handleOnchangeInput = (event, id) => {
     let copyState = { ...this.state };
     copyState[id] = event.target.value;
@@ -85,31 +85,30 @@ class SignUp extends Component {
   handleSignUpUser = async () => {
     try {
       if (this.checkValidateInput()) {
-        if (this.checkPassword()) {
-          if (this.state.password === this.state.repeatPassword) {
-            let data = {
-              nameUser: this.state.userName,
-              password: this.state.password,
-              email: this.state.email,
-              address: this.state.address,
-              telephone: this.state.phoneNumber,
-              sex: this.state.gender.value,
-              image: this.state.img,
-              fullName: this.state.fullName,
-            };
-            let res = await handleSignUp(data);
-            if (res) {
-              toast.success("Đăng kí thành công! Vui lòng đăng nhập");
-              this.props.history.push("/login");
-            } else {
-              toast.error("Đăng kí không thành công! Vui lòng kiểm tra lại");
-            }
+        if (this.state.password === this.state.repeatPassword) {
+          let data = {
+            nameUser: this.state.userName,
+            password: this.state.password,
+            email: this.state.email,
+            address: this.state.address,
+            telephone: this.state.phoneNumber,
+            sex: this.state.gender.value,
+            image: this.state.img,
+            fullName: this.state.fullName,
+          };
+          let res = await handleSignUp(data);
+          if (res.status === 200) {
+            toast.success("Đăng kí thành công! Vui lòng đăng nhập");
+            this.props.history.push("/login");
           } else {
-            toast.error("Mật khẩu và mật khẩu lặp lại không trùng nhau!!!");
+            toast.error("Đăng kí không thành công! Vui lòng kiểm tra lại");
           }
+        } else {
+          toast.error("Mật khẩu và mật khẩu lặp lại không trùng nhau!!!");
         }
       }
     } catch (e) {
+      console.log(e);
       toast.error("Lỗi đăng kí!!");
     }
   };

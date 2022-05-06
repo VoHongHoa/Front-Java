@@ -56,7 +56,7 @@ class BooksManage extends Component {
   };
   handleDeleteBook = async (bookId) => {
     let res = await deleteBook(bookId);
-    console.log(res);
+    //console.log(res);
     if (res) {
       toast.success("Xóa thành công!");
     }

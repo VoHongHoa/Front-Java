@@ -49,6 +49,8 @@ class App extends Component {
 
             <Route path="/admin" exact>
               {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
                 userInfor.role.nameRole === "LIBRARIAN") ? (
                 <Adminpage />
@@ -58,6 +60,8 @@ class App extends Component {
             </Route>
             <Route path="/admin/user" exact>
               {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
                 userInfor.role.nameRole === "LIBRARIAN") ? (
                 <UserManage />
@@ -68,6 +72,8 @@ class App extends Component {
 
             <Route path="/admin/categories" exact>
               {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
                 userInfor.role.nameRole === "LIBRARIAN") ? (
                 <CategoriesBooks />
@@ -78,6 +84,8 @@ class App extends Component {
 
             <Route path="/admin/books" exact>
               {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
                 userInfor.role.nameRole === "LIBRARIAN") ? (
                 <BooksManage />

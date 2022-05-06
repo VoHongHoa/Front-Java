@@ -8,4 +8,16 @@ const getAllBooksPaging = (page) => {
 const deleteBook = (bookId) => {
   return axios.delete(`/admin/xoa-sach/${bookId}`);
 };
-export { addNewBook, getAllBooksPaging, deleteBook };
+const getBooksLibrary = () => {
+  return axios.get(`/thu-vien`);
+};
+const borrowBooks = (data) => {
+  return axios.get("/user/muon-sach", data);
+};
+export {
+  addNewBook,
+  getAllBooksPaging,
+  deleteBook,
+  getBooksLibrary,
+  borrowBooks,
+};

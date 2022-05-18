@@ -14,10 +14,14 @@ const getBooksLibrary = () => {
 const borrowBooks = (data) => {
   return axios.get("/user/muon-sach", data);
 };
+const editBook = (data, bookId) => {
+  return axios.post(`/admin/sua-sach/${bookId}`, data);
+};
 export {
   addNewBook,
   getAllBooksPaging,
   deleteBook,
   getBooksLibrary,
   borrowBooks,
+  editBook,
 };

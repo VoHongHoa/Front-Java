@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { editUser } from "../../store/actions/AppAction";
+import { editUser, editUserAvatar } from "../../store/actions/AppAction";
 import HomeHeader from "../Homepage/HomeHeader";
 import CommonUtils from "../../utils/CommonUtils";
 import avatar from "../../assets/images/avatar.jpg";
 import "./Profile.css";
-import { changeAvatar } from "../../services/userService";
 import { toast } from "react-toastify";
 class Profile extends Component {
   constructor(props) {
@@ -24,6 +23,20 @@ class Profile extends Component {
   }
   componentDidMount() {
     if (this.props.userInfor) {
+      this.setState({
+        email: this.props.userInfor.email,
+        userName: this.props.userInfor.nameUser,
+        fullName: this.props.userInfor.fullName,
+        address: this.props.userInfor.address,
+        phoneNumber: this.props.userInfor.telephone,
+        img: this.props.userInfor.image,
+        gender: this.props.userInfor.sex,
+        userId: this.props.userInfor.userId,
+      });
+    }
+  }
+  componentDidUpdate(preProps) {
+    if (preProps.userInfor !== this.props.userInfor) {
       this.setState({
         email: this.props.userInfor.email,
         userName: this.props.userInfor.nameUser,
@@ -64,18 +77,15 @@ class Profile extends Component {
     let file = filedata[0];
     if (file) {
       let base64 = await CommonUtils.getBase64(file);
-      // console.log(base64);
       let data = {
         image: base64,
       };
-      let res = await changeAvatar(data);
-      console.log(res);
+      this.props.editUserAvatar(data);
     } else {
       toast.error("Thay đổi không thành công");
     }
   };
   render() {
-    // console.log(this.state);
     return (
       <>
         <HomeHeader />
@@ -250,6 +260,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editUser: (data) => dispatch(editUser(data)),
+    editUserAvatar: (data) => dispatch(editUserAvatar(data)),
   };
 };
 export default withRouter(

@@ -8,6 +8,7 @@ class ModalAddNewBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      bookId: "",
       nameBook: "",
       author: "",
       publishYear: "",
@@ -29,6 +30,30 @@ class ModalAddNewBook extends Component {
         allCategoriesBooks: this.buildDataCateGories(
           this.props.allCategoriesBooks
         ),
+      });
+    }
+    if (prevProps.action !== this.props.action) {
+      this.setState({
+        action: this.props.action,
+      });
+    }
+    if (prevProps.currentBook !== this.props.currentBook) {
+      //console.log(this.props.currentBook);
+      this.setState({
+        currentBook: this.props.currentBook,
+        bookId: this.props.currentBook.bookId,
+        nameBook: this.props.currentBook.nameBook,
+        author: this.props.currentBook.author,
+        publishYear: this.props.currentBook.publishYear,
+        publishCom: this.props.currentBook.publishCom,
+        price: this.props.currentBook.price,
+        count: this.props.currentBook.count,
+        description: this.props.currentBook.description,
+        image: this.props.currentBook.image,
+        selectedCategory: {
+          value: this.props.currentBook.category,
+          label: this.props.currentBook.category.nameCate,
+        },
       });
     }
   }
@@ -55,10 +80,7 @@ class ModalAddNewBook extends Component {
     let file = filedata[0];
     if (file) {
       let base64 = await CommonUtils.getBase64(file);
-      //console.log(base64);
-      //let objectUrl = URL.createObjectURL(file);
       this.setState({
-        //priviewImgURL: objectUrl,
         image: base64,
       });
     }
@@ -75,8 +97,12 @@ class ModalAddNewBook extends Component {
       image: this.state.image,
       category: this.state.selectedCategory.value,
     };
-    console.log(data);
-    this.props.doAddNewBook(data);
+    let bookId = this.state.bookId;
+    if (this.state.action === "EDIT_BOOK") {
+      this.props.doEditBook(data, bookId);
+    } else {
+      this.props.doAddNewBook(data);
+    }
     this.setState({
       nameBook: "",
       author: "",
@@ -105,7 +131,7 @@ class ModalAddNewBook extends Component {
   };
   render() {
     //console.log(this.state);
-    let { allCategoriesBooks } = this.state;
+    let { allCategoriesBooks, action } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpenModal}
@@ -120,7 +146,7 @@ class ModalAddNewBook extends Component {
             this.toggle();
           }}
         >
-          Thêm mới sản phẩm
+          {action === "EDIT_BOOK" ? "Chỉnh sửa sách" : "Thêm mới sách"}
         </ModalHeader>
         <ModalBody>
           <div className="modalBody-product-container row">
@@ -217,6 +243,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 options={allCategoriesBooks}
                 onChange={this.handleOnchangeSelect}
+                value={this.state.selectedCategory}
                 name={"selectedCategory"}
               ></Select>
             </div>
@@ -252,7 +279,7 @@ class ModalAddNewBook extends Component {
             className="px-3"
             onClick={() => this.handleSubmitAdd()}
           >
-            Thêm mới
+            {action === "EDIT_BOOK" ? "Lưu thay đổi" : "Thêm mới"}
           </Button>{" "}
           <Button
             color="secondary"

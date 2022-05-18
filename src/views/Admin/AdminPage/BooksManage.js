@@ -8,6 +8,7 @@ import {
   addNewBook,
   getAllBooksPaging,
   deleteBook,
+  editBook,
 } from "../../../services/BookService";
 class BooksManage extends Component {
   constructor(props) {
@@ -18,6 +19,8 @@ class BooksManage extends Component {
       numOfBooks: 0,
       numOfPage: 0,
       isOpenModal: false,
+      action: "",
+      currentBook: {},
     };
   }
   getBooksPaging = async (currentPage) => {
@@ -71,6 +74,14 @@ class BooksManage extends Component {
   handleAddNewBook = () => {
     this.setState({
       isOpenModal: true,
+      action: "ADD_NEW_BOOK",
+    });
+  };
+  handleEditBook = (item) => {
+    this.setState({
+      isOpenModal: true,
+      action: "EDIT_BOOK",
+      currentBook: item,
     });
   };
   toggle = () => {
@@ -91,13 +102,30 @@ class BooksManage extends Component {
       toast.error("Thêm thất bại!Vui lòng kiểm tra lại");
     }
   };
+  doEditBook = async (data, bookId) => {
+    try {
+      //console.log(data);
+      let res = await editBook(data, bookId);
+      console.log(res);
+      if (res) {
+        this.setState({
+          isOpenModal: false,
+        });
+        this.getBooksPaging(0);
+        toast.success("Chỉnh sửa thành công!");
+      }
+    } catch (e) {
+      toast.error("Chỉnh sửa thất bại!");
+      console.log(e);
+    }
+  };
   render() {
     let { numOfPage, allBooks, currentPage } = this.state;
     let arr = [];
     for (let i = 0; i < numOfPage; i++) {
       arr.push(i);
     }
-    console.log(this.state);
+    //console.log(this.state);
     return (
       <div className="categories-manage-container container">
         <AdminHeader></AdminHeader>
@@ -132,7 +160,13 @@ class BooksManage extends Component {
                       <td>{item.count}</td>
                       <td>
                         <i
+                          className="fas fa-pencil"
+                          style={{ margin: "3px", cursor: "pointer" }}
+                          onClick={() => this.handleEditBook(item)}
+                        ></i>
+                        <i
                           className="fas fa-trash "
+                          style={{ margin: "3px", cursor: "pointer" }}
                           onClick={() => this.handleDeleteBook(item.bookId)}
                         ></i>
                       </td>
@@ -164,6 +198,9 @@ class BooksManage extends Component {
           isOpenModal={this.state.isOpenModal}
           toggle={this.toggle}
           doAddNewBook={this.doAddNewBook}
+          action={this.state.action}
+          currentBook={this.state.currentBook}
+          doEditBook={this.doEditBook}
         />
       </div>
     );

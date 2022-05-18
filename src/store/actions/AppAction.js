@@ -2,6 +2,7 @@ import {
   handleLogin,
   getUserInfor,
   editUserInfor,
+  changeAvatar,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 //------------------cart action------------------------------
@@ -9,6 +10,7 @@ export const addToCart = (item) => {
   //console.log("check user:", user);
   return async (dispatch, getState) => {
     item.quantity = 1;
+    item.total = item.quantity * item.price;
     dispatch(addToCartSuccess(item));
   };
 };
@@ -114,5 +116,33 @@ export const editUserSuccess = (data) => ({
 });
 export const editUserFailed = () => ({
   type: "EDIT_USER_FAILED",
+  userData: {},
+});
+
+export const editUserAvatar = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let respone = await changeAvatar(data);
+      console.log("check res", respone);
+      if (respone) {
+        toast.success("Thay đổi thông tin  thành công");
+        dispatch(editUserSuccess(respone));
+      } else {
+        toast.error("Thay đổi không thành công!!");
+        dispatch(editUserFailed());
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Lỗi server!!");
+      dispatch(editUserFailed());
+    }
+  };
+};
+export const editUserAvatarSuccess = (data) => ({
+  type: "EDIT_USER_AVATAR_SUCCESS",
+  userData: data,
+});
+export const editUserAvatarFailed = () => ({
+  type: "EDIT_USER_AVATAR_FAILED",
   userData: {},
 });

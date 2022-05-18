@@ -3,6 +3,12 @@
         .h-custom {
             height: 100vh !important;
         }
+
+        .cart {
+            input {
+                width: 60px;
+            }
+        }
     }
 
     .card-registration .select-input.form-control[readonly]:not([disabled]) {

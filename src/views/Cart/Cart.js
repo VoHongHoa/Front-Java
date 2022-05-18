@@ -72,22 +72,23 @@ class Cart extends Component {
     this.props.changeInputItem(this.state.allItemInCart);
   };
   handleBorrowBooks = async () => {
-    console.log(this.state);
     let data = {
       ...this.state.allItemInCart,
     };
-    try {
-      let res = await borrowBooks(data);
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-      toast.error("Lỗi server!!Vui lòng thử lại sau");
-    }
+    console.log(data);
+    // try {
+    //   let res = await borrowBooks(data);
+    //   console.log(res);
+    // } catch (e) {
+    //   console.log(e);
+    //   toast.error("Lỗi server!!Vui lòng thử lại sau");
+    // }
   };
   render() {
     //console.log(this.state.allItemInCart);
     let { allItemInCart } = this.state;
     let { userInfor } = this.props;
+    let total = 0;
     return (
       <div className="container CartContainer">
         <section
@@ -116,9 +117,10 @@ class Cart extends Component {
                           {allItemInCart &&
                             allItemInCart.length > 0 &&
                             allItemInCart.map((item, index) => {
+                              total = total + item.price * item.quantity;
                               return (
                                 <div
-                                  className="row mb-4 d-flex justify-content-between align-items-center"
+                                  className="row mb-4 d-flex justify-content-between align-items-center cart"
                                   key={index}
                                 >
                                   <div className="col-md-2 col-lg-2 col-xl-2">
@@ -245,7 +247,7 @@ class Cart extends Component {
 
                           <div className="d-flex justify-content-between mb-5">
                             <h5 className="text-uppercase">Total price</h5>
-                            <h5>€ 137.00</h5>
+                            <h5>{total}</h5>
                           </div>
 
                           <button

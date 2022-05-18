@@ -97,7 +97,7 @@ class SignUp extends Component {
             fullName: this.state.fullName,
           };
           let res = await handleSignUp(data);
-          if (res.status === 200) {
+          if (res) {
             toast.success("Đăng kí thành công! Vui lòng đăng nhập");
             this.props.history.push("/login");
           } else {

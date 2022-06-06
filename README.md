@@ -1,3 +1,5 @@
+Chạy lệnh `npm i --legacy-peer-deps` để install thư viện reveal
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

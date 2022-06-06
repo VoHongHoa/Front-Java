@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./SectionProduct.css";
+import "./SectionProduct.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import sach1 from "../../assets/images/sach1.jpg";
@@ -8,6 +8,8 @@ import sach3 from "../../assets/images/sach3.jpg";
 import { toast } from "react-toastify";
 import { getBooksLibrary } from "../../services/BookService";
 import { addToCart } from "../../store/actions/AppAction";
+import Flip from "react-reveal/Flip";
+import Fade from "react-reveal/Fade";
 class SectionProduct extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     //console.log(item);
     this.props.addToCart(item);
   };
@@ -46,52 +48,45 @@ class SectionProduct extends Component {
             allBooks.map((item, index) => {
               return (
                 <div className="col-md-4 mt-2" key={index}>
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="card-img-actions">
-                        <img
-                          src={item.image}
-                          className="card-img img-fluid"
-                          width="96"
-                          height="350"
-                          alt="item.nameBook"
-                        />
+                  <Fade bottom delay={200}>
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="card-img-actions">
+                          <img
+                            src={item.image}
+                            className="card-img img-fluid"
+                            width="96"
+                            height="350"
+                            alt="item.nameBook"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="card-body bg-light text-center">
-                      <div className="mb-2">
-                        <h6 className="font-weight-semibold mb-2">
-                          <a
-                            href="#"
-                            className="text-default mb-2"
-                            data-abc="true"
-                          >
-                            {item.description}
+                      <div className="card-body bg-light text-center">
+                        <div className="mb-2">
+                          <a href="#" className="text-muted" data-abc="true">
+                            {item.nameBook}
                           </a>
-                        </h6>
-                        <a href="#" className="text-muted" data-abc="true">
-                          {item.nameBook}
-                        </a>
+                        </div>
+                        <h3 className="mb-0 font-weight-semibold">
+                          {item.price}
+                        </h3>
+                        <div>
+                          <i className="fa fa-star star"></i>
+                          <i className="fa fa-star star"></i>
+                          <i className="fa fa-star star"></i>
+                          <i className="fa fa-star star"></i>
+                        </div>
+                        <div className="text-muted mb-3">34 reviews</div>
+                        <button
+                          type="button"
+                          className="btn bg-cart"
+                          onClick={() => this.handleAddToCart(item)}
+                        >
+                          <i className="fa fa-cart-plus mr-2"></i> Add to cart
+                        </button>
                       </div>
-                      <h3 className="mb-0 font-weight-semibold">
-                        {item.price}
-                      </h3>
-                      <div>
-                        <i className="fa fa-star star"></i>
-                        <i className="fa fa-star star"></i>
-                        <i className="fa fa-star star"></i>
-                        <i className="fa fa-star star"></i>
-                      </div>
-                      <div className="text-muted mb-3">34 reviews</div>
-                      <button
-                        type="button"
-                        className="btn bg-cart"
-                        onClick={() => this.handleAddToCart(item)}
-                      >
-                        <i className="fa fa-cart-plus mr-2"></i> Add to cart
-                      </button>
                     </div>
-                  </div>
+                  </Fade>
                 </div>
               );
             })}
@@ -100,16 +95,16 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SectionProduct);

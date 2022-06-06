@@ -1,5 +1,5 @@
 .header-dark {
-    background: #444;
+    background: rgb(221, 255, 242);
     background-size: cover;
     padding-bottom: 10px;
 
@@ -29,7 +29,7 @@
             background: transparent;
             padding-top: 0;
             padding-bottom: 0;
-            color: #fff;
+            color: rgb(0, 77, 14);
             border-radius: 0;
             box-shadow: none;
             border: none;
@@ -43,13 +43,14 @@
         .navbar {
             padding-top: .75rem;
             padding-bottom: .75rem;
-
+            
             .navbar-brand {
                 font-weight: bold;
                 color: inherit;
 
                 &:hover {
-                    color: #f0f0f0;
+                    color: #0e5f00;
+                    font-weight: bold;
                 }
             }
         }
@@ -59,12 +60,13 @@
                 margin-top: 5px;
 
                 .login {
-                    color: #d9d9d9;
-                    margin-right: .5rem;
+                    color: #005718;
+                    margin: 0 1rem;
                     text-decoration: none;
 
                     &:hover {
-                        color: #fff;
+                        color: #0e5f00;
+                        font-weight: bold;
                     }
                 }
             }
@@ -105,7 +107,7 @@
 }
 
 .header-dark .navbar .navbar-toggler {
-    color: #eee;
+    color: rgb(238, 238, 238);
 }
 
 .header-dark .navbar .navbar-collapse,
@@ -121,19 +123,20 @@
 }
 
 .header-dark .navbar.navbar-dark .navbar-nav .nav-link {
-    color: #d9d9d9;
+    color: #005718;
 }
 
 .header-dark .navbar.navbar-dark .navbar-nav .nav-link:focus,
 .header-dark .navbar.navbar-dark .navbar-nav .nav-link:hover {
-    color: #fcfeff !important;
+    color: #013a04 !important;
+    font-weight: bold;
     background-color: transparent;
 }
 
 .header-dark .navbar .navbar-nav>li>.dropdown-menu {
     margin-top: -5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
-    background-color: #fff;
+    background-color: rgba(170, 229, 182, 0.7);
     border-radius: 2px;
 }
 
@@ -151,7 +154,7 @@
 
 .header-dark .navbar .action-button,
 .header-dark .navbar .action-button:active {
-    background: #208f8f;
+    background: #2f8748;
     border-radius: 20px;
     font-size: inherit;
     color: #fff;
@@ -163,7 +166,8 @@
 }
 
 .header-dark .navbar .action-button:hover {
-    background: #269d9d;
+    background: #0e5f00;
+    font-weight: bold;
 }
 
 .header-dark .navbar .form-inline label {
@@ -171,16 +175,20 @@
 }
 
 .header-dark .navbar .form-inline .search-field {
-    display: inline-block;
-    width: 80%;
+    display:inline-block;
+    height: 30px;
+    width: 90%;
     background: none;
-    border: none;
-    border-bottom: 1px solid transparent;
-    border-radius: 0;
-    color: #ccc;
+    // border: none;
+    // border-bottom: 1px solid ;
+    border: 1px solid #013a04 ;
+    border-radius: 10px 0 0 10px;
+    color: #005718;
+    background: #eff3ef;
     box-shadow: none;
     color: inherit;
     transition: border-bottom-color 0.3s;
+    margin: 0 2px;
 }
 
 .header-dark .navbar .form-inline .search-field:focus {

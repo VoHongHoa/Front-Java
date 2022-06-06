@@ -39,7 +39,7 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleIncreaseQuantity = (item) => {
+  handleIncreaseQuantity = item => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (copyState.allItemInCart[index].bookId === item.bookId) {
@@ -53,11 +53,11 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleDeleteBook = (item) => {
+  handleDeleteBook = item => {
     this.props.deleteItem(item);
   };
 
-  handleDecreaseQuantity = (item) => {
+  handleDecreaseQuantity = item => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (
@@ -172,7 +172,7 @@ class Cart extends Component {
                                       value={item.quantity}
                                       type="number"
                                       className="form-control form-control-sm"
-                                      onChange={(event) =>
+                                      onChange={event =>
                                         this.handleOnchangeInput(event, item)
                                       }
                                     />
@@ -291,7 +291,7 @@ class Cart extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -299,10 +299,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteItem: (item) => dispatch(deleteItem(item)),
-    changeInputItem: (allItems) => dispatch(changeInputItem(allItems)),
+    deleteItem: item => dispatch(deleteItem(item)),
+    changeInputItem: allItems => dispatch(changeInputItem(allItems)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

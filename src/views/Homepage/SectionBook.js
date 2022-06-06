@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./SectionProduct.scss";
+import "./SectionBook.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import sach1 from "../../assets/images/sach1.jpg";
@@ -8,7 +8,6 @@ import sach3 from "../../assets/images/sach3.jpg";
 import { toast } from "react-toastify";
 import { getBooksLibrary } from "../../services/BookService";
 import { addToCart } from "../../store/actions/AppAction";
-import Flip from "react-reveal/Flip";
 import Fade from "react-reveal/Fade";
 class SectionProduct extends Component {
   constructor(props) {
@@ -47,8 +46,8 @@ class SectionProduct extends Component {
             allBooks.length > 0 &&
             allBooks.map((item, index) => {
               return (
-                <div className="col-md-4 mt-2" key={index}>
-                  <Fade bottom delay={200}>
+                <div className="col-md-3 mt-2" key={index}>
+                  <Fade bottom delay={150}>
                     <div className="card">
                       <div className="card-body">
                         <div className="card-img-actions">

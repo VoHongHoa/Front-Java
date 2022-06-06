@@ -6,17 +6,26 @@ import CommonUtils from "../../../utils/CommonUtils";
 import { handleSignUp } from "../../../services/userService";
 import "./SignUp.scss";
 import { toast } from "react-toastify";
+var mediumRegex = new RegExp(
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+);
+var phoneRegex = new RegExp("^(?=.*[0-9])");
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      errEmail: true,
       password: "",
+      passErr: true,
       repeatPassword: "",
+      rpPassErr: true,
       userName: "",
       fullName: "",
       address: "",
       phoneNumber: "",
+      errPhone: true,
       img: "",
       gender: "",
     };
@@ -25,36 +34,27 @@ class SignUp extends Component {
   checkValidateInput = () => {
     let isValid = true;
     let arrInput = [
-      "email",
-      "fullName",
-      "userName",
-      "gender",
-      "password",
-      "repeatPassword",
-      "address",
-      "phoneNumber",
+      { value: "email", label: "Email" },
+      { value: "fullName", label: "Họ và tên" },
+      { value: "userName", label: "Tên đăng nhập" },
+      { value: "gender", label: "Giới tính" },
+      { value: "password", label: "Mật khẩu" },
+      { value: "repeatPassword", label: "Mật khẩu lặp lại" },
+      { value: "address", label: "Địa chỉ" },
+      { value: "phoneNumber", label: "Số điện thoại" },
     ];
     for (let i = 0; i < arrInput.length; i++) {
       // console.log(this.state[arrInput[i]]);
-      if (!this.state[arrInput[i]]) {
+      if (!this.state[arrInput[i].value]) {
         isValid = false;
-        toast.error(`Vui lòng điền thông tin ${arrInput[i]}`);
+        toast.error(`Vui lòng điền thông tin: ${arrInput[i].label}`);
         break;
       }
     }
     return isValid;
   };
-
-  // checkPassword = (password) => {
-  //   let isValid = true;
-  //   if (password.length < 8) {
-  //     isValid = false;
-  //   } else {
-  //     isValid = true;
-  //   }
-  //   return isValid;
-  // };
   handleOnchangeInput = (event, id) => {
+    console.log(event);
     let copyState = { ...this.state };
     copyState[id] = event.target.value;
     this.setState({
@@ -112,6 +112,61 @@ class SignUp extends Component {
       toast.error("Lỗi đăng kí!!");
     }
   };
+  handleOnchangePassword = (event) => {
+    if (mediumRegex.test(event.target.value) === true) {
+      this.setState({
+        password: event.target.value,
+        passErr: true,
+      });
+    } else {
+      this.setState({
+        passErr: false,
+      });
+    }
+  };
+  handleOnchangeRepeat = (event) => {
+    if (this.state.password !== event.target.value) {
+      this.setState({
+        rpPassErr: false,
+      });
+    } else {
+      this.setState({
+        rpPassErr: true,
+        repeatPassword: event.target.value,
+      });
+    }
+  };
+  handleOnchangeEmail = (event) => {
+    if (event.target.value.includes("@gmail.com")) {
+      this.setState({
+        email: event.target.value,
+        errEmail: true,
+      });
+    } else {
+      this.setState({
+        errEmail: false,
+      });
+    }
+  };
+  handleOnchangePhoneNumber = (event) => {
+    if (event.target.value.length !== 10) {
+      this.setState({
+        errPhone: false,
+      });
+    } else {
+      if (phoneRegex.test(event.target.value)) {
+        this.setState({
+          errPhone: true,
+          phoneNumber: event.target.value,
+        });
+      } else {
+        this.setState({
+          errPhone: false,
+        });
+      }
+    }
+  };
+
   render() {
     const options = [
       { value: "Nam", label: "Nam" },
@@ -133,9 +188,13 @@ class SignUp extends Component {
               className="form-control"
               placeholder="Enter Email"
               name="email"
-              required
-              onChange={(event) => this.handleOnchangeInput(event, "email")}
+              onChange={(event) => this.handleOnchangeEmail(event)}
             />
+            <span
+              className={this.state.errEmail === false ? "notice" : "no-notice"}
+            >
+              Email phải có định dạng: *@gmail.com
+            </span>
           </div>
           <div className="col-6 fullNameInput">
             <label htmlFor="fullName">
@@ -184,9 +243,14 @@ class SignUp extends Component {
               placeholder="Enter Password"
               className="form-control"
               name="psw"
-              onChange={(event) => this.handleOnchangeInput(event, "password")}
-              required
+              onChange={(event) => this.handleOnchangePassword(event)}
             />
+            <span
+              className={this.state.passErr === false ? "notice" : "no-notice"}
+            >
+              Mật khẩu có ít nhất 8 kí tự có chứa ít nhất: 1 kí tự in hoa, 1 kí
+              tự thường, 1 kí tự đặc biệt!
+            </span>
           </div>
 
           <div className="col-6 pswRepeat mt-2">
@@ -198,11 +262,16 @@ class SignUp extends Component {
               placeholder="Repeat Password"
               className="form-control"
               name="psw-repeat"
-              onChange={(event) =>
-                this.handleOnchangeInput(event, "repeatPassword")
-              }
+              onChange={(event) => this.handleOnchangeRepeat(event)}
               required
             />
+            <span
+              className={
+                this.state.rpPassErr === false ? "notice" : "no-notice"
+              }
+            >
+              Mật khẩu không trùng khớp!
+            </span>
           </div>
           <div className="col-6 addressInput mt-2">
             <label htmlFor="address">
@@ -226,11 +295,14 @@ class SignUp extends Component {
               placeholder="Enter PhoneNumber"
               className="form-control"
               name="phonenumber"
-              onChange={(event) =>
-                this.handleOnchangeInput(event, "phoneNumber")
-              }
+              onChange={(event) => this.handleOnchangePhoneNumber(event)}
               required
             />
+            <span
+              className={this.state.errPhone === false ? "notice" : "no-notice"}
+            >
+              Số điện thoại không hợp lệ
+            </span>
           </div>
           <div className="col-6 imgInput mt-2">
             <label htmlFor="imgavatar">

@@ -16,6 +16,8 @@ import BooksManage from "./Admin/AdminPage/BooksManage";
 import ChangePassword from "./User/ChangePassword/ChangePassword";
 import ForgotPassword from "./User/ForgotPassword/ForgotPassword";
 import Cart from "./Cart/Cart";
+import Contact from "./Contact/Contact";
+import Term from "./Term/Term";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +32,12 @@ class App extends Component {
           <Switch>
             <Route path="/" exact>
               <HomePage />
+            </Route>
+            <Route path="/lienhe" exact>
+              <Contact />
+            </Route>
+            <Route path="/quydinh" exact>
+              <Term />
             </Route>
 
             <Route path="/login" exact>
@@ -122,14 +130,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

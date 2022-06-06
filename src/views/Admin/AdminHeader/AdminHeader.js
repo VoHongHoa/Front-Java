@@ -27,7 +27,7 @@ class AdminHeader extends Component {
         {this.props.userInfor &&
           this.props.userInfor.role.nameRole === "ADMIN" && (
             <NavLink to={"/admin"} exact={true} activeClassName="active">
-              Disbash
+              Thống kê
             </NavLink>
           )}
         <NavLink to={"/admin/user"} exact={true} activeClassName="active">

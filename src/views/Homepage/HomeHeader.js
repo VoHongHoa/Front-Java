@@ -50,7 +50,7 @@ class HomePage extends Component {
                   </NavLink>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <NavLink to="/" exact={true} className="nav-link">
+                  <NavLink to="/lienhe" exact={true} className="nav-link">
                     Liên hệ
                   </NavLink>
                 </li>
@@ -199,7 +199,7 @@ class HomePage extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -207,7 +207,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import "./Footer.css";
+import "./Footer.scss";
 class Footer extends Component {
   constructor(props) {
     super(props);
@@ -73,10 +73,10 @@ class Footer extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

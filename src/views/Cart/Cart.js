@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { changeInputItem, deleteItem } from "../../store/actions/AppAction";
 import { toast } from "react-toastify";
 import { borrowBooks } from "../../services/BookService";
+import { buyBooks } from "../../services/userService";
 // import {borrowBooks} from ""
 class Cart extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleIncreaseQuantity = item => {
+  handleIncreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (copyState.allItemInCart[index].bookId === item.bookId) {
@@ -53,11 +54,11 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleDeleteBook = item => {
+  handleDeleteBook = (item) => {
     this.props.deleteItem(item);
   };
 
-  handleDecreaseQuantity = item => {
+  handleDecreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (
@@ -75,27 +76,25 @@ class Cart extends Component {
     this.props.changeInputItem(this.state.allItemInCart);
   };
   handleBorrowBooks = async () => {
-    let data = [];
+    let cart = [];
     if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
-      // for (let index = 0; index < this.state.allItemInCart.length; index++) {
-      //   let obj = {}
-      //   let books = {}
-      //   obj.quantity = this.state.allItemInCart[index].quantity
-      //   books.bookId = this.state.allItemInCart[index].bookId
-      //   books.category = this.state.allItemInCart[index].category
-      //   books.nameBook = this.state.allItemInCart[index].nameBook
-      //   books.author = this.state.allItemInCart[index].author
-      //   books.category = this.state.allItemInCart[index].category
-      //   books.category = this.state.allItemInCart[index].category
-      //   books.category = this.state.allItemInCart[index].category
-      //   books.category = this.state.allItemInCart[index].category
-      //   console.log(this.state.allItemInCart[index]);
-      // }
+      for (let index = 0; index < this.state.allItemInCart.length; index++) {
+        let obj = {};
+        obj.quantity = this.state.allItemInCart[index].quantity;
+        obj.books = this.state.allItemInCart[index].bookId;
+        obj.total = this.state.allItemInCart[index].price * obj.quantity;
+        cart.push(obj);
+      }
+
+      let data = {
+        cart: cart,
+      };
+      console.log(data);
+      let res = await buyBooks(data);
+      console.log(res);
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");
     }
-
-    console.log(data);
     // try {
     //   let res = await borrowBooks(data);
     //   console.log(res);
@@ -172,7 +171,7 @@ class Cart extends Component {
                                       value={item.quantity}
                                       type="number"
                                       className="form-control form-control-sm"
-                                      onChange={event =>
+                                      onChange={(event) =>
                                         this.handleOnchangeInput(event, item)
                                       }
                                     />
@@ -291,7 +290,7 @@ class Cart extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -299,10 +298,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: item => dispatch(deleteItem(item)),
-    changeInputItem: allItems => dispatch(changeInputItem(allItems)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
+    changeInputItem: (allItems) => dispatch(changeInputItem(allItems)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

@@ -11,17 +11,7 @@ const deleteBook = (bookId) => {
 const getBooksLibrary = () => {
   return axios.get(`/thu-vien`);
 };
-const borrowBooks = (data) => {
-  return axios.get("/user/muon-sach", data);
-};
 const editBook = (data, bookId) => {
   return axios.post(`/admin/sua-sach/${bookId}`, data);
 };
-export {
-  addNewBook,
-  getAllBooksPaging,
-  deleteBook,
-  getBooksLibrary,
-  borrowBooks,
-  editBook,
-};
+export { addNewBook, getAllBooksPaging, deleteBook, getBooksLibrary, editBook };

@@ -37,6 +37,9 @@ const forgotPassword = (data) => {
   console.log(data);
   return axios.post(`/quen-mat-khau/${data.email}`);
 };
+const buyBooks = (data) => {
+  return axios.post("/user/mua-sach", data);
+};
 export {
   handleSignUp,
   handleLogin,
@@ -49,4 +52,5 @@ export {
   forgotPassword,
   getAllUserByLibrarian,
   deleteUserByLibrarian,
+  buyBooks,
 };

@@ -6,6 +6,7 @@ import "./HomeHeader.scss";
 import { logOutSuccess } from "../../store/actions/AppAction";
 import { getAllCategoriesBooksRedux } from "../../store/actions/CategoriesAction";
 import defaultAvatar from "../../assets/images/avatar.jpg";
+import { BsSearch } from "react-icons/bs";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -88,15 +89,13 @@ class HomePage extends Component {
               </ul>
               <form className="form-inline mr-auto" target="_self">
                 <div className="form-group">
-                  <label htmlFor="search-field">
-                    <i className="fa fa-search"></i>
-                  </label>
                   <input
                     className="form-control search-field"
                     type="search"
                     name="tìm kiếm"
                     id="search-field"
                   />
+                  <BsSearch className="icon-search" color="#005718" />
                 </div>
               </form>
               {this.props.isLogin === true ? (

@@ -4,6 +4,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
 import CommonUtils from "../../../utils/CommonUtils";
 import { getAllCategoriesBooksRedux } from "../../../store/actions/CategoriesAction";
+import { storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 class ModalAddNewBook extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,20 @@ class ModalAddNewBook extends Component {
       this.setState({
         action: this.props.action,
       });
+      if (this.props.action === "ADD_NEW_BOOK") {
+        this.setState({
+          nameBook: "",
+          author: "",
+          publishYear: "",
+          publishCom: "",
+          price: "",
+          count: "",
+          description: "",
+          image: "",
+          allCategoriesBooks: [],
+          selectedCategory: "",
+        });
+      }
     }
     if (prevProps.currentBook !== this.props.currentBook) {
       //console.log(this.props.currentBook);
@@ -78,11 +94,25 @@ class ModalAddNewBook extends Component {
   handleOnchangeImage = async (event) => {
     let filedata = event.target.files;
     let file = filedata[0];
+    //console.log(file);
     if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      this.setState({
-        image: base64,
-      });
+      const storageRef = ref(storage, `/books/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log("check url", url);
+            this.setState({
+              image: url,
+            });
+          });
+        }
+      );
     }
   };
   handleSubmitAdd = () => {

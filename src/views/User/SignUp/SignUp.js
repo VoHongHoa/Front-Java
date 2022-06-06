@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Select from "react-select";
-import CommonUtils from "../../../utils/CommonUtils";
 import { handleSignUp } from "../../../services/userService";
 import "./SignUp.scss";
 import { toast } from "react-toastify";
+import { storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 var mediumRegex = new RegExp(
-  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_+])(?=.{8,})"
 );
 var phoneRegex = new RegExp("^(?=.*[0-9])");
 
@@ -64,11 +65,25 @@ class SignUp extends Component {
   handleOnchangeImage = async (event) => {
     let filedata = event.target.files;
     let file = filedata[0];
+    //console.log(file);
     if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      this.setState({
-        img: base64,
-      });
+      const storageRef = ref(storage, `/user/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log("check url", url);
+            this.setState({
+              img: url,
+            });
+          });
+        }
+      );
     }
   };
   handleOnchangeSelect = (selectedOption, id) => {
@@ -149,7 +164,11 @@ class SignUp extends Component {
     }
   };
   handleOnchangePhoneNumber = (event) => {
-    if (event.target.value.length !== 10) {
+    console.log(event.target.value.charAt(0));
+    if (
+      event.target.value.length !== 10 ||
+      event.target.value.charAt(0) !== "0"
+    ) {
       this.setState({
         errPhone: false,
       });

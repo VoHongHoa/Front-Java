@@ -60,7 +60,10 @@ class Cart extends Component {
   handleDecreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
-      if (copyState.allItemInCart[index].bookId === item.bookId) {
+      if (
+        copyState.allItemInCart[index].bookId === item.bookId &&
+        copyState.allItemInCart[index].quantity > 1
+      ) {
         copyState.allItemInCart[index].quantity =
           parseInt(copyState.allItemInCart[index].quantity) - 1;
         break;
@@ -72,9 +75,15 @@ class Cart extends Component {
     this.props.changeInputItem(this.state.allItemInCart);
   };
   handleBorrowBooks = async () => {
-    let data = {
-      ...this.state.allItemInCart,
-    };
+    let data = [];
+    if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+      }
+    } else {
+      toast.error("Vui lòng chọn thêm sản phẩm");
+    }
+
     console.log(data);
     // try {
     //   let res = await borrowBooks(data);

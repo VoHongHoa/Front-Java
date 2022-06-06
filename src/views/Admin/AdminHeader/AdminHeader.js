@@ -40,7 +40,7 @@ class AdminHeader extends Component {
           Sách
         </NavLink>
         <NavLink to={"/borrow"} exact={true} activeClassName="active">
-          Phiếu mượn
+          Đơn hàng
         </NavLink>
         <a className="icon" onClick={() => this.myFuntion()} href="#">
           <i className="fa fa-bars"></i>

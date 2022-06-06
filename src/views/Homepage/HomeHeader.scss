@@ -60,12 +60,13 @@
                 margin-top: 5px;
 
                 .login {
-                    color: #d9d9d9;
-                    margin-right: .5rem;
+                    color: #005718;
+                    margin: 0 1rem;
                     text-decoration: none;
-                    
+
                     &:hover {
-                        color: #fff;
+                        color: #0e5f00;
+                        font-weight: bold;
                     }
                 }
             }
@@ -153,7 +154,7 @@
 
 .header-dark .navbar .action-button,
 .header-dark .navbar .action-button:active {
-    background: #208f8f;
+    background: #2f8748;
     border-radius: 20px;
     font-size: inherit;
     color: #fff;
@@ -165,7 +166,8 @@
 }
 
 .header-dark .navbar .action-button:hover {
-    background: #269d9d;
+    background: #0e5f00;
+    font-weight: bold;
 }
 
 .header-dark .navbar .form-inline label {

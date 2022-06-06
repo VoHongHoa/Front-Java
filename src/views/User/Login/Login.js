@@ -12,6 +12,7 @@ class Login extends Component {
     this.state = {
       userName: "",
       password: "",
+      isShowPassword: false,
     };
   }
   componentDidMount() {}
@@ -51,6 +52,11 @@ class Login extends Component {
   handleForgotPassword = () => {
     this.props.history.push("/forgotpassword");
   };
+  handleShowHidePassword = () => {
+    this.setState({
+      isShowPassword: !this.state.isShowPassword,
+    });
+  };
   render() {
     return (
       <div className="logincontainer">
@@ -75,13 +81,26 @@ class Login extends Component {
               <b>Password</b>
             </label>
             <input
-              type="password"
+              type={this.state.isShowPassword === true ? "text" : "password"}
               placeholder="Enter Password"
               onChange={(event) => this.handleOnchangeInput(event, "password")}
               className="form-control"
               name="psw"
               required
             />
+          </div>
+
+          <div className="form-check mt-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value={this.state.isShowPassword}
+              id="rememberPasswordCheck"
+              onChange={() => this.handleShowHidePassword()}
+            />
+            <label className="form-check-label" htmlFor="rememberPasswordCheck">
+              Hiển thị mật khẩu
+            </label>
           </div>
 
           <button type="submit" onClick={() => this.handleLogin()}>

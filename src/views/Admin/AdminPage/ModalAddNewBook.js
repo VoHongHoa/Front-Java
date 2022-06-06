@@ -40,6 +40,7 @@ class ModalAddNewBook extends Component {
       });
       if (this.props.action === "ADD_NEW_BOOK") {
         this.setState({
+          bookId: "",
           nameBook: "",
           author: "",
           publishYear: "",
@@ -48,7 +49,6 @@ class ModalAddNewBook extends Component {
           count: "",
           description: "",
           image: "",
-          allCategoriesBooks: [],
           selectedCategory: "",
         });
       }
@@ -142,7 +142,6 @@ class ModalAddNewBook extends Component {
       count: "",
       description: "",
       image: "",
-      allCategoriesBooks: [],
       selectedCategory: "",
     });
   };

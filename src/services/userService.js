@@ -27,7 +27,7 @@ const deleteUserByLibrarian = (userId) => {
   return axios.delete(`/librarian/xoa-user/${userId}`);
 };
 const changePassword = (data) => {
-  return axios.post(`/sua-mat-khau/${data.curentPassword}/${data.newPassword}`);
+  return axios.post(`/sua-mat-khau/${data.oldPassword}/${data.newPassword}`);
 };
 const changeAvatar = (data) => {
   //console.log(image);

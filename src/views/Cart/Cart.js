@@ -77,8 +77,19 @@ class Cart extends Component {
   handleBorrowBooks = async () => {
     let data = [];
     if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
-      // for (let index = 0; index < array.length; index++) {
-      //   const element = array[index];
+      // for (let index = 0; index < this.state.allItemInCart.length; index++) {
+      //   let obj = {}
+      //   let books = {}
+      //   obj.quantity = this.state.allItemInCart[index].quantity
+      //   books.bookId = this.state.allItemInCart[index].bookId
+      //   books.category = this.state.allItemInCart[index].category
+      //   books.nameBook = this.state.allItemInCart[index].nameBook
+      //   books.author = this.state.allItemInCart[index].author
+      //   books.category = this.state.allItemInCart[index].category
+      //   books.category = this.state.allItemInCart[index].category
+      //   books.category = this.state.allItemInCart[index].category
+      //   books.category = this.state.allItemInCart[index].category
+      //   console.log(this.state.allItemInCart[index]);
       // }
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");

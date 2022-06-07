@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import "./Login.scss";
 import { handleLoginRedux } from "../../../store/actions/AppAction";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "react-google-login";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -57,13 +58,18 @@ class Login extends Component {
       isShowPassword: !this.state.isShowPassword,
     });
   };
+  responseGoogle = (response) => {
+    console.log(response);
+  };
+  responseFailGoogle = (response) => {
+    console.log(response);
+  };
   render() {
     return (
       <div className="logincontainer">
         <div className="imgcontainer">
           <img src={logo} alt="Logo" className="avatar" />
         </div>
-
         <div className="container">
           <label htmlFor="uname">
             <b>Username</b>
@@ -103,15 +109,37 @@ class Login extends Component {
             </label>
           </div>
 
-          <button type="submit" onClick={() => this.handleLogin()}>
+          <button
+            type="submit"
+            onClick={() => this.handleLogin()}
+            className="mb-3"
+          >
             Đăng nhập
           </button>
+          <p style={{ textAlign: "center" }}>OR</p>
+
+          <GoogleLogin
+            clientId="1000261381053-acnpjvmhm485p7aal87iicf70bvdm04a.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className=" btn btn-primary button-login-google"
+                style={{ cursor: "pointer" }}
+              >
+                Đăng nhập bằng Google
+              </button>
+            )}
+            buttonText="Login"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseFailGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
           {/* <label>
             <input type="checkbox" checked="checked" name="remember" />
             Lưu thông tin
           </label> */}
         </div>
-
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
           <button
             type="button"
@@ -124,6 +152,7 @@ class Login extends Component {
             Quên <a href="#">mật khẩu?</a>
           </span>
         </div>
+        , ,
       </div>
     );
   }

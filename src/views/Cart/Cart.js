@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeInputItem, deleteItem } from "../../store/actions/AppAction";
 import { toast } from "react-toastify";
-import { borrowBooks } from "../../services/BookService";
 import { buyBooks } from "../../services/userService";
-// import {borrowBooks} from ""
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -85,12 +83,7 @@ class Cart extends Component {
         obj.total = this.state.allItemInCart[index].price * obj.quantity;
         cart.push(obj);
       }
-
-      let data = {
-        cart: cart,
-      };
-      console.log(data);
-      let res = await buyBooks(data);
+      let res = await buyBooks(cart);
       console.log(res);
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");

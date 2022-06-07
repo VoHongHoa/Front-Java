@@ -18,7 +18,12 @@ import ForgotPassword from "./User/ForgotPassword/ForgotPassword";
 import Cart from "./Cart/Cart";
 import Contact from "./Contact/Contact";
 import Term from "./Term/Term";
+<<<<<<< HEAD
 import DetailBook from "./DetailBook/DetailBook";
+=======
+import ManageOrder from "./Admin/AdminPage/ManageOrder";
+import BlogManage from "./Admin/AdminPage/BlogManage";
+>>>>>>> 2a70fa204b752469b275379dee8d2f24e7b286ef
 class App extends Component {
   constructor(props) {
     super(props);
@@ -94,6 +99,18 @@ class App extends Component {
               )}
             </Route>
 
+            <Route path="/admin/order" exact>
+              {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
+                <ManageOrder />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
+
             <Route path="/admin/books" exact>
               {isLogin === true &&
               userInfor.role &&
@@ -101,6 +118,17 @@ class App extends Component {
               (userInfor.role.nameRole === "ADMIN" ||
                 userInfor.role.nameRole === "LIBRARIAN") ? (
                 <BooksManage />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
+
+            <Route path="/admin/blog" exact>
+              {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
+              userInfor.role.nameRole === "ADMIN" ? (
+                <BlogManage />
               ) : (
                 <Redirect to="/login" />
               )}
@@ -134,14 +162,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

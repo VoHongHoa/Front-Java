@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { findBooksByBookId } from "../../services/BookService";
-import { addToCart } from "../../store/actions/AppAction";
+import "./DetailBook.scss";
 
 class DetailBook extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class DetailBook extends Component {
   async componentDidMount() {
     let id = this.props.match.params.id;
     let res = await findBooksByBookId(id);
-    console.log("book:", res.category);
+    console.log("book:", res);
     // this.getAllReviews(id);
     if (res) {
       this.setState({
@@ -65,6 +65,47 @@ class DetailBook extends Component {
               | <b>{book.nameBook}</b>
             </p>
           </section>
+          <div className="detail-body row">
+            <img
+              className="detail-img col-xs-6 col-md-4"
+              src={book.image}
+              alt="book-img"
+            />
+            <div className="col-xs-12 col-md-8">
+              <h3>{book.nameBook}</h3>
+              <p className="gia">
+                {" "}
+                Giá: <p className="detail-price">{book.price} đ</p>
+              </p>
+              <p className="info">
+                Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}
+              </p>
+              <p className="info">
+                {" "}
+                Tác giả: <span className="info2">{book.author}</span>{" "}
+              </p>
+              <p className="info">
+                {" "}
+                Năm xuất bản: <span className="info2">
+                  {book.publishYear}
+                </span>{" "}
+              </p>
+              <p className="info">
+                {" "}
+                Loại sách:{" "}
+                <span className="info2">{book.category?.nameCate}</span>
+              </p>
+              <p className="info">
+                {" "}
+                Số lượng còn lại: <span className="info2">{book.count}</span>
+              </p>
+            </div>
+          </div>
+          <div className="description">
+            <h4>Mô tả:</h4>
+            <p>{book.description}</p>
+          </div>
+
           <Footer />
         </div>
       </React.Fragment>

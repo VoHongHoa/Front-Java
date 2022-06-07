@@ -19,6 +19,8 @@ import Cart from "./Cart/Cart";
 import Contact from "./Contact/Contact";
 import Term from "./Term/Term";
 import DetailBook from "./DetailBook/DetailBook";
+// import ManageOrder from "./Admin/AdminPage/ManageOrder";
+// import BlogManage from "./Admin/AdminPage/BlogManage";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -94,6 +96,18 @@ class App extends Component {
               )}
             </Route>
 
+            {/* <Route path="/admin/order" exact>
+              {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
+              (userInfor.role.nameRole === "ADMIN" ||
+                userInfor.role.nameRole === "LIBRARIAN") ? (
+                <ManageOrder />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route> */}
+
             <Route path="/admin/books" exact>
               {isLogin === true &&
               userInfor.role &&
@@ -105,6 +119,17 @@ class App extends Component {
                 <Redirect to="/login" />
               )}
             </Route>
+
+            {/* <Route path="/admin/blog" exact>
+              {isLogin === true &&
+              userInfor.role &&
+              userInfor.role.nameRole &&
+              userInfor.role.nameRole === "ADMIN" ? (
+                <BlogManage />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route> */}
 
             <Route path="/changepassword" exact>
               {isLogin === false ? (

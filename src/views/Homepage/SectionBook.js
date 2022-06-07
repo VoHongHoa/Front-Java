@@ -51,7 +51,7 @@ class SectionProduct extends Component {
             allBooks.length > 0 &&
             allBooks.map((item, index) => {
               return (
-                <div className="col-md-4 mt-2" key={index}>
+                <div className="col-md-3 mt-2" key={index}>
                   <Fade bottom delay={150}>
                     <div
                       className="card"

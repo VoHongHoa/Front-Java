@@ -7,7 +7,7 @@ import { logOutSuccess } from "../../store/actions/AppAction";
 import { getAllCategoriesBooksRedux } from "../../store/actions/CategoriesAction";
 import defaultAvatar from "../../assets/images/avatar.jpg";
 import { BsSearch } from "react-icons/bs";
-class HomePage extends Component {
+class HomeHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -212,4 +212,4 @@ const mapDispatchToProps = (dispatch) => {
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);

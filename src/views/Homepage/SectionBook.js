@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SectionBook.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import sach1 from "../../assets/images/sach1.jpg";
 import sach2 from "../../assets/images/sach2.webp";
 import sach3 from "../../assets/images/sach3.jpg";
@@ -30,6 +31,9 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
+  handleDetailBook = item => {
+    this.props.history.push(`/book/${item.bookId}`);
+  };
   handleAddToCart = item => {
     //console.log(item);
     this.props.addToCart(item);
@@ -46,9 +50,12 @@ class SectionProduct extends Component {
             allBooks.length > 0 &&
             allBooks.map((item, index) => {
               return (
-                <div className="col-md-3 mt-2" key={index}>
+                <div className="col-md-4 mt-2" key={index}>
                   <Fade bottom delay={150}>
-                    <div className="card">
+                    <div
+                      className="card"
+                      onClick={() => this.handleDetailBook(item)}
+                    >
                       <div className="card-body">
                         <div className="card-img-actions">
                           <img
@@ -106,4 +113,6 @@ const mapDispatchToProps = dispatch => {
     addToCart: item => dispatch(addToCart(item)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SectionProduct);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SectionProduct)
+);

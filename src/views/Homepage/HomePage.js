@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import HomeHeader from "./HomeHeader";
 import Slider from "./Slider";
 import SectionBook from "./SectionBook";
-import Footer from "../../components/Footer";
+import Footer from "./Footer";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -28,14 +28,14 @@ class HomePage extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

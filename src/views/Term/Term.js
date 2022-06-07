@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Term.scss";
 import HomeHeader from "../Homepage/HomeHeader";
-import Footer from "../../components/Footer";
+import Footer from "../Homepage/Footer";
 
 class Term extends Component {
   render() {

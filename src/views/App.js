@@ -18,6 +18,7 @@ import ForgotPassword from "./User/ForgotPassword/ForgotPassword";
 import Cart from "./Cart/Cart";
 import Contact from "./Contact/Contact";
 import Term from "./Term/Term";
+import DetailBook from "./DetailBook/DetailBook";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +33,9 @@ class App extends Component {
           <Switch>
             <Route path="/" exact>
               <HomePage />
+            </Route>
+            <Route path="/book/:id" exact>
+              <DetailBook />
             </Route>
             <Route path="/lienhe" exact>
               <Contact />

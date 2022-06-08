@@ -198,7 +198,7 @@ class BlogManage extends Component {
               />
             </div>
             <MdEditor
-              style={{ height: "550px" }}
+              style={{ height: "500px" }}
               renderHTML={(text) => mdParser.render(text)}
               onChange={this.handleEditorChange}
               value={this.state.contentMarkdown}

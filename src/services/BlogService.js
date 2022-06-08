@@ -5,4 +5,11 @@ const addNewBlog = (data) => {
 const getAllBlog = () => {
   return axios.get("/admin/xem-tat-ca-blog");
 };
-export { addNewBlog, getAllBlog };
+const updateBlog = (data) => {
+  return axios.post("/admin/sua-blog", data);
+};
+const deleteBlog = (blogId) => {
+  return axios.delete(`/admin/xoa-blog/${blogId}`);
+};
+
+export { addNewBlog, getAllBlog, updateBlog, deleteBlog };

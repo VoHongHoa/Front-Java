@@ -66,7 +66,7 @@ class CategoriesBooks extends Component {
       currentPage: item,
     });
   };
-  handleDeleteUser = async (userId) => {
+  handleDeleteCategories = async (userId) => {
     let res = await deleteCategories(userId);
     console.log(res);
     if (res) {
@@ -171,7 +171,7 @@ class CategoriesBooks extends Component {
                             <i
                               className="fas fa-trash "
                               onClick={() =>
-                                this.handleDeleteUser(item.categoryId)
+                                this.handleDeleteCategories(item.categoryId)
                               }
                             ></i>
                           </td>

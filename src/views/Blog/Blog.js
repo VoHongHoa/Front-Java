@@ -19,22 +19,23 @@ class Blog extends Component {
             </NavLink>{" "}
             | <b>Blog</b>
           </p>
-          <h1 className="title-blog">Cập nhật tin tức</h1>
+          <h1 className="tittle-blog">Cập nhật tin tức</h1>
           <h5 className="h5">Tin tức:</h5>
-          <NavLink exact to="./blog/:idblog">
-            <div class="blog-card">
-              <div class="card-body">
-                <p class="card-text">
-                  Biến thể dùng chip Dimensity 9000 của Xiaomi 12S Pro vừa đạt
-                  chứng nhận 3C, sắp sửa ra mắt?
+          <NavLink exact to="./blog/blogId">
+            <div class="blog-card container">
+              <p class="card-tittle">
+                Biến thể dùng chip Dimensity 9000 của Xiaomi 12S Pro vừa đạt
+                chứng nhận 3C, sắp sửa ra mắt?
+              </p>
+              <div className="row">
+                <p className="card-user col-md-6">
+                  Người đăng: Nguyễn Thị Thiên
                 </p>
-                <br />
-                <p className="date">Ngày 1/6/2022</p>
+                <p className="card-date col-md-6">Ngày 1/6/2022</p>
               </div>
             </div>
           </NavLink>
         </section>
-        <div className="content-blog"> Blog here</div>
         <div className="mt-2">
           <Footer />
         </div>

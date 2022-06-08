@@ -1,4 +1,4 @@
-.title-blog{
+.tittle-blog{
     text-align: center;
     margin: 30px;
 }
@@ -15,33 +15,23 @@
     border-color: rgb(1, 145, 32);
     border-width: 2px;
     background-color: rgb(210, 209, 209);
-    .card-body{
-        .card-text{
-            color: rgb(36, 3, 248);
-        }
+    .card-tittle{
+        color: rgb(36, 3, 248);
     }
 }
 .blog-card{
-    display: flex;
+    display: block;
     border: solid 2px;
-    border-color: grey;
+    border-color: rgb(196, 196, 196);
     border-radius: 8px;
-    background: rgb(225, 225, 225);
+    background: rgb(230, 230, 230);
     max-width: 70%;
-    margin: 10px auto;
-    .blog-img{
-        border-radius: 8px;
-        width: 30%;
+    margin: 0 auto;
+    padding: 0 20px;
+    color: black;
+    .card-user{
+
     }
-    .card-body{
-        .card-text{
-            color: black;
-        }
-        .card-text:hover{
-            color: rgb(36, 3, 248);
-        }
-        .date{
-            color: black;
-        }
+    .card-date{
     }
 }

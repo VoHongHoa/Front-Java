@@ -23,10 +23,10 @@ class UserManage extends Component {
     };
   }
   checkAdminOrLibrarian = () => {
-    let isValid = true; // admin: true , librarian: false
+    let isValid = true; // admin: true , seller: false
     if (
       this.props.userInfor &&
-      this.props.userInfor.role.nameRole === "LIBRARIAN"
+      this.props.userInfor.role.nameRole === "SELLER"
     ) {
       isValid = false;
     }
@@ -42,10 +42,10 @@ class UserManage extends Component {
       }
       if (res) {
         let numOfPage = 0;
-        if (res.count % 4 === 0) {
-          numOfPage = res.count / 4;
+        if (res.count % 8 === 0) {
+          numOfPage = res.count / 8;
         } else {
-          numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+          numOfPage = (res.count - (res.count % 8)) / 8 + 1;
         }
         this.setState({
           numOfUser: res.count,
@@ -58,6 +58,7 @@ class UserManage extends Component {
         });
       }
     } catch (e) {
+      console.log(e);
       toast.error("Lỗi server");
     }
   };

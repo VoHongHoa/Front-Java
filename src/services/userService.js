@@ -18,7 +18,7 @@ const getAllUser = (currentPage) => {
 };
 
 const getAllUserByLibrarian = (currentPage) => {
-  return axios.get(`/librarian/xem-tat-ca-user/${currentPage}`);
+  return axios.get(`/seller/xem-tat-ca-user/${currentPage}`);
 };
 const deleteUser = (userId) => {
   return axios.delete(`/admin/xoa-user/${userId}`);

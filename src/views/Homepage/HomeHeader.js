@@ -60,6 +60,11 @@ class HomeHeader extends Component {
                     Quy định
                   </NavLink>
                 </li>
+                <li className="nav-item" role="presentation">
+                  <NavLink to="/blog" exact={true} className="nav-link">
+                    Blog
+                  </NavLink>
+                </li>
                 <li className="dropdown">
                   <a
                     className="dropdown-toggle nav-link dropdown-toggle"
@@ -74,14 +79,14 @@ class HomeHeader extends Component {
                       allCategoriesBooks.length > 0 &&
                       allCategoriesBooks.map((item, index) => {
                         return (
-                          <a
+                          <NavLink
                             className="dropdown-item"
                             role="presentation"
-                            href="false"
+                            to={`/category/${item.categoryId}`}
                             key={item.categoryId}
                           >
                             {item.nameCate}
-                          </a>
+                          </NavLink>
                         );
                       })}
                   </div>
@@ -198,7 +203,7 @@ class HomeHeader extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -206,7 +211,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),

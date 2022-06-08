@@ -52,10 +52,7 @@ class SectionProduct extends Component {
               return (
                 <div className="col-md-3 mt-2" key={index}>
                   <Fade bottom delay={150}>
-                    <div
-                      className="card"
-                      onClick={() => this.handleDetailBook(item)}
-                    >
+                    <div className="card">
                       <div className="card-body">
                         <div className="card-img-actions">
                           <img
@@ -68,21 +65,23 @@ class SectionProduct extends Component {
                         </div>
                       </div>
                       <div className="card-body bg-light text-center">
-                        <div className="mb-2">
-                          <a href="#" className="text-muted" data-abc="true">
-                            {item.nameBook}
-                          </a>
+                        <div onClick={() => this.handleDetailBook(item)}>
+                          <div className="mb-2">
+                            <a href="#" className="text-muted" data-abc="true">
+                              {item.nameBook}
+                            </a>
+                          </div>
+                          <h3 className="mb-0 font-weight-semibold">
+                            {item.price}
+                          </h3>
+                          <div>
+                            <i className="fa fa-star star"></i>
+                            <i className="fa fa-star star"></i>
+                            <i className="fa fa-star star"></i>
+                            <i className="fa fa-star star"></i>
+                          </div>
+                          <div className="text-muted mb-3">34 reviews</div>
                         </div>
-                        <h3 className="mb-0 font-weight-semibold">
-                          {item.price}
-                        </h3>
-                        <div>
-                          <i className="fa fa-star star"></i>
-                          <i className="fa fa-star star"></i>
-                          <i className="fa fa-star star"></i>
-                          <i className="fa fa-star star"></i>
-                        </div>
-                        <div className="text-muted mb-3">34 reviews</div>
                         <button
                           type="button"
                           className="btn bg-cart"

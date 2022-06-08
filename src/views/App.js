@@ -23,6 +23,7 @@ import ManageOrder from "./Admin/AdminPage/ManageOrder";
 import BlogManage from "./Admin/AdminPage/BlogManage";
 import CateSectionBook from "./Homepage/CateSectionBook";
 import Blog from "./Blog/Blog";
+import DetailBlog from "./Blog/DetailBlog";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -52,6 +53,9 @@ class App extends Component {
             </Route>
             <Route path="/blog" exact>
               <Blog />
+            </Route>
+            <Route path="/blog/:blogId" exact>
+              <DetailBlog />
             </Route>
             <Route path="/login" exact>
               {isLogin === true ? <Redirect to="/" /> : <Login />}

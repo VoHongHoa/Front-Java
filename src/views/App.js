@@ -19,8 +19,8 @@ import Cart from "./Cart/Cart";
 import Contact from "./Contact/Contact";
 import Term from "./Term/Term";
 import DetailBook from "./DetailBook/DetailBook";
-// import ManageOrder from "./Admin/AdminPage/ManageOrder";
-// import BlogManage from "./Admin/AdminPage/BlogManage";
+import ManageOrder from "./Admin/AdminPage/ManageOrder";
+import BlogManage from "./Admin/AdminPage/BlogManage";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +66,7 @@ class App extends Component {
               userInfor.role &&
               userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "LIBRARIAN") ? (
+                userInfor.role.nameRole === "SELLER") ? (
                 <Adminpage />
               ) : (
                 <Redirect to="/login" />
@@ -77,7 +77,7 @@ class App extends Component {
               userInfor.role &&
               userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "LIBRARIAN") ? (
+                userInfor.role.nameRole === "SELLER") ? (
                 <UserManage />
               ) : (
                 <Redirect to="/login" />
@@ -89,38 +89,38 @@ class App extends Component {
               userInfor.role &&
               userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "LIBRARIAN") ? (
+                userInfor.role.nameRole === "SELLER") ? (
                 <CategoriesBooks />
               ) : (
                 <Redirect to="/login" />
               )}
             </Route>
 
-            {/* <Route path="/admin/order" exact>
+            <Route path="/admin/order" exact>
               {isLogin === true &&
               userInfor.role &&
               userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "LIBRARIAN") ? (
+                userInfor.role.nameRole === "SELLER") ? (
                 <ManageOrder />
               ) : (
                 <Redirect to="/login" />
               )}
-            </Route> */}
+            </Route>
 
             <Route path="/admin/books" exact>
               {isLogin === true &&
               userInfor.role &&
               userInfor.role.nameRole &&
               (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "LIBRARIAN") ? (
+                userInfor.role.nameRole === "SELLER") ? (
                 <BooksManage />
               ) : (
                 <Redirect to="/login" />
               )}
             </Route>
 
-            {/* <Route path="/admin/blog" exact>
+            <Route path="/admin/blog" exact>
               {isLogin === true &&
               userInfor.role &&
               userInfor.role.nameRole &&
@@ -129,7 +129,7 @@ class App extends Component {
               ) : (
                 <Redirect to="/login" />
               )}
-            </Route> */}
+            </Route>
 
             <Route path="/changepassword" exact>
               {isLogin === false ? (

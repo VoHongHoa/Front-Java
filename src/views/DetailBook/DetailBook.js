@@ -91,7 +91,7 @@ class DetailBook extends Component {
       if (this.checkAddNewComment()) {
         let data = {
           content: this.state.newReview,
-          bookId: this.state.book.bookId,
+          book: this.state.book,
         };
         let res = await addComment(data);
         //console.log(res);

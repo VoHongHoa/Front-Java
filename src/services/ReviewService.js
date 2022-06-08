@@ -1,6 +1,6 @@
 import axios from "axios";
 const addComment = data => {
-  return axios.post(`/user/luu-comment/${data.bookId}`, data);
+  return axios.post(`/user/luu-comment/${data.book.bookId}`, data.content);
 };
 const deleteComment = commentId => {
   return axios.delete(`/user/xoa-comment/${commentId}`);

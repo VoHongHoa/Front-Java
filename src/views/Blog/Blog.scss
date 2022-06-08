@@ -1,0 +1,47 @@
+.title-blog{
+    text-align: center;
+    margin: 30px;
+}
+.h5{
+    margin-left: 15%;
+    color: red;
+}
+.sidebar{
+    .navlink-home{
+        color: black;
+    }
+}
+.blog-card:hover{
+    border-color: rgb(1, 145, 32);
+    border-width: 2px;
+    background-color: rgb(210, 209, 209);
+    .card-body{
+        .card-text{
+            color: rgb(36, 3, 248);
+        }
+    }
+}
+.blog-card{
+    display: flex;
+    border: solid 2px;
+    border-color: grey;
+    border-radius: 8px;
+    background: rgb(225, 225, 225);
+    max-width: 70%;
+    margin: 10px auto;
+    .blog-img{
+        border-radius: 8px;
+        width: 30%;
+    }
+    .card-body{
+        .card-text{
+            color: black;
+        }
+        .card-text:hover{
+            color: rgb(36, 3, 248);
+        }
+        .date{
+            color: black;
+        }
+    }
+}

@@ -20,6 +20,9 @@ const editBook = (data, bookId) => {
 const findBooksByBookId = bookId => {
   return axios.get(`/xem-chi-tiet-sach/${bookId}`);
 };
+const getCateBook = CategoryId => {
+  return axios.get(`/search/${CategoryId}`);
+};
 export {
   addNewBook,
   getAllBooksPaging,
@@ -28,4 +31,5 @@ export {
   borrowBooks,
   editBook,
   findBooksByBookId,
+  getCateBook,
 };

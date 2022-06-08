@@ -21,6 +21,8 @@ import Term from "./Term/Term";
 import DetailBook from "./DetailBook/DetailBook";
 import ManageOrder from "./Admin/AdminPage/ManageOrder";
 import BlogManage from "./Admin/AdminPage/BlogManage";
+import CateSectionBook from "./Homepage/CateSectionBook";
+import Blog from "./Blog/Blog";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -39,13 +41,18 @@ class App extends Component {
             <Route path="/book/:id" exact>
               <DetailBook />
             </Route>
+            <Route path="/category/:cateId" exact>
+              <CateSectionBook />
+            </Route>
             <Route path="/lienhe" exact>
               <Contact />
             </Route>
             <Route path="/quydinh" exact>
               <Term />
             </Route>
-
+            <Route path="/blog" exact>
+              <Blog />
+            </Route>
             <Route path="/login" exact>
               {isLogin === true ? <Redirect to="/" /> : <Login />}
             </Route>

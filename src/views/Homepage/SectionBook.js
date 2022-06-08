@@ -53,27 +53,28 @@ class SectionProduct extends Component {
                 <div className="col-md-3 mt-2" key={index}>
                   <Fade bottom delay={150}>
                     <div className="card">
-                      <div className="card-body">
-                        <div className="card-img-actions">
-                          <img
-                            src={item.image}
-                            className="card-img img-fluid"
-                            width="96"
-                            height="350"
-                            alt="item.nameBook"
-                          />
+                      <div onClick={() => this.handleDetailBook(item)}>
+                        <div className="card-body">
+                          <div className="card-img-actions">
+                            <img
+                              src={item.image}
+                              className="card-img img-fluid"
+                              width="96"
+                              height="350"
+                              alt="item.nameBook"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="card-body bg-light text-center">
-                        <div onClick={() => this.handleDetailBook(item)}>
+                        <div className="card-body show bg-light text-center">
                           <div className="mb-2">
-                            <a href="#" className="text-muted" data-abc="true">
+                            <a
+                              href="#"
+                              className="text-muted name"
+                              data-abc="true"
+                            >
                               {item.nameBook}
                             </a>
                           </div>
-                          <h3 className="mb-0 font-weight-semibold">
-                            {item.price}
-                          </h3>
                           <div>
                             <i className="fa fa-star star"></i>
                             <i className="fa fa-star star"></i>
@@ -82,14 +83,19 @@ class SectionProduct extends Component {
                           </div>
                           <div className="text-muted mb-3">34 reviews</div>
                         </div>
+                      </div>
+                      <Fade top delay={-200}>
+                        <h3 className="hide mb-0 font-weight-semibold">
+                          {item.price}
+                        </h3>
                         <button
                           type="button"
-                          className="btn bg-cart"
+                          className="hide btn bg-cart"
                           onClick={() => this.handleAddToCart(item)}
                         >
                           <i className="fa fa-cart-plus mr-2"></i> Add to cart
                         </button>
-                      </div>
+                      </Fade>
                     </div>
                   </Fade>
                 </div>

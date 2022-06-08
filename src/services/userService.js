@@ -27,7 +27,7 @@ const deleteUserByLibrarian = (userId) => {
   return axios.delete(`/librarian/xoa-user/${userId}`);
 };
 const changePassword = (data) => {
-  return axios.post(`/sua-mat-khau/${data.curentPassword}/${data.newPassword}`);
+  return axios.post(`/sua-mat-khau/${data.oldPassword}/${data.newPassword}`);
 };
 const changeAvatar = (data) => {
   //console.log(image);
@@ -36,6 +36,9 @@ const changeAvatar = (data) => {
 const forgotPassword = (data) => {
   console.log(data);
   return axios.post(`/quen-mat-khau/${data.email}`);
+};
+const buyBooks = (data) => {
+  return axios.post("/user/mua-sach", data);
 };
 export {
   handleSignUp,
@@ -49,4 +52,5 @@ export {
   forgotPassword,
   getAllUserByLibrarian,
   deleteUserByLibrarian,
+  buyBooks,
 };

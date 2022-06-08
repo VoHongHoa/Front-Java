@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { editUser, editUserAvatar } from "../../store/actions/AppAction";
 import HomeHeader from "../Homepage/HomeHeader";
-import CommonUtils from "../../utils/CommonUtils";
 import avatar from "../../assets/images/avatar.jpg";
 import "./Profile.css";
-import { toast } from "react-toastify";
+import { storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -72,17 +72,43 @@ class Profile extends Component {
     };
     this.props.editUser(data);
   };
+  // handleOnchangeAvatar = async (event) => {
+  //   let filedata = event.target.files;
+  //   let file = filedata[0];
+  //   if (file) {
+  //     let base64 = await CommonUtils.getBase64(file);
+  //     let data = {
+  //       image: base64,
+  //     };
+  //     this.props.editUserAvatar(data);
+  //   } else {
+  //     toast.error("Thay đổi không thành công");
+  //   }
+  // };
+
   handleOnchangeAvatar = async (event) => {
     let filedata = event.target.files;
     let file = filedata[0];
+    //console.log(file);
     if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      let data = {
-        image: base64,
-      };
-      this.props.editUserAvatar(data);
-    } else {
-      toast.error("Thay đổi không thành công");
+      const storageRef = ref(storage, `/user/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log("check url", url);
+            let data = {
+              image: url,
+            };
+            this.props.editUserAvatar(data);
+          });
+        }
+      );
     }
   };
   render() {

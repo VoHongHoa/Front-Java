@@ -4,6 +4,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
 import CommonUtils from "../../../utils/CommonUtils";
 import { getAllCategoriesBooksRedux } from "../../../store/actions/CategoriesAction";
+import { storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { toast } from "react-toastify";
 class ModalAddNewBook extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +39,20 @@ class ModalAddNewBook extends Component {
       this.setState({
         action: this.props.action,
       });
+      if (this.props.action === "ADD_NEW_BOOK") {
+        this.setState({
+          bookId: "",
+          nameBook: "",
+          author: "",
+          publishYear: "",
+          publishCom: "",
+          price: "",
+          count: "",
+          description: "",
+          image: "",
+          selectedCategory: "",
+        });
+      }
     }
     if (prevProps.currentBook !== this.props.currentBook) {
       //console.log(this.props.currentBook);
@@ -78,43 +95,79 @@ class ModalAddNewBook extends Component {
   handleOnchangeImage = async (event) => {
     let filedata = event.target.files;
     let file = filedata[0];
+    //console.log(file);
     if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      this.setState({
-        image: base64,
-      });
+      const storageRef = ref(storage, `/books/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log("check url", url);
+            this.setState({
+              image: url,
+            });
+          });
+        }
+      );
     }
   };
   handleSubmitAdd = () => {
-    let data = {
-      nameBook: this.state.nameBook,
-      author: this.state.author,
-      publishYear: this.state.publishYear,
-      publishCom: this.state.publishCom,
-      price: this.state.price,
-      count: this.state.count,
-      description: this.state.description,
-      image: this.state.image,
-      category: this.state.selectedCategory.value,
-    };
-    let bookId = this.state.bookId;
-    if (this.state.action === "EDIT_BOOK") {
-      this.props.doEditBook(data, bookId);
-    } else {
-      this.props.doAddNewBook(data);
+    if (this.checkValidateInput()) {
+      let data = {
+        nameBook: this.state.nameBook,
+        author: this.state.author,
+        publishYear: this.state.publishYear,
+        publishCom: this.state.publishCom,
+        price: this.state.price,
+        count: this.state.count,
+        description: this.state.description,
+        image: this.state.image,
+        category: this.state.selectedCategory.value,
+      };
+      let bookId = this.state.bookId;
+      if (this.state.action === "EDIT_BOOK") {
+        this.props.doEditBook(data, bookId);
+      } else {
+        this.props.doAddNewBook(data);
+      }
+      this.setState({
+        nameBook: "",
+        author: "",
+        publishYear: "",
+        publishCom: "",
+        price: "",
+        count: "",
+        description: "",
+        image: "",
+        selectedCategory: "",
+      });
     }
-    this.setState({
-      nameBook: "",
-      author: "",
-      publishYear: "",
-      publishCom: "",
-      price: "",
-      count: "",
-      description: "",
-      image: "",
-      allCategoriesBooks: [],
-      selectedCategory: "",
-    });
+  };
+  checkValidateInput = () => {
+    let isValid = true;
+    let arrInput = [
+      { value: "nameBook", label: "Tên sách" },
+      { value: "author", label: "Tác giả" },
+      { value: "publishYear", label: "Năm xuất bản" },
+      { value: "publishCom", label: "Nhà xuất bản" },
+      { value: "price", label: "Giá" },
+      { value: "count", label: "Số lượng" },
+      { value: "image", label: "Hình ảnh" },
+      { value: "selectedCategory", label: "Loại sách" },
+    ];
+    for (let i = 0; i < arrInput.length; i++) {
+      if (!this.state[arrInput[i].value]) {
+        isValid = false;
+        toast.error(`Vui lòng điền thông tin: ${arrInput[i].label}`);
+        break;
+      }
+    }
+    return isValid;
   };
   buildDataCateGories = (listCategories) => {
     let arrCategories = [];
@@ -151,7 +204,7 @@ class ModalAddNewBook extends Component {
         <ModalBody>
           <div className="modalBody-product-container row">
             <div className="form-group mt-2 col-6">
-              <label>Tên sản phẩm</label>
+              <label>Tên sách</label>
               <input
                 type="text"
                 className="form-control"

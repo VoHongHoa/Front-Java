@@ -154,7 +154,7 @@ class HomeHeader extends Component {
                         className="dropdown-item"
                         role="presentation"
                       >
-                        Cặp
+                        Giỏ hàng
                       </NavLink>
                       <NavLink
                         to="/changepassword"
@@ -198,7 +198,7 @@ class HomeHeader extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -206,7 +206,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),

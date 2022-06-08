@@ -74,24 +74,46 @@ class CategoriesBooks extends Component {
     }
     this.getCategoriesPaging(0);
   };
+  isValid = (arr, newCategories) => {
+    let isValid = true;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].nameCate === newCategories) {
+        toast.error("Loại sách đã tồn tại");
+        isValid = false;
+        break;
+      }
+    }
+    return isValid;
+  };
   handleOnchangeInput = (event) => {
-    this.setState({
-      newCategories: event.target.value,
-    });
+    if (this.isValid(this.state.allCategories, event.target.value)) {
+      this.setState({
+        newCategories: event.target.value,
+      });
+    }
   };
   handleAddNewCategoriesBook = async () => {
-    let data = {
-      nameCate: this.state.newCategories,
-    };
-    let res = await addNewCategoriesBooks(data);
-    if (res) {
-      toast.success("Thêm thành công");
-      this.setState({
-        newCategories: "",
-      });
-      this.getCategoriesPaging(0);
+    if (this.state.newCategories === "") {
+      toast.error("Nhập tên loại sách");
     } else {
-      toast.error("Thêm không thành công");
+      try {
+        let data = {
+          nameCate: this.state.newCategories,
+        };
+        let res = await addNewCategoriesBooks(data);
+        if (res) {
+          toast.success("Thêm thành công");
+          this.setState({
+            newCategories: "",
+          });
+          this.getCategoriesPaging(0);
+        } else {
+          toast.error("Thêm không thành công");
+        }
+      } catch (e) {
+        console.log(e);
+        toast.error("Lỗi hệ thống");
+      }
     }
   };
   render() {
@@ -141,7 +163,7 @@ class CategoriesBooks extends Component {
                 allCategories.map((item, index) => {
                   return (
                     <tr key={item.categoryId}>
-                      <th scope="row">{index}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{item.nameCate}</td>
                       {this.props.userInfor &&
                         this.props.userInfor.role.nameRole === "ADMIN" && (

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./SectionProduct.scss";
+import "./SectionBook.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -9,7 +9,6 @@ import sach3 from "../../assets/images/sach3.jpg";
 import { toast } from "react-toastify";
 import { getBooksLibrary } from "../../services/BookService";
 import { addToCart } from "../../store/actions/AppAction";
-import Flip from "react-reveal/Flip";
 import Fade from "react-reveal/Fade";
 class SectionProduct extends Component {
   constructor(props) {

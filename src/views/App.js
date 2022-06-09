@@ -72,8 +72,7 @@ class App extends Component {
               {isLogin === true &&
               userInfor.role &&
               userInfor.role.nameRole &&
-              (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "SELLER") ? (
+              userInfor.role.nameRole === "ADMIN" ? (
                 <Adminpage />
               ) : (
                 <Redirect to="/login" />

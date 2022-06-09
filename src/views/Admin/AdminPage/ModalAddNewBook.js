@@ -92,7 +92,7 @@ class ModalAddNewBook extends Component {
       ...copyState,
     });
   };
-  handleOnchangeImage = async event => {
+  handleOnchangeImage = async (event) => {
     let filedata = event.target.files;
     let file = filedata[0];
     //console.log(file);
@@ -101,12 +101,12 @@ class ModalAddNewBook extends Component {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
-        snapshot => {},
-        err => {
+        (snapshot) => {},
+        (err) => {
           console.log(err);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(url => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             console.log("check url", url);
             this.setState({
               image: url,
@@ -129,9 +129,21 @@ class ModalAddNewBook extends Component {
         image: this.state.image,
         category: this.state.selectedCategory.value,
       };
+      let dataEdit = {
+        bookId: this.state.bookId,
+        nameBook: this.state.nameBook,
+        author: this.state.author,
+        publishYear: this.state.publishYear,
+        publishCom: this.state.publishCom,
+        price: this.state.price,
+        count: this.state.count,
+        description: this.state.description,
+        image: this.state.image,
+        category: this.state.selectedCategory.value,
+      };
       let bookId = this.state.bookId;
       if (this.state.action === "EDIT_BOOK") {
-        this.props.doEditBook(data, bookId);
+        this.props.doEditBook(dataEdit, bookId);
       } else {
         this.props.doAddNewBook(data);
       }
@@ -169,7 +181,7 @@ class ModalAddNewBook extends Component {
     }
     return isValid;
   };
-  buildDataCateGories = listCategories => {
+  buildDataCateGories = (listCategories) => {
     let arrCategories = [];
     for (let index = 0; index < listCategories.length; index++) {
       let objData = {};
@@ -209,7 +221,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product name"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "nameBook");
                 }}
                 value={this.state.nameBook}
@@ -221,7 +233,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product descriptions"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "author");
                 }}
                 value={this.state.author}
@@ -233,7 +245,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter book descriptions"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "description");
                 }}
                 value={this.state.description}
@@ -246,7 +258,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product price"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "price");
                 }}
                 value={this.state.price}
@@ -258,7 +270,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product price"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "publishYear");
                 }}
                 value={this.state.publishYear}
@@ -271,7 +283,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product price"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "publishCom");
                 }}
                 value={this.state.publishCom}
@@ -283,7 +295,7 @@ class ModalAddNewBook extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product price"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeInput(event, "count");
                 }}
                 value={this.state.count}
@@ -305,7 +317,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="file"
                 className="form-control"
-                onChange={event => {
+                onChange={(event) => {
                   this.handleOnchangeImage(event);
                 }}
               />
@@ -349,11 +361,11 @@ class ModalAddNewBook extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { allCategoriesBooks: state.books.allCategoriesBooks };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
   };

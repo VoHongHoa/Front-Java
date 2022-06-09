@@ -23,7 +23,7 @@ class CategoriesBooks extends Component {
   }
   getCategoriesPaging = async (currentPage) => {
     let res;
-    if (this.checkAdminOrLibrarian()) {
+    if (this.checkAdminOrSeller()) {
       res = await getAllCategoriesBooks(currentPage);
     } else {
       res = await getAllCategoriesBooksByLibrarian(currentPage);
@@ -47,11 +47,11 @@ class CategoriesBooks extends Component {
       });
     }
   };
-  checkAdminOrLibrarian = () => {
+  checkAdminOrSeller = () => {
     let isValid = true; // admin: true , librarian: false
     if (
       this.props.userInfor &&
-      this.props.userInfor.role.nameRole === "LIBRARIAN"
+      this.props.userInfor.role.nameRole === "SELLER"
     ) {
       isValid = false;
     }

@@ -40,6 +40,10 @@ const forgotPassword = (data) => {
 const buyBooks = (data) => {
   return axios.post("/user/mua-sach", data);
 };
+const updateUserRoleByAdmin = (data, userId) => {
+  return axios.post(`admin/${userId}`, data);
+};
+
 export {
   handleSignUp,
   handleLogin,
@@ -53,4 +57,5 @@ export {
   getAllUserByLibrarian,
   deleteUserByLibrarian,
   buyBooks,
+  updateUserRoleByAdmin,
 };

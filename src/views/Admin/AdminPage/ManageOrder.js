@@ -25,7 +25,7 @@ class OrderManage extends Component {
     let isValid = true; // admin: true , librarian: false
     if (
       this.props.userInfor &&
-      this.props.userInfor.role.nameRole === "LIBRARIAN"
+      this.props.userInfor.role.nameRole === "SELLER"
     ) {
       isValid = false;
     }
@@ -79,17 +79,18 @@ class OrderManage extends Component {
         res = await deleteOrderBySeller(orderssId);
       }
       console.log(res);
-      if (res) {
+      if (res === "successful") {
         toast.success("Xóa thành công!");
+        this.getOrderPaging(0);
         this.setState({
           currentPage: 0,
         });
       } else {
         toast.error("Xóa không thành công");
       }
-      this.getUserPaging(0);
     } catch (e) {
-      toast.error("Xóa không thành công!!!");
+      console.log(e);
+      toast.error("Lỗi server");
     }
   };
   render() {
@@ -98,7 +99,6 @@ class OrderManage extends Component {
     for (let i = 0; i < numOfPage; i++) {
       arr.push(i);
     }
-    //console.log(arr);
     return (
       <div className="container">
         <AdminHeader></AdminHeader>

@@ -6,10 +6,13 @@ import {
   deleteUser,
   getAllUserByLibrarian,
   deleteUserByLibrarian,
+  updateUserRoleByAdmin,
 } from "../../../services/userService";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import { toast } from "react-toastify";
 import "./UserManage.css";
+import ModalAddNewUser from "./ModalAddNewUser";
+import { handleSignUp } from "../../../services/userService";
 class UserManage extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +23,7 @@ class UserManage extends Component {
       currentPage: 0,
       isOpenModal: false,
       currentUserEdit: {},
+      action: "",
     };
   }
   checkAdminOrLibrarian = () => {
@@ -71,6 +75,11 @@ class UserManage extends Component {
       currentPage: item,
     });
   };
+  toggle = () => {
+    this.setState({
+      isOpenModal: false,
+    });
+  };
   handleDeleteUser = async (userId) => {
     try {
       let res;
@@ -92,6 +101,35 @@ class UserManage extends Component {
       toast.error("Xóa không thành công!!!");
     }
   };
+  handleOpenModal = () => {
+    this.setState({
+      isOpenModal: true,
+      action: "ADD_NEW_BOOK",
+    });
+  };
+  doAddNewUser = async (data) => {
+    let res = await handleSignUp(data);
+    if (res) {
+      this.setState({
+        isOpenModal: false,
+      });
+      toast.success("Thêm thành công !!!");
+      this.getUserPaging(0);
+    } else {
+      toast.error("Thêm thất bại!Vui lòng kiểm tra lại");
+    }
+  };
+  doEditRoleUser = async (data, userId) => {
+    let res = await updateUserRoleByAdmin(data, userId);
+    console.log(res);
+  };
+  handleEditUser = (item) => {
+    this.setState({
+      action: "EDIT_USER",
+      isOpenModal: true,
+      currentUserEdit: item,
+    });
+  };
   render() {
     let { numOfPage, allUser, currentPage } = this.state;
     let arr = [];
@@ -102,6 +140,19 @@ class UserManage extends Component {
     return (
       <div className="container">
         <AdminHeader></AdminHeader>
+        <h2 className="title mt-3" style={{ textAlign: "center" }}>
+          Quản lý người dùng
+        </h2>
+        {this.props.userInfor &&
+          this.props.userInfor.role.nameRole === "ADMIN" && (
+            <button
+              className="btn btn-primary"
+              onClick={() => this.handleOpenModal()}
+            >
+              Thêm mới
+            </button>
+          )}
+
         <div className="container">
           <table className="table table-striped">
             <thead>
@@ -109,6 +160,7 @@ class UserManage extends Component {
                 <th scope="col">#</th>
                 <th scope="col">Họ và Tên</th>
                 <th scope="col">Email</th>
+                <th scope="col">Role</th>
                 <th scope="col">Thao tác</th>
               </tr>
             </thead>
@@ -121,9 +173,16 @@ class UserManage extends Component {
                       <th scope="row">{index}</th>
                       <td>{item.fullName}</td>
                       <td>{item.email}</td>
+                      <td>{item.role.nameRole ? item.role.nameRole : ""}</td>
                       <td className="">
                         <i
+                          className="fas fa-pencil"
+                          style={{ margin: "3px", cursor: "pointer" }}
+                          onClick={() => this.handleEditUser(item)}
+                        ></i>
+                        <i
                           className="fas fa-trash "
+                          style={{ margin: "3px", cursor: "pointer" }}
                           onClick={() => this.handleDeleteUser(item.userId)}
                         ></i>
                       </td>
@@ -151,6 +210,14 @@ class UserManage extends Component {
             <p>&raquo;</p>
           </div>
         </div>
+        <ModalAddNewUser
+          isOpenModal={this.state.isOpenModal}
+          toggle={this.toggle}
+          action={this.state.action}
+          doAddNewUser={this.doAddNewUser}
+          currentUserEdit={this.state.currentUserEdit}
+          doEditRoleUser={this.doEditRoleUser}
+        />
       </div>
     );
   }

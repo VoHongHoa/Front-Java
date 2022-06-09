@@ -3,7 +3,7 @@ const getAllCategoriesBooks = (page) => {
   return axios.get(`/admin/xem-tat-ca-loai-sach/${page}`);
 };
 const getAllCategoriesBooksByLibrarian = (page) => {
-  return axios.get(`/librarian/xem-tat-ca-loai-sach/${page}`);
+  return axios.get(`/seller/xem-tat-ca-loai-sach/${page}`);
 };
 const addNewCategoriesBooks = (data) => {
   return axios.post("/admin/luu-loai-sach", data);

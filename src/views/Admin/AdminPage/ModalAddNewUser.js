@@ -24,8 +24,11 @@ class ModalAddNewBook extends Component {
       fullName: "",
       phoneNumber: "",
       errPhone: true,
-      role: {},
-      action: "",
+      role: {
+        value: "ADMIN",
+        label: "ADMIN",
+      },
+      action: "ADD_NEW_USER",
     };
   }
   componentDidMount() {
@@ -36,7 +39,7 @@ class ModalAddNewBook extends Component {
       this.setState({
         action: this.props.action,
       });
-      if (this.props.action === "ADD_NEW_BOOK") {
+      if (this.props.action === "ADD_NEW_USER") {
         this.setState({
           email: "",
           errEmail: true,
@@ -46,8 +49,11 @@ class ModalAddNewBook extends Component {
           fullName: "",
           phoneNumber: "",
           errPhone: true,
-          role: {},
-          action: "",
+          role: {
+            value: "ADMIN",
+            label: "ADMIN",
+          },
+          action: "ADD_NEW_USER",
         });
       }
     }
@@ -90,9 +96,9 @@ class ModalAddNewBook extends Component {
   };
   handleSubmitAdd = () => {
     if (
-      this.state.errEmail === false &&
-      this.state.errPhone === false &&
-      this.state.passErr === false &&
+      this.state.errEmail === true &&
+      this.state.errPhone === true &&
+      this.state.passErr === true &&
       this.state.action === "ADD_NEW_USER"
     ) {
       let data = {
@@ -107,6 +113,8 @@ class ModalAddNewBook extends Component {
         },
       };
       this.props.doAddNewUser(data);
+    } else {
+      toast.error("Vui lòng điền thông tin");
     }
     if (this.state.action === "EDIT_USER") {
       let data = {

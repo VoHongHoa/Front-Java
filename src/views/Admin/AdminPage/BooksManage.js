@@ -9,6 +9,7 @@ import {
   getAllBooksPaging,
   deleteBook,
   editBook,
+  getAllBooksPagingBySeller,
 } from "../../../services/BookService";
 class BooksManage extends Component {
   constructor(props) {
@@ -25,8 +26,12 @@ class BooksManage extends Component {
   }
   getBooksPaging = async (currentPage) => {
     try {
-      let res = await getAllBooksPaging(currentPage);
-      //console.log(res);
+      let res;
+      if (this.checkAdminOrSeller()) {
+        res = await getAllBooksPaging(currentPage);
+      } else {
+        res = await getAllBooksPagingBySeller(currentPage);
+      }
       if (res) {
         let numOfPage = 0;
         if (res.count % 4 === 0) {
@@ -51,6 +56,17 @@ class BooksManage extends Component {
   componentDidMount() {
     this.getBooksPaging(0);
   }
+  checkAdminOrSeller = () => {
+    let isValid = true; // admin: true , librarian: false
+
+    if (
+      this.props.userInfor &&
+      this.props.userInfor.role.nameRole === "SELLER"
+    ) {
+      isValid = false;
+    }
+    return isValid;
+  };
   handleChangePage = (item) => {
     this.getBooksPaging(item);
     this.setState({
@@ -129,13 +145,21 @@ class BooksManage extends Component {
     return (
       <div className="categories-manage-container container">
         <AdminHeader></AdminHeader>
-        <h2 className="title mt-3">Quản lý sách</h2>
-        <button
-          className="btn btn-primary mt-2"
-          onClick={() => this.handleAddNewBook()}
-        >
-          Thêm mới
-        </button>
+        <h2 className="title mt-3">
+          {this.props.userInfor &&
+          this.props.userInfor.role.nameRole === "ADMIN"
+            ? "Quản lý sách"
+            : "Xem thông tin sách"}
+        </h2>
+        {this.props.userInfor &&
+          this.props.userInfor.role.nameRole === "ADMIN" && (
+            <button
+              className="btn btn-primary mt-2"
+              onClick={() => this.handleAddNewBook()}
+            >
+              Thêm mới
+            </button>
+          )}
 
         <div className="container">
           <table className="table table-striped">
@@ -145,7 +169,11 @@ class BooksManage extends Component {
                 <th scope="col">Tên sách</th>
                 <th scope="col">Tác giả</th>
                 <th scope="col">Số lượng</th>
-                <th scope="col">Thao tác</th>
+                <th scope="col">Giá</th>
+                {this.props.userInfor &&
+                  this.props.userInfor.role.nameRole === "ADMIN" && (
+                    <th scope="col">Thao tác</th>
+                  )}
               </tr>
             </thead>
             <tbody>
@@ -158,18 +186,22 @@ class BooksManage extends Component {
                       <td>{item.nameBook}</td>
                       <td>{item.author}</td>
                       <td>{item.count}</td>
-                      <td>
-                        <i
-                          className="fas fa-pencil"
-                          style={{ margin: "3px", cursor: "pointer" }}
-                          onClick={() => this.handleEditBook(item)}
-                        ></i>
-                        <i
-                          className="fas fa-trash "
-                          style={{ margin: "3px", cursor: "pointer" }}
-                          onClick={() => this.handleDeleteBook(item.bookId)}
-                        ></i>
-                      </td>
+                      <td>{item.price}</td>
+                      {this.props.userInfor &&
+                        this.props.userInfor.role.nameRole === "ADMIN" && (
+                          <td>
+                            <i
+                              className="fas fa-pencil"
+                              style={{ margin: "3px", cursor: "pointer" }}
+                              onClick={() => this.handleEditBook(item)}
+                            ></i>
+                            <i
+                              className="fas fa-trash "
+                              style={{ margin: "3px", cursor: "pointer" }}
+                              onClick={() => this.handleDeleteBook(item.bookId)}
+                            ></i>
+                          </td>
+                        )}
                     </tr>
                   );
                 })}
@@ -207,7 +239,7 @@ class BooksManage extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {};
+  return { userInfor: state.user.userInfor };
 };
 
 const mapDispatchToProps = (dispatch) => {

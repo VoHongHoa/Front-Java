@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import "./UserManage.css";
 import ModalAddNewUser from "./ModalAddNewUser";
 import { handleSignUp } from "../../../services/userService";
+import Popup from "../../../components/Popup";
 class UserManage extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class UserManage extends Component {
       isOpenModal: false,
       currentUserEdit: {},
       action: "",
+      isOpenPopup: false,
     };
   }
   checkAdminOrLibrarian = () => {
@@ -80,6 +82,11 @@ class UserManage extends Component {
       isOpenModal: false,
     });
   };
+  togglePopup = () => {
+    this.setState({
+      isOpenPopup: false,
+    });
+  };
   handleDeleteUser = async (userId) => {
     try {
       let res;
@@ -92,6 +99,7 @@ class UserManage extends Component {
         toast.success("Xóa thành công!");
         this.setState({
           currentPage: 0,
+          isOpenPopup: false,
         });
       } else {
         toast.error("Xóa không thành công");
@@ -104,7 +112,7 @@ class UserManage extends Component {
   handleOpenModal = () => {
     this.setState({
       isOpenModal: true,
-      action: "ADD_NEW_BOOK",
+      action: "ADD_NEW_USER",
     });
   };
   doAddNewUser = async (data) => {
@@ -122,11 +130,26 @@ class UserManage extends Component {
   doEditRoleUser = async (data, userId) => {
     let res = await updateUserRoleByAdmin(data, userId);
     console.log(res);
+    if (res === "successful") {
+      this.setState({
+        isOpenModal: false,
+      });
+      toast.success("Chỉnh sửa thành công");
+      this.getUserPaging(0);
+    } else {
+      toast.error("Chỉnh sửa thất bại");
+    }
   };
   handleEditUser = (item) => {
     this.setState({
       action: "EDIT_USER",
       isOpenModal: true,
+      currentUserEdit: item,
+    });
+  };
+  handleOpenPopup = (item) => {
+    this.setState({
+      isOpenPopup: true,
       currentUserEdit: item,
     });
   };
@@ -175,15 +198,20 @@ class UserManage extends Component {
                       <td>{item.email}</td>
                       <td>{item.role.nameRole ? item.role.nameRole : ""}</td>
                       <td className="">
-                        <i
-                          className="fas fa-pencil"
-                          style={{ margin: "3px", cursor: "pointer" }}
-                          onClick={() => this.handleEditUser(item)}
-                        ></i>
+                        {this.props.userInfor &&
+                          this.props.userInfor.role.nameRole === "ADMIN" && (
+                            <i
+                              className="fas fa-pencil"
+                              style={{ margin: "3px", cursor: "pointer" }}
+                              onClick={() => this.handleEditUser(item)}
+                            ></i>
+                          )}
+
                         <i
                           className="fas fa-trash "
                           style={{ margin: "3px", cursor: "pointer" }}
-                          onClick={() => this.handleDeleteUser(item.userId)}
+                          // onClick={() => this.handleDeleteUser(item.userId)}
+                          onClick={() => this.handleOpenPopup(item)}
                         ></i>
                       </td>
                     </tr>
@@ -217,6 +245,12 @@ class UserManage extends Component {
           doAddNewUser={this.doAddNewUser}
           currentUserEdit={this.state.currentUserEdit}
           doEditRoleUser={this.doEditRoleUser}
+        />
+        <Popup
+          isOpenPopup={this.state.isOpenPopup}
+          toggle={this.togglePopup}
+          handleDeleteUser={this.handleDeleteUser}
+          currentUserEdit={this.state.currentUserEdit}
         />
       </div>
     );

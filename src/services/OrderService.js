@@ -12,4 +12,14 @@ const deleteOrderBySeller = (OrderssId) => {
   return axios.delete(`/seller/xoa-Orderss/${OrderssId}`);
 };
 
-export { getAllOrder, getAllOrderBySeller, deleteOrder, deleteOrderBySeller };
+const getDetailOrderById = (orderssId) => {
+  return axios.get(`/admin/tim-Orderssde/${orderssId}`);
+};
+
+export {
+  getAllOrder,
+  getAllOrderBySeller,
+  deleteOrder,
+  deleteOrderBySeller,
+  getDetailOrderById,
+};

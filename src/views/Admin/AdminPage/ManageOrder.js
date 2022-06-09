@@ -9,6 +9,7 @@ import {
   deleteOrderBySeller,
   getAllOrder,
   getAllOrderBySeller,
+  getDetailOrderById,
 } from "../../../services/OrderService";
 import moment from "moment";
 class OrderManage extends Component {
@@ -93,6 +94,15 @@ class OrderManage extends Component {
       toast.error("Lỗi server");
     }
   };
+  handleViewDetailOrder = async (orderssId) => {
+    try {
+      let res = await getDetailOrderById(orderssId);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+      toast.error("Lỗi server");
+    }
+  };
   render() {
     let { numOfPage, allOrder, currentPage } = this.state;
     let arr = [];
@@ -109,8 +119,11 @@ class OrderManage extends Component {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Khách hàng</th>
+                <th scope="col">Địa chỉ giao hàng</th>
+                <th scope="col">Số điện thoại</th>
                 <th scope="col">Tống số sách</th>
                 <th scope="col">Ngày hóa đơn</th>
+                <th scope="col">Trạng thái</th>
                 <th scope="col">Hành động</th>
               </tr>
             </thead>
@@ -121,12 +134,28 @@ class OrderManage extends Component {
                   return (
                     <tr key={item.orderssId}>
                       <th scope="row">{index + 1}</th>
-                      <td>{item.user?.fullName}</td>
+                      <td>{item.fullName}</td>
+                      <td>{item.address}</td>
+                      <td>{item.telephone}</td>
                       <td>{item.totalBook}</td>
                       <td>{moment(item.orderssDate).format("MM/DD/YYYY")}</td>
+                      <td>{item.status}</td>
                       <td className="">
                         <i
-                          className="fas fa-trash "
+                          className="fa-solid fa-eye"
+                          style={{ margin: "3px", cursor: "pointer" }}
+                          onClick={() =>
+                            this.handleViewDetailOrder(item.orderssId)
+                          }
+                        ></i>
+                        <i
+                          className="fas fa-pencil"
+                          style={{ margin: "3px", cursor: "pointer" }}
+                          onClick={() => this.handleEditUser(item)}
+                        ></i>
+                        <i
+                          className="fas fa-trash"
+                          style={{ margin: "3px", cursor: "pointer" }}
                           onClick={() => this.handleDeleteOrder(item.orderssId)}
                         ></i>
                       </td>

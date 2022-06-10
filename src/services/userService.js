@@ -31,7 +31,7 @@ const changePassword = (data) => {
 };
 const changeAvatar = (data) => {
   //console.log(image);
-  return axios.post("/cap-nhat-anh", data);
+  return axios.post("/user/cap-nhat-anh", data);
 };
 const forgotPassword = (data) => {
   console.log(data);

@@ -33,7 +33,7 @@ class DetailBook extends Component {
   async componentDidMount() {
     let id = this.props.match.params.id;
     let res = await findBooksByBookId(id);
-    console.log("book:", res);
+    //console.log("book:", res);
     this.getAllReviews(id);
     if (res) {
       this.setState({
@@ -42,7 +42,7 @@ class DetailBook extends Component {
     }
   }
 
-  handleAddToCart = book => {
+  handleAddToCart = (book) => {
     this.props.addToCart(book);
   };
 
@@ -50,13 +50,14 @@ class DetailBook extends Component {
     this.props.history.push("/");
   };
 
-  handleReturnCate = cateId => {
+  handleReturnCate = (cateId) => {
     this.props.history.push("/");
   };
 
-  getAllReviews = async bookId => {
+  getAllReviews = async (bookId) => {
     try {
       let res = await getComment(bookId);
+      //console.log(res);
       this.setState({
         allReview: res,
       });
@@ -65,7 +66,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = event => {
+  handleOnchangeInput = (event) => {
     this.setState({
       newReview: event.target.value,
     });
@@ -91,11 +92,11 @@ class DetailBook extends Component {
       if (this.checkAddNewComment()) {
         let data = {
           content: this.state.newReview,
-          book: this.state.book,
         };
-        let res = await addComment(data);
+        let bookId = this.props.match.params.id;
+        let res = await addComment(data, bookId);
         //console.log(res);
-        if (res && res.success === true) {
+        if (res === "successfull") {
           this.setState({
             newReview: "",
           });
@@ -115,21 +116,21 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async reviewId => {
+  handledeleteComment = async (reviewId) => {
     try {
       let res = await deleteComment(reviewId);
-      //console.log(res);
-      if (res && res.success === true) {
-        toast.success("Xóa bình luận thành công!");
-        this.getAllReviews(this.props.match.params.id);
-      }
+      console.log(res);
+      // if (res && res.success === true) {
+      //   toast.success("Xóa bình luận thành công!");
+      //   this.getAllReviews(this.props.match.params.id);
+      // }
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server");
     }
   };
 
-  handleOpenModaleditComment = async item => {
+  handleOpenModaleditComment = async (item) => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -142,7 +143,7 @@ class DetailBook extends Component {
     });
   };
 
-  doeditComment = async data => {
+  doeditComment = async (data) => {
     try {
       let res = await editComment(data);
       //console.log(res);
@@ -164,6 +165,7 @@ class DetailBook extends Component {
   render() {
     let { book, allReview, isShowComment } = this.state;
     let isEmptyObj = Object.keys(book).length === 0;
+    //console.log(allReview);
     return (
       <React.Fragment>
         <div className="container">
@@ -177,8 +179,7 @@ class DetailBook extends Component {
                 style={{ cursor: "pointer" }}
               >
                 Trang chủ
-              </span>{" "}
-              |{" "}
+              </span>
               <span
                 onClick={() => this.handleReturnCate(book.category?.categoryId)}
                 style={{ cursor: "pointer" }}
@@ -197,8 +198,7 @@ class DetailBook extends Component {
             <div className="col-xs-12 col-md-8">
               <h3>{book.nameBook}</h3>
               <p className="gia">
-                {" "}
-                Giá: <p className="detail-price">{book.price} đ</p>
+                Giá: <span className="detail-price">{book.price} đ</span>
               </p>
               <p className="info">
                 Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}
@@ -235,7 +235,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={event => this.handleOnchangeInput(event)}
+                onChange={(event) => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -276,13 +276,13 @@ class DetailBook extends Component {
                       allReview.length > 0 &&
                       allReview.map((item, index) => {
                         return (
-                          <div className="card p-3 mt-2" key={item._id}>
+                          <div className="card p-3 mt-2" key={item.commentId}>
                             <div className="d-flex justify-content-between align-items-center">
                               <div className="user d-flex flex-row align-items-center">
                                 <img
                                   src={
-                                    item.user[0] && item.user[0].img
-                                      ? item.user[0].img
+                                    item.user && item.user.image
+                                      ? item.user.image
                                       : defaultAvatar
                                   }
                                   width="30"
@@ -290,28 +290,29 @@ class DetailBook extends Component {
                                 />
                                 <span>
                                   <small className="font-weight-bold text-primary">
-                                    {item.user[0] && item.user[0].fullname
-                                      ? item.user[0].fullname
+                                    {item.user && item.user.fullName
+                                      ? item.user.fullName
                                       : "Người dùng"}
                                   </small>{" "}
                                   <small className="font-weight-bold">
-                                    {item.review}
+                                    {item.content}
                                   </small>
                                 </span>
                               </div>
 
-                              <small>
+                              {/* <small>
                                 {moment(item.updatedAt).format("Do MMMM YYYY")}
-                              </small>
+                              </small> */}
                             </div>
 
-                            {this.props.userInfor.user &&
-                              this.props.userInfor.user._id === item.userId && (
+                            {this.props.userInfor &&
+                              this.props.userInfor.userId ===
+                                item.user.userId && (
                                 <div className="action d-flex justify-content-between mt-2 align-items-center">
                                   <div className="reply px-4">
                                     <small
                                       onClick={() =>
-                                        this.handledeleteComment(item._id)
+                                        this.handledeleteComment(item.commentId)
                                       }
                                     >
                                       Xóa
@@ -351,15 +352,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return { addToCart: item => dispatch(addToCart(item)) };
+const mapDispatchToProps = (dispatch) => {
+  return { addToCart: (item) => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

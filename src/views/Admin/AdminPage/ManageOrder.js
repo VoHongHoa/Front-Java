@@ -12,6 +12,7 @@ import {
   getDetailOrderById,
 } from "../../../services/OrderService";
 import moment from "moment";
+import ModalViewDetailOrder from "./ModalViewDetailOrder";
 class OrderManage extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ class OrderManage extends Component {
       allOrder: [],
       numOfPage: 0,
       currentPage: 0,
+      isOpenModalView: false,
     };
   }
   checkAdminOrLibrarian = () => {
@@ -98,10 +100,18 @@ class OrderManage extends Component {
     try {
       let res = await getDetailOrderById(orderssId);
       console.log(res);
+      this.setState({
+        isOpenModalView: true,
+      });
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server");
     }
+  };
+  toggleCloseModalViewDetail = () => {
+    this.setState({
+      isOpenModalView: false,
+    });
   };
   render() {
     let { numOfPage, allOrder, currentPage } = this.state;
@@ -183,6 +193,10 @@ class OrderManage extends Component {
             <p>&raquo;</p>
           </div>
         </div>
+        <ModalViewDetailOrder
+          toggle={this.toggleCloseModalViewDetail}
+          isOpenModalView={this.state.isOpenModalView}
+        />
       </div>
     );
   }

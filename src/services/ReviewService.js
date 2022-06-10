@@ -1,14 +1,14 @@
-import axios from "axios";
-const addComment = data => {
-  return axios.post(`/user/luu-comment/${data.book.bookId}`, data.content);
+import axios from "../axios";
+const addComment = (data, bookId) => {
+  return axios.post(`/user/luu-comment/${bookId}`, data);
 };
-const deleteComment = commentId => {
+const deleteComment = (commentId) => {
   return axios.delete(`/user/xoa-comment/${commentId}`);
 };
-const editComment = data => {
+const editComment = (data) => {
   return axios.post(`/user/sua-comment/${data.bookId}`, data);
 };
-const getComment = bookId => {
+const getComment = (bookId) => {
   return axios.get(`/book/comment/${bookId}`);
 };
 

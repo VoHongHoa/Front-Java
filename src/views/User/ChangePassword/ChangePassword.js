@@ -62,7 +62,7 @@ class ChangePassword extends Component {
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Mật khẩu hiện tại"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "curentPassword")
               }
@@ -78,7 +78,7 @@ class ChangePassword extends Component {
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Mật khẩu mới"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "newPassword")
               }
@@ -94,7 +94,7 @@ class ChangePassword extends Component {
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Nhập lại mật khẩu mới"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "repeatNewPassword")
               }

@@ -267,7 +267,7 @@ class Cart extends Component {
                             <hr className="my-4" />
 
                             <div className="d-flex justify-content-between mb-5">
-                              <h5 className="text-uppercase">Total price</h5>
+                              <h5 className="text">Trị giá hóa đơn</h5>
                               <h5>{formatPrice(total)}</h5>
                             </div>
 

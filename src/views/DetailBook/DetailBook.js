@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
-import { findBooksByBookId } from "../../services/BookService";
+import { findBooksByBookId, ratingBook } from "../../services/BookService";
 import "./DetailBook.scss";
 import { addToCart } from "../../store/actions/AppAction";
 import {
@@ -28,6 +28,7 @@ class DetailBook extends Component {
       curentReview: {},
       isOpenModal: false,
       showHide: false,
+      numOfStar: 0,
     };
   }
   async componentDidMount() {
@@ -88,25 +89,41 @@ class DetailBook extends Component {
   };
 
   handleAddNewReview = async () => {
-    try {
-      if (this.checkAddNewComment()) {
-        let data = {
-          content: this.state.newReview,
-        };
-        let bookId = this.props.match.params.id;
-        let res = await addComment(data, bookId);
-        //console.log(res);
-        if (res === "successfull") {
-          this.setState({
-            newReview: "",
-          });
-          toast.success("Thêm bình luận thành công!");
-          this.getAllReviews(this.props.match.params.id);
+    if (this.state.newReview !== "") {
+      try {
+        if (this.checkAddNewComment()) {
+          let data = {
+            content: this.state.newReview,
+          };
+          let bookId = this.props.match.params.id;
+          let res = await addComment(data, bookId);
+          //console.log(res);
+          if (res === "successfull") {
+            this.setState({
+              newReview: "",
+            });
+            toast.success("Thêm bình luận thành công!");
+            this.getAllReviews(this.props.match.params.id);
+          }
         }
+      } catch (e) {
+        console.log(e);
+        toast.error("Thêm bình luận không thành công");
       }
-    } catch (e) {
-      console.log(e);
-      toast.error("Thêm bình luận không thành công");
+    }
+    if (this.state.numOfStar !== 0) {
+      try {
+        let data = {
+          bookId: this.props.match.params.id,
+          star: this.state.numOfStar,
+        };
+        console.log(data);
+        let res = await ratingBook(data);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+        toast.error("Lỗi server");
+      }
     }
   };
 
@@ -161,9 +178,12 @@ class DetailBook extends Component {
       toast.error("Lỗi server");
     }
   };
+  handleVoterating = (numOfStar) => {
+    this.setState({ numOfStar: numOfStar });
+  };
 
   render() {
-    let { book, allReview, isShowComment } = this.state;
+    let { book, allReview, isShowComment, numOfStar } = this.state;
     let isEmptyObj = Object.keys(book).length === 0;
     //console.log(allReview);
     return (
@@ -239,13 +259,48 @@ class DetailBook extends Component {
                 value={this.state.newReview}
               ></textarea>
             </div>
-            <button
-              className="btn btn-primary mb-2 mt-2"
-              onClick={() => this.handleAddNewReview()}
-            >
-              Thêm bình luận
-            </button>
           </div>
+          <div className="rating">
+            <span>Đánh giá sản phẩm: </span>
+            <div className="star">
+              <i
+                className={
+                  1 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
+                }
+                onClick={() => this.handleVoterating(1)}
+              ></i>
+              <i
+                className={
+                  2 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
+                }
+                onClick={() => this.handleVoterating(2)}
+              ></i>
+              <i
+                className={
+                  3 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
+                }
+                onClick={() => this.handleVoterating(3)}
+              ></i>
+              <i
+                className={
+                  4 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
+                }
+                onClick={() => this.handleVoterating(4)}
+              ></i>
+              <i
+                className={
+                  5 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
+                }
+                onClick={() => this.handleVoterating(5)}
+              ></i>
+            </div>
+          </div>
+          <button
+            className="btn btn-primary mb-2 mt-2"
+            onClick={() => this.handleAddNewReview()}
+          >
+            Thêm đánh giá
+          </button>
 
           <div className="container mt-5">
             <div className="row  d-flex justify-content-center">

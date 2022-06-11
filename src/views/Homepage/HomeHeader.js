@@ -31,7 +31,11 @@ class HomeHeader extends Component {
     });
   };
   getProductSearch = (infoBook) => {
-    this.props.searchBooks(infoBook);
+    let data = {
+      infoBook: infoBook,
+    };
+    console.log(data);
+    this.props.searchBooks(data);
   };
 
   render() {
@@ -443,7 +447,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
-    searchBooks: (infoBook) => dispatch(searchBooks(infoBook)),
+    searchBooks: (data) => dispatch(searchBooks(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);

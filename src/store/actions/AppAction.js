@@ -147,10 +147,10 @@ export const editUserAvatarFailed = () => ({
   type: "EDIT_USER_AVATAR_FAILED",
   userData: {},
 });
-export const searchBooks = (infoBook) => {
+export const searchBooks = (data) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getSearchBook(infoBook);
+      let res = await getSearchBook(data);
       console.log(res);
     } catch (e) {
       console.error(e);

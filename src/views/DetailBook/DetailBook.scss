@@ -1,38 +1,62 @@
-.container{
-    .detail-body{
+.container {
+    .detail-body {
         width: 90%;
         margin: 30px auto;
         background-color: rgb(233, 233, 233);
         padding: 20px 10px;
         border-radius: 20px;
-        .gia{
+
+        .gia {
             font-weight: 700;
             font-size: 1.5rem;
             margin: 60px 0;
-            .detail-price{
-                font-size:2.5rem;
+
+            .detail-price {
+                font-size: 2.5rem;
                 color: red;
                 font-style: italic;
                 font-weight: 600;
             }
         }
-        .info{
+
+        .info {
             margin: 0 0;
             font-style: italic;
-            .info2{
+
+            .info2 {
                 font-style: normal;
                 font-weight: bold;
             }
         }
     }
-    .description{
+
+    .description {
         background-color: rgb(233, 233, 233);
         padding: 20px 10px;
         border-radius: 20px;
         width: 90%;
         margin: 20px auto;
-        h4{
+
+        h4 {}
+    }
+
+    .rating {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .star {
+            i {
+                color: black;
+                cursor: pointer;
+
+                &.active {
+                    color: yellow;
+                    cursor: pointer;
+                }
+            }
+
         }
     }
-    
+
 }

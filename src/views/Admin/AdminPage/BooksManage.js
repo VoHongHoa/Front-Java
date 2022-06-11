@@ -32,6 +32,7 @@ class BooksManage extends Component {
       } else {
         res = await getAllBooksPagingBySeller(currentPage);
       }
+      console.log(res);
       if (res) {
         let numOfPage = 0;
         if (res.count % 4 === 0) {

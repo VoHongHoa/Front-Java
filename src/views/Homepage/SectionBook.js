@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { getBooksLibrary } from "../../services/BookService";
 import { addToCart } from "../../store/actions/AppAction";
 import Fade from "react-reveal/Fade";
+import { forEach } from "lodash";
 class SectionProduct extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +41,7 @@ class SectionProduct extends Component {
   }
   render() {
     let { allBooks } = this.state;
+    console.log(allBooks);
     return (
       <div className="container d-flex justify-content-center mt-50 mb-50">
         <div className="row">
@@ -72,12 +74,42 @@ class SectionProduct extends Component {
                               {item.nameBook}
                             </a>
                           </div>
-                          <div>
-                            <i className="fa fa-star star"></i>
-                            <i className="fa fa-star star"></i>
-                            <i className="fa fa-star star"></i>
-                            <i className="fa fa-star star"></i>
-                          </div>
+
+                          {item.rating === 1 && (
+                            <div>
+                              <i className="fa fa-star star"></i>
+                            </div>
+                          )}
+                          {item.rating === 2 && (
+                            <div>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                            </div>
+                          )}
+                          {item.rating === 3 && (
+                            <div>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                            </div>
+                          )}
+                          {item.rating === 4 && (
+                            <div>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                            </div>
+                          )}
+                          {item.rating === 5 && (
+                            <div>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                              <i className="fa fa-star star"></i>
+                            </div>
+                          )}
                           <div className="text-muted mb-3">34 reviews</div>
                         </div>
                       </div>

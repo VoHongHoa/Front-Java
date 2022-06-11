@@ -24,11 +24,11 @@ const updateStatusOrder = (data) => {
 const updateStatusOrderBySeller = (data) => {
   return axios.post("/seller/sua-orderss", data);
 };
-const searchorderByAdmin = (keysearch) => {
-  return axios.get(`/admin/tim-Orderss/${keysearch}`);
+const searchorderByAdmin = (data) => {
+  return axios.get(`/admin/tim-Orderss`, data);
 };
-const searchorderBySeller = (keysearch) => {
-  return axios.get(`/seller/tim-Orderss/${keysearch}`);
+const searchorderBySeller = (data) => {
+  return axios.get(`/seller/tim-Orderss`, data);
 };
 
 export {

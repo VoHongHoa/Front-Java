@@ -111,7 +111,7 @@ class OrderManage extends Component {
       } else {
         res = await getDetailOrderBySeller(item.orderssId);
       }
-      console.log(res);
+      // console.log(res);
       this.setState({
         isOpenModalView: true,
         detailOrder: res,
@@ -135,8 +135,7 @@ class OrderManage extends Component {
       } else {
         res = await updateStatusOrderBySeller(data);
       }
-
-      console.log(res);
+      // console.log(res);
       if (res === "successful") {
         this.setState({
           isOpenModalView: false,
@@ -154,10 +153,13 @@ class OrderManage extends Component {
     });
     try {
       let res;
+      let data = {
+        keysearch: event.target.value,
+      };
       if (this.checkAdminOrLibrarian()) {
-        res = await searchorderByAdmin(event.target.value);
+        res = await searchorderByAdmin(data);
       } else {
-        res = await updateStatusOrderBySeller(event.target.value);
+        res = await updateStatusOrderBySeller(data);
       }
       console.log(res);
     } catch (e) {

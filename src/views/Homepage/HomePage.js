@@ -14,12 +14,14 @@ class HomePage extends Component {
   componentDidMount() {}
   render() {
     return (
-      <div className="">
-        <div className="mb-2">
+      <div className="homepage-container">
+        <div className="section-header">
           <HomeHeader></HomeHeader>
         </div>
+        <div className="slider">
+          <Slider />
+        </div>
 
-        <Slider />
         <SectionBook></SectionBook>
         <div className="mt-2">
           <Footer />
@@ -28,14 +30,14 @@ class HomePage extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

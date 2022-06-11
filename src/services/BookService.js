@@ -26,6 +26,9 @@ const findBooksByBookId = (bookId) => {
 const getCateBook = (CategoryId) => {
   return axios.get(`/search/${CategoryId}`);
 };
+const getSearchBook = (infoBook) => {
+  return axios.get(`/tim-sach/${infoBook}`);
+};
 export {
   addNewBook,
   getAllBooksPaging,
@@ -36,4 +39,5 @@ export {
   findBooksByBookId,
   getCateBook,
   getAllBooksPagingBySeller,
+  getSearchBook,
 };

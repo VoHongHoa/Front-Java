@@ -149,7 +149,7 @@ class App extends Component {
             </Route>
           </Switch>
           <ToastContainer
-            position="top-center"
+            position="top-right"
             autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}

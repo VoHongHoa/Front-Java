@@ -10,7 +10,10 @@ import {
   getAllOrder,
   getAllOrderBySeller,
   getDetailOrderById,
+  getDetailOrderBySeller,
+  searchorderByAdmin,
   updateStatusOrder,
+  updateStatusOrderBySeller,
 } from "../../../services/OrderService";
 import moment from "moment";
 import ModalViewDetailOrder from "./ModalViewDetailOrder";
@@ -102,7 +105,13 @@ class OrderManage extends Component {
   };
   handleViewDetailOrder = async (item) => {
     try {
-      let res = await getDetailOrderById(item.orderssId);
+      let res;
+      if (this.checkAdminOrLibrarian()) {
+        res = await getDetailOrderById(item.orderssId);
+      } else {
+        res = await getDetailOrderBySeller(item.orderssId);
+      }
+      console.log(res);
       this.setState({
         isOpenModalView: true,
         detailOrder: res,
@@ -120,7 +129,13 @@ class OrderManage extends Component {
   };
   doUpdateStatusOrder = async (data) => {
     try {
-      let res = await updateStatusOrder(data);
+      let res;
+      if (this.checkAdminOrLibrarian()) {
+        res = await updateStatusOrder(data);
+      } else {
+        res = await updateStatusOrderBySeller(data);
+      }
+
       console.log(res);
       if (res === "successful") {
         this.setState({
@@ -133,10 +148,21 @@ class OrderManage extends Component {
       toast.error("Lỗi server");
     }
   };
-  handleOnchangeInput = (event) => {
+  handleOnchangeInput = async (event) => {
     this.setState({
       keyword: event.target.value,
     });
+    try {
+      let res;
+      if (this.checkAdminOrLibrarian()) {
+        res = await searchorderByAdmin(event.target.value);
+      } else {
+        res = await updateStatusOrderBySeller(event.target.value);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
   };
   render() {
     let { numOfPage, allOrder, currentPage, detailOrder, curentOrder } =

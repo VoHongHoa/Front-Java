@@ -151,7 +151,9 @@ class AdminPage extends Component {
       <div>
         <div className="container">
           <AdminHeader />
-          <h2 className="title mt-3">Báo cáo thống kê</h2>
+          <h2 className="title mt-3" style={{ textAlign: "center" }}>
+            Báo cáo thống kê
+          </h2>
           <div className="row">
             <div className="col-6 mb-3">
               <Bar

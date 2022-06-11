@@ -5,6 +5,7 @@ import {
   changeAvatar,
 } from "../../services/userService";
 import { toast } from "react-toastify";
+import { getSearchBook } from "../../services/BookService";
 //------------------cart action------------------------------
 export const addToCart = (item) => {
   //console.log("check user:", user);
@@ -145,4 +146,25 @@ export const editUserAvatarSuccess = (data) => ({
 export const editUserAvatarFailed = () => ({
   type: "EDIT_USER_AVATAR_FAILED",
   userData: {},
+});
+export const searchBooks = (infoBook) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getSearchBook(infoBook);
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+      toast.error("Lỗi server!!");
+      dispatch(searchBookFailed());
+    }
+  };
+};
+
+export const searchBookSuccess = (data) => ({
+  type: "SEARCH_BOOK_SUCCESS",
+  book: data,
+});
+export const searchBookFailed = () => ({
+  type: "SEARCH_BOOK_FAILED",
+  book: [],
 });

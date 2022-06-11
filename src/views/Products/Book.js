@@ -35,6 +35,9 @@ class Book extends Component {
       this.getAllBooksByCate(this.props.match.params.cateId);
     }
   }
+  handleAddToCart = (item) => {
+    this.props.addToCart(item);
+  };
   render() {
     let { allBooks } = this.state;
     return (

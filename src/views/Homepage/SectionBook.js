@@ -3,9 +3,6 @@ import "./SectionBook.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import sach1 from "../../assets/images/sach1.jpg";
-import sach2 from "../../assets/images/sach2.webp";
-import sach3 from "../../assets/images/sach3.jpg";
 import { toast } from "react-toastify";
 import { getBooksLibrary } from "../../services/BookService";
 import { addToCart } from "../../store/actions/AppAction";
@@ -31,10 +28,10 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
-  handleDetailBook = item => {
+  handleDetailBook = (item) => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleAddToCart = item => {
+  handleAddToCart = (item) => {
     //console.log(item);
     this.props.addToCart(item);
   };
@@ -106,16 +103,16 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: item => dispatch(addToCart(item)),
+    addToCart: (item) => dispatch(addToCart(item)),
   };
 };
 export default withRouter(

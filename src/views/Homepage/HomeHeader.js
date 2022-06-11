@@ -82,7 +82,8 @@ class HomeHeader extends Component {
                           <NavLink
                             className="dropdown-item"
                             role="presentation"
-                            to={`/category/${item.categoryId}`}
+                            to={`/loai-sach/${item.categoryId}`}
+                            exact
                             key={item.categoryId}
                           >
                             {item.nameCate}

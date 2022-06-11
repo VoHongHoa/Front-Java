@@ -143,11 +143,11 @@ class DetailBook extends Component {
     });
   };
 
-  doeditComment = async (data) => {
+  doeditComment = async (commentId, data) => {
     try {
-      let res = await editComment(data);
-      //console.log(res);
-      if (res && res.success === true) {
+      let res = await editComment(commentId, data);
+      console.log(res);
+      if (res && res === "successfull") {
         toast.success("Chỉnh sửa thành công");
         this.getAllReviews(this.props.match.params.id);
         this.setState({

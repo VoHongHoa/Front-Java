@@ -1,18 +1,33 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { toast } from "react-toastify";
+import moment from "moment";
 class ModalViewDetailOrder extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      messageStatus: "",
+    };
   }
   componentDidMount() {}
   componentDidUpdate(prevProps) {}
   toggle = () => {
     this.props.toggle();
   };
+  handleChangeStatusOrder = (curentOrder) => {
+    console.log(curentOrder);
+    let data = {
+      orderssId: curentOrder.orderssId,
+      status: "đã giao hàng",
+      address: curentOrder.address,
+      telephone: curentOrder.telephone,
+    };
+    this.props.doUpdateStatusOrder(data);
+  };
 
   render() {
+    let { detailOrder, curentOrder } = this.props;
+    console.log(curentOrder);
     return (
       <Modal
         isOpen={this.props.isOpenModalView}
@@ -20,22 +35,91 @@ class ModalViewDetailOrder extends Component {
           this.toggle();
         }}
         className={"modal-product-container"}
-        size="md"
+        size="lg"
       >
         <ModalHeader
           toggle={() => {
             this.toggle();
           }}
         >
-          <p>Chi tiết đơn hàng</p>
+          <h2>Chi tiết đơn hàng</h2>
         </ModalHeader>
         <ModalBody>
-          <div className="modalBody-product-container row">
-            <p style={{ textAlign: "center" }}>Thông tin đơn hàng</p>
-          </div>
+          <h3 style={{ textAlign: "center" }}>Thông tin đơn hàng</h3>
+          <p>
+            Tên khách hàng: <span>{curentOrder.fullName}</span>{" "}
+          </p>
+          <p>
+            Số điện thoại: <span>{curentOrder.telephone}</span>{" "}
+          </p>
+          <p>
+            Địa chỉ: <span>{curentOrder.address}</span>{" "}
+          </p>
+          <p>
+            Trị giá đơn hàng:{" "}
+            <span style={{ fontWeight: "bold" }}>{curentOrder.totalPrice}</span>{" "}
+          </p>
+          <p>
+            Trạng thái đơn hàng: <span>{curentOrder.status}</span>{" "}
+          </p>
+          <p>
+            Ngày hóa đơn:
+            <span>{moment(curentOrder.orderssDate).format("MM/DD/YYYY")}</span>
+          </p>
+          <h3 style={{ textAlign: "center" }}>Danh sách sản phẩm</h3>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sách</th>
+                <th scope="col">Tác giả</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              {detailOrder &&
+                detailOrder.length > 0 &&
+                detailOrder.map((item, index) => {
+                  return (
+                    <tr key={item.orderssDeId}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{item.book.nameBook}</td>
+                      <td>{item.book.author}</td>
+                      <td>
+                        <div
+                          className="img-product"
+                          style={{
+                            backgroundImage: `url(${item.book.image})`,
+                            backgroundRepeat: "none",
+                            backgroundSize: "cover",
+                            width: "50px",
+                            height: "60px",
+                            backgroundPosition: "center",
+                          }}
+                        ></div>
+                      </td>
+                      <td>{item.count}</td>
+                      <td>{item.book.price}</td>
+                      <td>{item.total}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">Chuyển trạng thái đơn hàng</Button>
+          {curentOrder && curentOrder.status !== "đã giao hàng" && (
+            <Button
+              color="primary"
+              onClick={() => this.handleChangeStatusOrder(curentOrder)}
+            >
+              Chuyển trạng thái đơn hàng
+            </Button>
+          )}
+
           <Button
             color="secondary"
             onClick={() => {

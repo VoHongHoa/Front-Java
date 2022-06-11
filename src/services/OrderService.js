@@ -13,7 +13,10 @@ const deleteOrderBySeller = (OrderssId) => {
 };
 
 const getDetailOrderById = (orderssId) => {
-  return axios.get(`/admin/tim-Orderssde/${orderssId}`);
+  return axios.post(`/admin/tim-Orderssde/${orderssId}`);
+};
+const updateStatusOrder = (data) => {
+  return axios.post("/admin/sua-orderss", data);
 };
 
 export {
@@ -22,4 +25,5 @@ export {
   deleteOrder,
   deleteOrderBySeller,
   getDetailOrderById,
+  updateStatusOrder,
 };

@@ -10,6 +10,7 @@ import {
   getAllOrder,
   getAllOrderBySeller,
   getDetailOrderById,
+  updateStatusOrder,
 } from "../../../services/OrderService";
 import moment from "moment";
 import ModalViewDetailOrder from "./ModalViewDetailOrder";
@@ -22,6 +23,9 @@ class OrderManage extends Component {
       numOfPage: 0,
       currentPage: 0,
       isOpenModalView: false,
+      detailOrder: [],
+      curentOrder: {},
+      keyword: "",
     };
   }
   checkAdminOrLibrarian = () => {
@@ -96,12 +100,13 @@ class OrderManage extends Component {
       toast.error("Lỗi server");
     }
   };
-  handleViewDetailOrder = async (orderssId) => {
+  handleViewDetailOrder = async (item) => {
     try {
-      let res = await getDetailOrderById(orderssId);
-      console.log(res);
+      let res = await getDetailOrderById(item.orderssId);
       this.setState({
         isOpenModalView: true,
+        detailOrder: res,
+        curentOrder: item,
       });
     } catch (e) {
       console.log(e);
@@ -113,8 +118,29 @@ class OrderManage extends Component {
       isOpenModalView: false,
     });
   };
+  doUpdateStatusOrder = async (data) => {
+    try {
+      let res = await updateStatusOrder(data);
+      console.log(res);
+      if (res === "successful") {
+        this.setState({
+          isOpenModalView: false,
+        });
+        this.getOrderPaging(0);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Lỗi server");
+    }
+  };
+  handleOnchangeInput = (event) => {
+    this.setState({
+      keyword: event.target.value,
+    });
+  };
   render() {
-    let { numOfPage, allOrder, currentPage } = this.state;
+    let { numOfPage, allOrder, currentPage, detailOrder, curentOrder } =
+      this.state;
     let arr = [];
     for (let i = 0; i < numOfPage; i++) {
       arr.push(i);
@@ -122,7 +148,21 @@ class OrderManage extends Component {
     return (
       <div className="container">
         <AdminHeader></AdminHeader>
-        <h2 className="title mt-3">Quản lý đơn hàng</h2>
+
+        <h2 className="title mt-3 mb-3">Quản lý đơn hàng</h2>
+        <div className="col-6 mb-3">
+          <label htmlFor="search">
+            <b>Tìm kiếm hóa đơn</b>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter Email"
+            name="search"
+            onChange={(event) => this.handleOnchangeInput(event)}
+          />
+        </div>
+
         <div className="container">
           <table className="table table-striped">
             <thead>
@@ -154,9 +194,7 @@ class OrderManage extends Component {
                         <i
                           className="fa-solid fa-eye"
                           style={{ margin: "3px", cursor: "pointer" }}
-                          onClick={() =>
-                            this.handleViewDetailOrder(item.orderssId)
-                          }
+                          onClick={() => this.handleViewDetailOrder(item)}
                         ></i>
                         <i
                           className="fas fa-pencil"
@@ -196,6 +234,9 @@ class OrderManage extends Component {
         <ModalViewDetailOrder
           toggle={this.toggleCloseModalViewDetail}
           isOpenModalView={this.state.isOpenModalView}
+          detailOrder={detailOrder}
+          curentOrder={curentOrder}
+          doUpdateStatusOrder={this.doUpdateStatusOrder}
         />
       </div>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { logOutSuccess } from "../../store/actions/AppAction";
@@ -103,6 +103,11 @@ class HomeHeader extends Component {
                   <BsSearch className="icon-search" color="#005718" />
                 </div>
               </form>
+
+              <Link to="/cart" exact={true}>
+                <i className="fa-solid fa-cart-shopping"></i>
+              </Link>
+
               {this.props.isLogin === true ? (
                 <span className="user-infor d-flex">
                   {this.props.userInfor && this.props.userInfor.image ? (
@@ -153,14 +158,14 @@ class HomeHeader extends Component {
                         Thông tin cá nhân
                       </NavLink>
 
-                      <NavLink
+                      {/* <NavLink
                         to="/cart"
                         exact={true}
                         className="dropdown-item"
                         role="presentation"
                       >
                         Giỏ hàng
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink
                         to="/changepassword"
                         exact={true}
@@ -168,6 +173,14 @@ class HomeHeader extends Component {
                         role="presentation"
                       >
                         Đổi mật khẩu
+                      </NavLink>
+                      <NavLink
+                        to="/admin"
+                        exact={true}
+                        className="dropdown-item"
+                        role="presentation"
+                      >
+                        Chuyển đến Admin
                       </NavLink>
                       <a
                         className="dropdown-item"
@@ -203,7 +216,7 @@ class HomeHeader extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -211,7 +224,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),

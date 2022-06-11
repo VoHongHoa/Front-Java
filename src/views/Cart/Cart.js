@@ -2,9 +2,15 @@ import React, { Component } from "react";
 import "./Cart.scss";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeInputItem, deleteItem } from "../../store/actions/AppAction";
+import {
+  changeInputItem,
+  deleteCart,
+  deleteItem,
+} from "../../store/actions/AppAction";
 import { toast } from "react-toastify";
 import { buyBooks } from "../../services/userService";
+import HomeHeader from "../Homepage/HomeHeader";
+import Footer from "../Homepage/Footer";
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -85,16 +91,14 @@ class Cart extends Component {
       }
       let res = await buyBooks(cart);
       console.log(res);
+      if (res && res.length > 0) {
+        toast.success("Mua sách thành công");
+        this.props.deleteCart();
+        this.props.history.push("/");
+      }
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");
     }
-    // try {
-    //   let res = await borrowBooks(data);
-    //   console.log(res);
-    // } catch (e) {
-    //   console.log(e);
-    //   toast.error("Lỗi server!!Vui lòng thử lại sau");
-    // }
   };
   render() {
     //console.log(this.state.allItemInCart);
@@ -102,7 +106,8 @@ class Cart extends Component {
     let { userInfor } = this.props;
     let total = 0;
     return (
-      <div className="container CartContainer">
+      <div className="CartContainer">
+        <HomeHeader />
         <section
           className="h-100 h-custom"
           style={{ backgroundColor: "#d2c9ff" }}
@@ -205,73 +210,77 @@ class Cart extends Component {
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-4 bg-grey">
-                        <div className="p-5">
-                          <h3 className="fw-bold mb-5 mt-2 pt-1">Phiếu mượn</h3>
-                          <hr className="my-4" />
+                      {allItemInCart && allItemInCart.length > 0 && (
+                        <div className="col-lg-4 bg-grey">
+                          <div className="p-5">
+                            <h3 className="fw-bold mb-5 mt-2 pt-1">
+                              Phiếu mượn
+                            </h3>
+                            <hr className="my-4" />
 
-                          <div className="d-flex justify-content-between mb-4">
-                            <h5 className="text-uppercase">
-                              {allItemInCart.length} sách
-                            </h5>
-                            {/* <h5>€ 132.00</h5> */}
-                          </div>
+                            <div className="d-flex justify-content-between mb-4">
+                              <h5 className="text-uppercase">
+                                {allItemInCart.length} sách
+                              </h5>
+                              {/* <h5>€ 132.00</h5> */}
+                            </div>
 
-                          {/* <h5 class="text-uppercase mb-3">Shipping</h5> */}
+                            {/* <h5 class="text-uppercase mb-3">Shipping</h5> */}
 
-                          <div className="mb-4 pb-2">
-                            <label
-                              className="form-label"
-                              htmlFor="form3Examplea2"
-                            >
-                              Họ và tên
-                            </label>
-                            <input
-                              type="text"
-                              id="form3Examplea2"
-                              className="form-control form-control-lg"
-                              defaultValue={userInfor.fullName}
-                              readOnly
-                            />
-                          </div>
-
-                          {/* <h5 className="text-uppercase mb-3">Give code</h5> */}
-
-                          <div className="mb-5">
-                            <div className="form-outline">
+                            <div className="mb-4 pb-2">
                               <label
                                 className="form-label"
                                 htmlFor="form3Examplea2"
                               >
-                                Địa chỉ
+                                Họ và tên
                               </label>
                               <input
                                 type="text"
                                 id="form3Examplea2"
                                 className="form-control form-control-lg"
-                                defaultValue={userInfor.address}
+                                defaultValue={userInfor.fullName}
                                 readOnly
                               />
                             </div>
+
+                            {/* <h5 className="text-uppercase mb-3">Give code</h5> */}
+
+                            <div className="mb-5">
+                              <div className="form-outline">
+                                <label
+                                  className="form-label"
+                                  htmlFor="form3Examplea2"
+                                >
+                                  Địa chỉ
+                                </label>
+                                <input
+                                  type="text"
+                                  id="form3Examplea2"
+                                  className="form-control form-control-lg"
+                                  defaultValue={userInfor.address}
+                                  readOnly
+                                />
+                              </div>
+                            </div>
+
+                            <hr className="my-4" />
+
+                            <div className="d-flex justify-content-between mb-5">
+                              <h5 className="text-uppercase">Total price</h5>
+                              <h5>{total}</h5>
+                            </div>
+
+                            <button
+                              type="button"
+                              className="btn btn-dark btn-block btn-lg"
+                              data-mdb-ripple-color="dark"
+                              onClick={() => this.handleBorrowBooks()}
+                            >
+                              Mua sách
+                            </button>
                           </div>
-
-                          <hr className="my-4" />
-
-                          <div className="d-flex justify-content-between mb-5">
-                            <h5 className="text-uppercase">Total price</h5>
-                            <h5>{total}</h5>
-                          </div>
-
-                          <button
-                            type="button"
-                            className="btn btn-dark btn-block btn-lg"
-                            data-mdb-ripple-color="dark"
-                            onClick={() => this.handleBorrowBooks()}
-                          >
-                            Mượn sách
-                          </button>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -279,6 +288,7 @@ class Cart extends Component {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     );
   }
@@ -295,6 +305,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (item) => dispatch(deleteItem(item)),
     changeInputItem: (allItems) => dispatch(changeInputItem(allItems)),
+    deleteCart: () => dispatch(deleteCart()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

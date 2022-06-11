@@ -5,16 +5,16 @@ class ModelEditReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      review: "",
-      reviewId: "",
+      content: "",
+      commentId: "",
     };
   }
   componentDidMount() {}
   componentDidUpdate(prevProps) {
     if (prevProps.review !== this.props.review) {
       this.setState({
-        review: this.props.review.review,
-        reviewId: this.props.review._id,
+        content: this.props.review.content,
+        commentId: this.props.review.commentId,
       });
     }
   }
@@ -31,18 +31,19 @@ class ModelEditReview extends Component {
 
   handleSubmitEdit = () => {
     let data = {
-      review: this.state.review,
-      reviewId: this.state.reviewId,
+      content: this.state.content,
     };
-    this.props.doEditReview(data);
+    let commentId = this.state.commentId;
+    console.log(data);
+    this.props.doeditComment(commentId, data);
     this.setState({
-      review: "",
-      reviewId: "",
+      content: "",
+      commentId: "",
     });
   };
 
   render() {
-    let { review } = this.state;
+    let { content } = this.state;
     //console.log(review);
     return (
       <Modal
@@ -68,10 +69,10 @@ class ModelEditReview extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter product name"
-                onChange={event => {
-                  this.handleOnchangeInput(event, "review");
+                onChange={(event) => {
+                  this.handleOnchangeInput(event, "content");
                 }}
-                value={this.state.review}
+                value={content}
               />
             </div>
           </div>

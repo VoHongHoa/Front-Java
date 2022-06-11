@@ -72,11 +72,11 @@ class Login extends Component {
         </div>
         <div className="container">
           <label htmlFor="uname">
-            <b>Username</b>
+            <b>Tên đăng nhập</b>
           </label>
           <input
             type="text"
-            placeholder="Enter Username"
+            placeholder="Nhập tên đăng nhập"
             className="form-control"
             name="uname"
             onChange={(event) => this.handleOnchangeInput(event, "userName")}
@@ -84,11 +84,11 @@ class Login extends Component {
           />
           <div className="form-group mt-2">
             <label htmlFor="psw">
-              <b>Password</b>
+              <b>Mật khẩu</b>
             </label>
             <input
               type={this.state.isShowPassword === true ? "text" : "password"}
-              placeholder="Enter Password"
+              placeholder="Nhập mật khẩu"
               onChange={(event) => this.handleOnchangeInput(event, "password")}
               className="form-control"
               name="psw"

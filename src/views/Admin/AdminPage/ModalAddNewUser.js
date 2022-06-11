@@ -209,7 +209,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter Email"
+                placeholder="Nhập email"
                 name="email"
                 onChange={(event) => this.handleOnchangeEmail(event)}
                 readOnly={this.state.action === "EDIT_USER" ? true : false}
@@ -225,12 +225,12 @@ class ModalAddNewBook extends Component {
             </div>
             <div className="col-6 fullNameInput">
               <label htmlFor="fullName">
-                <b>FullName</b>
+                <b>Họ và tên</b>
               </label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter Fullname"
+                placeholder="Họ và tên"
                 name="fullName"
                 required
                 readOnly={this.state.action === "EDIT_USER" ? true : false}
@@ -242,11 +242,11 @@ class ModalAddNewBook extends Component {
             </div>
             <div className="col-6 nameInput mt-2">
               <label htmlFor="username">
-                <b>UserName</b>
+                <b>Tên đăng nhập</b>
               </label>
               <input
                 type="text"
-                placeholder="Your Name"
+                placeholder="Tên đăng nhập"
                 className="form-control"
                 name="username"
                 onChange={(event) =>
@@ -260,11 +260,11 @@ class ModalAddNewBook extends Component {
 
             <div className="col-6 passwordInput mt-2">
               <label htmlFor="psw">
-                <b>Password</b>
+                <b>Mật khẩu</b>
               </label>
               <input
                 type="password"
-                placeholder="Enter Password"
+                placeholder="Nhập mật khẩu"
                 className="form-control"
                 name="psw"
                 onChange={(event) => this.handleOnchangePassword(event)}
@@ -283,11 +283,11 @@ class ModalAddNewBook extends Component {
 
             <div className="col-6 phonenumberInput mt-2">
               <label htmlFor="phonenumber">
-                <b>PhoneNumber</b>
+                <b>Số điện thoại</b>
               </label>
               <input
                 type="text"
-                placeholder="Enter PhoneNumber"
+                placeholder="Nhập số điện thoại"
                 className="form-control"
                 name="phonenumber"
                 onChange={(event) => this.handleOnchangePhoneNumber(event)}
@@ -305,7 +305,7 @@ class ModalAddNewBook extends Component {
             </div>
             <div className="col-6 genderInput mt-2">
               <label htmlFor="gender">
-                <b>Role</b>
+                <b>Vai trò</b>
               </label>
 
               <Select

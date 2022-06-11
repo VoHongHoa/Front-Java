@@ -133,14 +133,20 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async (reviewId) => {
+  handledeleteComment = async (item) => {
+    //onsole.log(item);
     try {
-      let res = await deleteComment(reviewId);
+      let data = {
+        commentId: item.commentId,
+        bookId: this.props.match.params.id,
+      };
+      console.log(data);
+      let res = await deleteComment(data);
       console.log(res);
-      // if (res && res.success === true) {
-      //   toast.success("Xóa bình luận thành công!");
-      //   this.getAllReviews(this.props.match.params.id);
-      // }
+      if (res === "successfull") {
+        toast.success("Xóa bình luận thành công!");
+        this.getAllReviews(this.props.match.params.id);
+      }
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server");
@@ -367,7 +373,7 @@ class DetailBook extends Component {
                                   <div className="reply px-4">
                                     <small
                                       onClick={() =>
-                                        this.handledeleteComment(item.commentId)
+                                        this.handledeleteComment(item)
                                       }
                                     >
                                       Xóa

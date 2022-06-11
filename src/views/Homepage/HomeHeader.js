@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { logOutSuccess, searchBooks } from "../../store/actions/AppAction";
@@ -36,6 +36,8 @@ class HomeHeader extends Component {
     };
     console.log(data);
     this.props.searchBooks(data);
+    this.props.history.push("/tim-kiem");
+    // console.log(this.props);
   };
 
   render() {
@@ -450,4 +452,6 @@ const mapDispatchToProps = (dispatch) => {
     searchBooks: (data) => dispatch(searchBooks(data)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HomeHeader)
+);

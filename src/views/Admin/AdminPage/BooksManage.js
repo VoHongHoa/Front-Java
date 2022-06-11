@@ -11,6 +11,7 @@ import {
   editBook,
   getAllBooksPagingBySeller,
 } from "../../../services/BookService";
+import { formatPrice } from "../../../constants/format";
 class BooksManage extends Component {
   constructor(props) {
     super(props);
@@ -35,10 +36,14 @@ class BooksManage extends Component {
       console.log(res);
       if (res) {
         let numOfPage = 0;
-        if (res.count % 4 === 0) {
-          numOfPage = res.count / 4;
+        if (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN === 0) {
+          numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_ADMIN;
         } else {
-          numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+          numOfPage =
+            (res.count -
+              (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN)) /
+              process.env.REACT_APP_PAGING_LIMIT_ADMIN +
+            1;
         }
         this.setState({
           numOfBooks: res.count,
@@ -187,7 +192,7 @@ class BooksManage extends Component {
                       <td>{item.nameBook}</td>
                       <td>{item.author}</td>
                       <td>{item.count}</td>
-                      <td>{item.price}</td>
+                      <td>{formatPrice(item.price)}</td>
                       {this.props.userInfor &&
                         this.props.userInfor.role.nameRole === "ADMIN" && (
                           <td>

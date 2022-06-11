@@ -52,10 +52,14 @@ class OrderManage extends Component {
       console.log(res);
       if (res) {
         let numOfPage = 0;
-        if (res.count % 4 === 0) {
-          numOfPage = res.count / 4;
+        if (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN === 0) {
+          numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_ADMIN;
         } else {
-          numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+          numOfPage =
+            (res.count -
+              (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN)) /
+              process.env.REACT_APP_PAGING_LIMIT_ADMIN +
+            1;
         }
         this.setState({
           numOfUser: res.count,
@@ -75,7 +79,7 @@ class OrderManage extends Component {
     this.getOrderPaging(0);
   }
   handleChangePage = (item) => {
-    this.getUserPaging(item);
+    this.getOrderPaging(item);
     this.setState({
       currentPage: item,
     });
@@ -185,7 +189,7 @@ class OrderManage extends Component {
           <input
             type="text"
             className="form-control"
-            placeholder="Enter Email"
+            placeholder="Tìm kiếm hóa đơn"
             name="search"
             onChange={(event) => this.handleOnchangeInput(event)}
           />

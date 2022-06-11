@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { toast } from "react-toastify";
 import moment from "moment";
+import { formatPrice } from "../../../constants/format";
 class ModalViewDetailOrder extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +58,9 @@ class ModalViewDetailOrder extends Component {
           </p>
           <p>
             Trị giá đơn hàng:{" "}
-            <span style={{ fontWeight: "bold" }}>{curentOrder.totalPrice}</span>{" "}
+            <span style={{ fontWeight: "bold" }}>
+              {formatPrice(curentOrder.totalPrice)}
+            </span>{" "}
           </p>
           <p>
             Trạng thái đơn hàng: <span>{curentOrder.status}</span>{" "}
@@ -102,8 +105,8 @@ class ModalViewDetailOrder extends Component {
                         ></div>
                       </td>
                       <td>{item.count}</td>
-                      <td>{item.book.price}</td>
-                      <td>{item.total}</td>
+                      <td> {formatPrice(item.book.price)}</td>
+                      <td>{formatPrice(item.total)}</td>
                     </tr>
                   );
                 })}

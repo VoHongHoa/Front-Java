@@ -7,6 +7,7 @@ import HomeHeader from "../Homepage/HomeHeader";
 import { getCateBook } from "../../services/BookService";
 import Footer from "../Homepage/Footer";
 import Fade from "react-reveal/Fade";
+import { formatPrice } from "../../constants/format";
 class Book extends Component {
   constructor(props) {
     super(props);
@@ -85,7 +86,7 @@ class Book extends Component {
                         </div>
                         <Fade top delay={-200}>
                           <h3 className="hide mb-0 font-weight-semibold">
-                            {item.price}
+                            {formatPrice(item.price)}
                           </h3>
                           <button
                             type="button"

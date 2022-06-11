@@ -2,8 +2,8 @@ import axios from "../axios";
 const addComment = (data, bookId) => {
   return axios.post(`/user/luu-comment/${bookId}`, data);
 };
-const deleteComment = (commentId) => {
-  return axios.post(`/user/xoa-comment/${commentId}`);
+const deleteComment = (data) => {
+  return axios.post(`/user/xoa-comment`, data);
 };
 const editComment = (commentId, data) => {
   return axios.post(`/user/sua-comment/${commentId}`, data);

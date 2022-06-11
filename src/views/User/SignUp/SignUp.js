@@ -28,7 +28,7 @@ class SignUp extends Component {
       phoneNumber: "",
       errPhone: true,
       img: "",
-      gender: "",
+      gender: { value: "Nam", label: "Nam" },
     };
   }
   componentDidMount() {}
@@ -205,7 +205,7 @@ class SignUp extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter Email"
+              placeholder="Nhập email"
               name="email"
               onChange={(event) => this.handleOnchangeEmail(event)}
             />
@@ -217,12 +217,12 @@ class SignUp extends Component {
           </div>
           <div className="col-6 fullNameInput">
             <label htmlFor="fullName">
-              <b>FullName</b>
+              <b>Họ và tên</b>
             </label>
             <input
               type="text"
               className="form-control"
-              placeholder="Enter Fullname"
+              placeholder="Nhập họ và tên"
               name="fullName"
               required
               onChange={(event) => this.handleOnchangeInput(event, "fullName")}
@@ -230,11 +230,11 @@ class SignUp extends Component {
           </div>
           <div className="col-6 nameInput mt-2">
             <label htmlFor="username">
-              <b>UserName</b>
+              <b>Tên đăng nhập</b>
             </label>
             <input
               type="text"
-              placeholder="Your Name"
+              placeholder="Nhập tên đăng nhập"
               className="form-control"
               name="username"
               onChange={(event) => this.handleOnchangeInput(event, "userName")}
@@ -243,7 +243,7 @@ class SignUp extends Component {
           </div>
           <div className="col-6 genderInput mt-2">
             <label htmlFor="gender">
-              <b>Gender</b>
+              <b>Giới tính</b>
             </label>
 
             <Select
@@ -251,15 +251,16 @@ class SignUp extends Component {
               options={options}
               onChange={this.handleOnchangeSelect}
               name={"gender"}
+              value={this.state.gender}
             />
           </div>
           <div className="col-6 passwordInput mt-2">
             <label htmlFor="psw">
-              <b>Password</b>
+              <b>Mật khẩu</b>
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Nhập mật khẩu"
               className="form-control"
               name="psw"
               onChange={(event) => this.handleOnchangePassword(event)}
@@ -274,11 +275,11 @@ class SignUp extends Component {
 
           <div className="col-6 pswRepeat mt-2">
             <label htmlFor="psw-repeat">
-              <b>Repeat Password</b>
+              <b>Nhập lại mật khẩu</b>
             </label>
             <input
               type="password"
-              placeholder="Repeat Password"
+              placeholder="Nhập lại mật khẩu"
               className="form-control"
               name="psw-repeat"
               onChange={(event) => this.handleOnchangeRepeat(event)}
@@ -294,11 +295,11 @@ class SignUp extends Component {
           </div>
           <div className="col-6 addressInput mt-2">
             <label htmlFor="address">
-              <b>Address</b>
+              <b>Địa chỉ</b>
             </label>
             <input
               type="text"
-              placeholder="Enter Address"
+              placeholder="Nhập địa chỉ"
               className="form-control"
               name="address"
               onChange={(event) => this.handleOnchangeInput(event, "address")}
@@ -307,11 +308,11 @@ class SignUp extends Component {
           </div>
           <div className="col-6 phonenumberInput mt-2">
             <label htmlFor="phonenumber">
-              <b>PhoneNumber</b>
+              <b>Số điện thoại</b>
             </label>
             <input
               type="text"
-              placeholder="Enter PhoneNumber"
+              placeholder="Nhập số điện thoại"
               className="form-control"
               name="phonenumber"
               onChange={(event) => this.handleOnchangePhoneNumber(event)}
@@ -325,7 +326,7 @@ class SignUp extends Component {
           </div>
           <div className="col-6 imgInput mt-2">
             <label htmlFor="imgavatar">
-              <b>Avatar</b>
+              <b>Hình ảnh</b>
             </label>
             <input
               type="file"
@@ -352,7 +353,7 @@ class SignUp extends Component {
         </div>
 
         <p>
-          By creating an account you agree to our{" "}
+          Các quy định của của hàng{" "}
           <a href="/regulation" style={{ color: "dodgerblue" }}>
             Terms & Privacy
           </a>
@@ -372,7 +373,7 @@ class SignUp extends Component {
             className="cancelSignUpbtn"
             onClick={() => this.handleCancelSignUp()}
           >
-            Cancel
+            Hủy
           </button>
         </div>
       </div>

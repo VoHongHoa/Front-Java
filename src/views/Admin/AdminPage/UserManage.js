@@ -48,10 +48,14 @@ class UserManage extends Component {
       }
       if (res) {
         let numOfPage = 0;
-        if (res.count % 8 === 0) {
-          numOfPage = res.count / 8;
+        if (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN === 0) {
+          numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_ADMIN;
         } else {
-          numOfPage = (res.count - (res.count % 8)) / 8 + 1;
+          numOfPage =
+            (res.count -
+              (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN)) /
+              process.env.REACT_APP_PAGING_LIMIT_ADMIN +
+            1;
         }
         this.setState({
           numOfUser: res.count,

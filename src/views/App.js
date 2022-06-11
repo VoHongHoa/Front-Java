@@ -23,6 +23,7 @@ import ManageOrder from "./Admin/AdminPage/ManageOrder";
 import BlogManage from "./Admin/AdminPage/BlogManage";
 import Blog from "./Blog/Blog";
 import Book from "./Products/Book";
+import Search from "./Search/Search";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +51,11 @@ class App extends Component {
             <Route path="/quydinh" exact>
               <Term />
             </Route>
+
+            <Route path="/tim-kiem" exact>
+              <Search />
+            </Route>
+
             <Route path="/blog" exact>
               <Blog />
             </Route>

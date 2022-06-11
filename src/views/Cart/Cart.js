@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Cart.scss";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import {
   changeInputItem,
   deleteCart,
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { buyBooks } from "../../services/userService";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
+import { formatPrice } from "../../constants/format";
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -184,7 +185,9 @@ class Cart extends Component {
                                     </button>
                                   </div>
                                   <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h6 className="mb-0">{item.price}</h6>
+                                    <h6 className="mb-0">
+                                      {formatPrice(item.price)}
+                                    </h6>
                                   </div>
                                   <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                                     <a href="#!" className="text-muted">
@@ -213,9 +216,7 @@ class Cart extends Component {
                       {allItemInCart && allItemInCart.length > 0 && (
                         <div className="col-lg-4 bg-grey">
                           <div className="p-5">
-                            <h3 className="fw-bold mb-5 mt-2 pt-1">
-                              Phiếu mượn
-                            </h3>
+                            <h3 className="fw-bold mb-5 mt-2 pt-1">Hóa đơn</h3>
                             <hr className="my-4" />
 
                             <div className="d-flex justify-content-between mb-4">
@@ -267,7 +268,7 @@ class Cart extends Component {
 
                             <div className="d-flex justify-content-between mb-5">
                               <h5 className="text-uppercase">Total price</h5>
-                              <h5>{total}</h5>
+                              <h5>{formatPrice(total)}</h5>
                             </div>
 
                             <button
@@ -308,4 +309,4 @@ const mapDispatchToProps = (dispatch) => {
     deleteCart: () => dispatch(deleteCart()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart));

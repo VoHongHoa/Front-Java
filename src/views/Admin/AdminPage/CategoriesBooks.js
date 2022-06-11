@@ -31,10 +31,13 @@ class CategoriesBooks extends Component {
     // console.log(res);
     if (res) {
       let numOfPage = 0;
-      if (res.count % 4 === 0) {
-        numOfPage = res.count / 4;
+      if (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN === 0) {
+        numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_ADMIN;
       } else {
-        numOfPage = (res.count - (res.count % 4)) / 4 + 1;
+        numOfPage =
+          (res.count - (res.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN)) /
+            process.env.REACT_APP_PAGING_LIMIT_ADMIN +
+          1;
       }
       this.setState({
         numOfCategories: res.count,

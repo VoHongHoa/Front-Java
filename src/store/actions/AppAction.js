@@ -151,7 +151,11 @@ export const searchBooks = (data) => {
   return async (dispatch, getState) => {
     try {
       let res = await getSearchBook(data);
-      console.log(res);
+      console.log("check res", res);
+      if (res && res.length > 0) {
+        toast.success(`Có ${res.length} kết quả tìm kiếm `);
+        dispatch(searchBookSuccess(res));
+      }
     } catch (e) {
       console.error(e);
       toast.error("Lỗi server!!");

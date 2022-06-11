@@ -220,7 +220,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product name"
+                placeholder="Nhập tên sách"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "nameBook");
                 }}
@@ -232,7 +232,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product descriptions"
+                placeholder="Nhập tên tác giả"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "author");
                 }}
@@ -244,7 +244,7 @@ class ModalAddNewBook extends Component {
               <textarea
                 type="text"
                 className="form-control"
-                placeholder="Enter book descriptions"
+                placeholder="Nhập mô tả"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "description");
                 }}
@@ -257,7 +257,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product price"
+                placeholder="Nhập giá"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "price");
                 }}
@@ -269,7 +269,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product price"
+                placeholder="Nhập giá sách"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "publishYear");
                 }}
@@ -282,7 +282,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product price"
+                placeholder="Năm xuất bản"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "publishCom");
                 }}
@@ -294,7 +294,7 @@ class ModalAddNewBook extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter product price"
+                placeholder="Nhập số lượng sách"
                 onChange={(event) => {
                   this.handleOnchangeInput(event, "count");
                 }}
@@ -303,7 +303,7 @@ class ModalAddNewBook extends Component {
             </div>
 
             <div className="form-group mt-2 col-6">
-              <label>loại sách</label>
+              <label>Loại sách</label>
               <Select
                 type="text"
                 options={allCategoriesBooks}

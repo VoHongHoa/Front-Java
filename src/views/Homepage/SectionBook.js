@@ -15,17 +15,38 @@ class SectionProduct extends Component {
       bookList: [],
       bookOrder: [],
       bookRating: [],
+      numOfPage: 0,
+      currentPage: 0,
     };
   }
-  getAllBook = async () => {
+  getAllBook = async (currentPage) => {
     try {
-      let res = await getBookHomePage(0);
+      let res = await getBookHomePage(currentPage);
       console.log(res);
       this.setState({
         bookList: res.bookList.bookList,
         bookOrder: res.bookOder,
         bookRating: res.bookRating,
       });
+      if (res && res.bookList) {
+        let numOfPage = 0;
+        if (
+          res.bookList.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN ===
+          0
+        ) {
+          numOfPage =
+            res.bookList.count / process.env.REACT_APP_PAGING_LIMIT_ADMIN;
+        } else {
+          numOfPage =
+            (res.bookList.count -
+              (res.bookList.count % process.env.REACT_APP_PAGING_LIMIT_ADMIN)) /
+              process.env.REACT_APP_PAGING_LIMIT_ADMIN +
+            1;
+        }
+        this.setState({
+          numOfPage: numOfPage,
+        });
+      }
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server!!");
@@ -39,11 +60,22 @@ class SectionProduct extends Component {
     this.props.addToCart(item);
   };
   componentDidMount() {
-    this.getAllBook();
+    this.getAllBook(this.state.currentPage);
   }
+  handleChangePage = (item) => {
+    this.getAllBook(item);
+    this.setState({
+      currentPage: item,
+    });
+  };
   render() {
-    let { bookList, bookOrder, bookRating } = this.state;
-    console.log(bookOrder);
+    let { bookList, bookOrder, bookRating, numOfPage, currentPage } =
+      this.state;
+    let arr = [];
+    for (let i = 0; i < numOfPage; i++) {
+      arr.push(i);
+    }
+    //console.log(bookList);
     return (
       <div className="section-book">
         <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
@@ -138,6 +170,24 @@ class SectionProduct extends Component {
                   </div>
                 );
               })}
+
+            <div className="pagination">
+              <p>&laquo;</p>
+              {arr &&
+                arr.length &&
+                arr.map((item, index) => {
+                  return (
+                    <p
+                      onClick={() => this.handleChangePage(item)}
+                      className={currentPage === item ? "active" : ""}
+                      key={index}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
+              <p>&raquo;</p>
+            </div>
           </div>
         </div>
 

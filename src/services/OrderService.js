@@ -25,10 +25,10 @@ const updateStatusOrderBySeller = (data) => {
   return axios.post("/seller/sua-orderss", data);
 };
 const searchorderByAdmin = (data) => {
-  return axios.post(`/admin/tim-Orderss`, data);
+  return axios.post(`/admin/timorderss`, data);
 };
 const searchorderBySeller = (data) => {
-  return axios.post(`/seller/tim-Orderss`, data);
+  return axios.post(`/seller/timorderss`, data);
 };
 
 export {

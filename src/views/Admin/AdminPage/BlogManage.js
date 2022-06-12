@@ -69,6 +69,7 @@ class BlogManage extends Component {
           title: this.state.title,
           context: this.state.contentMarkdown,
         };
+        console.log(data);
         let res = await addNewBlog(data);
         if (res === "successful") {
           toast.success("Thêm Blog thành công");

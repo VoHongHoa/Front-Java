@@ -29,6 +29,7 @@ class OrderManage extends Component {
       detailOrder: [],
       curentOrder: {},
       keyword: "",
+      action: "",
     };
   }
   checkAdminOrLibrarian = () => {
@@ -154,9 +155,16 @@ class OrderManage extends Component {
   handleOnchangeInput = async (event) => {
     this.setState({
       keyword: event.target.value,
+      action: "SEARCH",
     });
     try {
       let res;
+      if (event.target.value === "") {
+        this.getOrderPaging(0);
+        this.setState({
+          action: "",
+        });
+      }
       let data = {
         keysearch: event.target.value,
       };
@@ -166,6 +174,11 @@ class OrderManage extends Component {
         res = await updateStatusOrderBySeller(data);
       }
       console.log(res);
+      if (res) {
+        this.setState({
+          allOrder: res,
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -180,7 +193,6 @@ class OrderManage extends Component {
     return (
       <div className="container">
         <AdminHeader></AdminHeader>
-
         <h2 className="title mt-3 mb-3">Quản lý đơn hàng</h2>
         <div className="col-6 mb-3">
           <label htmlFor="search">
@@ -245,23 +257,25 @@ class OrderManage extends Component {
             </tbody>
           </table>
 
-          <div className="pagination">
-            <p>&laquo;</p>
-            {arr &&
-              arr.length &&
-              arr.map((item, index) => {
-                return (
-                  <p
-                    onClick={() => this.handleChangePage(item)}
-                    className={currentPage === item ? "active" : ""}
-                    key={index}
-                  >
-                    {item}
-                  </p>
-                );
-              })}
-            <p>&raquo;</p>
-          </div>
+          {this.state.action !== "SEARCH" && (
+            <div className="pagination">
+              <p>&laquo;</p>
+              {arr &&
+                arr.length &&
+                arr.map((item, index) => {
+                  return (
+                    <p
+                      onClick={() => this.handleChangePage(item)}
+                      className={currentPage === item ? "active" : ""}
+                      key={index}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
+              <p>&raquo;</p>
+            </div>
+          )}
         </div>
         <ModalViewDetailOrder
           toggle={this.toggleCloseModalViewDetail}

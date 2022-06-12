@@ -47,6 +47,7 @@ class Blog extends Component {
   };
   render() {
     let { allBlog } = this.state;
+    console.log(allBlog);
     return (
       <React.Fragment>
         <div className="mb-2">

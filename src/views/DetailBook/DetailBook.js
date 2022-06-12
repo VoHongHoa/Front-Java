@@ -265,9 +265,9 @@ class DetailBook extends Component {
             <p>{book.description}</p>
           </div>
           <div className="comment">
-            <h2>Bình luận</h2>
+            <h2>Nhận xét và đánh giá</h2>
             <div className="form-groud">
-              <label>Thêm bình luận</label>
+              <label>Thêm nhận xét</label>
 
               <textarea
                 className="form-control"

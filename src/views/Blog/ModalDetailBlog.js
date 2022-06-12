@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import "./ModalDetailBlog.scss";
 class ModalDetailBlog extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +41,7 @@ class ModalDetailBlog extends Component {
           {blog && blog.title ? blog.title : ""}
         </ModalHeader>
         <ModalBody>
-          <div className="modalBody-product-container row">
+          <div className="scroller modalBody-product-container row">
             <div style={{ margin: "0 auto" }}>
               {blog && blog.content && (
                 <div
@@ -58,7 +59,7 @@ class ModalDetailBlog extends Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter>
+        {/* <ModalFooter>
           <Button
             color="secondary"
             onClick={() => {
@@ -68,17 +69,17 @@ class ModalDetailBlog extends Component {
           >
             Đóng
           </Button>
-        </ModalFooter>
+        </ModalFooter> */}
       </Modal>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 

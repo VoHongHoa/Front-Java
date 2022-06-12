@@ -39,7 +39,7 @@ class Blog extends Component {
       isOpenModal: false,
     });
   };
-  handleOpenModal = (item) => {
+  handleOpenModal = item => {
     this.setState({
       isOpenModal: true,
       currentBlog: item,

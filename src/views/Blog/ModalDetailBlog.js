@@ -22,6 +22,7 @@ class ModalDetailBlog extends Component {
   render() {
     //console.log(this.state);
     let { blog } = this.state;
+    //console.log(blog);
     return (
       <Modal
         isOpen={this.props.isOpenModal}

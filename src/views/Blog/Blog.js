@@ -47,6 +47,7 @@ class Blog extends Component {
   };
   render() {
     let { allBlog } = this.state;
+    console.log(allBlog);
     return (
       <React.Fragment>
         <div className="mb-2">
@@ -78,7 +79,6 @@ class Blog extends Component {
                           ? item.user.fullName
                           : "Người dấu tên"}
                       </p>
-                      <p className="card-date col-md-6">Ngày 1/6/2022</p>
                     </div>
                   </div>
                 </div>

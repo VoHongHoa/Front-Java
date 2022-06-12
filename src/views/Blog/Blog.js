@@ -39,7 +39,7 @@ class Blog extends Component {
       isOpenModal: false,
     });
   };
-  handleOpenModal = (item) => {
+  handleOpenModal = item => {
     this.setState({
       isOpenModal: true,
       currentBlog: item,
@@ -78,7 +78,6 @@ class Blog extends Component {
                           ? item.user.fullName
                           : "Người dấu tên"}
                       </p>
-                      <p className="card-date col-md-6">Ngày 1/6/2022</p>
                     </div>
                   </div>
                 </div>

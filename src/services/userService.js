@@ -43,6 +43,9 @@ const buyBooks = (data) => {
 const updateUserRoleByAdmin = (data, userId) => {
   return axios.post(`admin/${userId}`, data);
 };
+const confirmChangeNewPassword = (token, data) => {
+  return axios.post(`/cai-dat-mat-khau-moi/${token}`, data);
+};
 
 export {
   handleSignUp,
@@ -58,4 +61,5 @@ export {
   deleteUserByLibrarian,
   buyBooks,
   updateUserRoleByAdmin,
+  confirmChangeNewPassword,
 };

@@ -24,6 +24,7 @@ import BlogManage from "./Admin/AdminPage/BlogManage";
 import Blog from "./Blog/Blog";
 import Book from "./Products/Book";
 import Search from "./Search/Search";
+import ConfirmForgotPassword from "./User/ForgotPassword/ConfirmForgotPassword";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +55,10 @@ class App extends Component {
 
             <Route path="/tim-kiem" exact>
               <Search />
+            </Route>
+
+            <Route path="/cai-dat-mat-khau-moi/:email/:token" exact>
+              <ConfirmForgotPassword />
             </Route>
 
             <Route path="/blog" exact>

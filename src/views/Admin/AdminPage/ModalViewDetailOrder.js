@@ -59,7 +59,9 @@ class ModalViewDetailOrder extends Component {
           <p>
             Trị giá đơn hàng:{" "}
             <span style={{ fontWeight: "bold" }}>
-              {formatPrice(curentOrder.totalPrice)}
+              {curentOrder.totalPrice
+                ? formatPrice(curentOrder.totalPrice)
+                : curentOrder.totalPrice}
             </span>{" "}
           </p>
           <p>
@@ -105,8 +107,14 @@ class ModalViewDetailOrder extends Component {
                         ></div>
                       </td>
                       <td>{item.count}</td>
-                      <td> {formatPrice(item.book.price)}</td>
-                      <td>{formatPrice(item.total)}</td>
+                      <td>
+                        {item.book && item.book.price
+                          ? formatPrice(item.book.price)
+                          : item.book.price}
+                      </td>
+                      <td>
+                        {item.total ? formatPrice(item.total) : item.total}
+                      </td>
                     </tr>
                   );
                 })}

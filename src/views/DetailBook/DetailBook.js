@@ -210,7 +210,7 @@ class DetailBook extends Component {
                 onClick={() => this.handleReturnCate(book.category?.categoryId)}
                 style={{ cursor: "pointer" }}
               >
-                {book.category?.nameCate}
+                | {book.category?.nameCate}
               </span>
               | <b>{book.nameBook}</b>
             </p>

@@ -24,6 +24,9 @@ class AdminHeader extends Component {
         className={isReponsesive === false ? "topnav" : "topnav responsive "}
         id="myTopnav"
       >
+        <NavLink to={"/"} exact={true} activeClassName="active">
+          Trang bán hàng
+        </NavLink>
         {this.props.userInfor &&
           this.props.userInfor.role.nameRole === "ADMIN" && (
             <NavLink to={"/admin"} exact={true} activeClassName="active">
@@ -57,13 +60,13 @@ class AdminHeader extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default withRouter(

@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import defaultAvatar from "../../assets/images/avatar.jpg";
 import { connect } from "react-redux";
 import ModelEditReview from "./ModelEditReview";
+import CurrencyFormat from "react-currency-format";
 
 class DetailBook extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class DetailBook extends Component {
     }
   }
 
-  handleAddToCart = (book) => {
+  handleAddToCart = book => {
     this.props.addToCart(book);
   };
 
@@ -51,11 +52,11 @@ class DetailBook extends Component {
     this.props.history.push("/");
   };
 
-  handleReturnCate = (cateId) => {
+  handleReturnCate = cateId => {
     this.props.history.push("/");
   };
 
-  getAllReviews = async (bookId) => {
+  getAllReviews = async bookId => {
     try {
       let res = await getComment(bookId);
       //console.log(res);
@@ -67,7 +68,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = (event) => {
+  handleOnchangeInput = event => {
     this.setState({
       newReview: event.target.value,
     });
@@ -133,7 +134,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async (item) => {
+  handledeleteComment = async item => {
     //onsole.log(item);
     try {
       let data = {
@@ -153,7 +154,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOpenModaleditComment = async (item) => {
+  handleOpenModaleditComment = async item => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -184,7 +185,7 @@ class DetailBook extends Component {
       toast.error("Lỗi server");
     }
   };
-  handleVoterating = (numOfStar) => {
+  handleVoterating = numOfStar => {
     this.setState({ numOfStar: numOfStar });
   };
 
@@ -224,7 +225,16 @@ class DetailBook extends Component {
             <div className="col-xs-12 col-md-8">
               <h3>{book.nameBook}</h3>
               <p className="gia">
-                Giá: <span className="detail-price">{book.price} đ</span>
+                {" "}
+                Giá:{" "}
+                <p className="detail-price">
+                  <CurrencyFormat
+                    value={book.price}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix={"đ"}
+                  />
+                </p>
               </p>
               <p className="info">
                 Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}
@@ -261,7 +271,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={(event) => this.handleOnchangeInput(event)}
+                onChange={event => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -413,15 +423,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { addToCart: (item) => dispatch(addToCart(item)) };
+const mapDispatchToProps = dispatch => {
+  return { addToCart: item => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

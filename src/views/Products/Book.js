@@ -15,15 +15,27 @@ class Book extends Component {
       allBooks: [],
       currentPage: 0,
       numOfPage: 0,
+      numofBooks: 0,
     };
   }
   getAllBooksByCate = async (categoryId, page) => {
     try {
       let res = await getCateBook(categoryId, page);
       console.log(res);
-      if (res && res.length > 0) {
+      if (res) {
+        let numOfPage = 0;
+        if (res.count % process.env.REACT_APP_PAGING_LIMIT_PRODUCT === 0) {
+          numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_PRODUCT;
+        } else {
+          numOfPage =
+            (res.count -
+              (res.count % process.env.REACT_APP_PAGING_LIMIT_PRODUCT)) /
+              process.env.REACT_APP_PAGING_LIMIT_PRODUCT +
+            1;
+        }
         this.setState({
-          allBooks: res,
+          allBooks: res.bookList,
+          numOfPage: numOfPage,
         });
       }
     } catch (e) {
@@ -41,8 +53,18 @@ class Book extends Component {
   handleAddToCart = (item) => {
     this.props.addToCart(item);
   };
+  handleChangePage = (item) => {
+    this.getAllBooksByCate(this.props.match.params.cateId, item);
+    this.setState({
+      currentPage: item,
+    });
+  };
   render() {
-    let { allBooks } = this.state;
+    let { numOfPage, currentPage, allBooks } = this.state;
+    let arr = [];
+    for (let i = 0; i < numOfPage; i++) {
+      arr.push(i);
+    }
     return (
       <div className="product-container">
         <HomeHeader></HomeHeader>
@@ -104,6 +126,23 @@ class Book extends Component {
                 );
               })}
           </div>
+        </div>
+        <div className="pagination">
+          <p>&laquo;</p>
+          {arr &&
+            arr.length &&
+            arr.map((item, index) => {
+              return (
+                <p
+                  onClick={() => this.handleChangePage(item)}
+                  className={currentPage === item ? "active" : ""}
+                  key={index}
+                >
+                  {item}
+                </p>
+              );
+            })}
+          <p>&raquo;</p>
         </div>
         <Footer />
       </div>

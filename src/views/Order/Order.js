@@ -44,6 +44,7 @@ class Order extends Component {
         <div className="mb-2">
           <HomeHeader />
         </div>
+        <h2>Đơn hàng</h2>
         {allOrder && allOrder.length > 0 ? (
           allOrder.map((item, index) => {
             return (
@@ -129,8 +130,6 @@ class Order extends Component {
         ) : (
           <div>Không có đơn hàng nào</div>
         )}
-        <h2>Đơn hàng</h2>
-
         <div className="mt-2">
           <Footer />
         </div>

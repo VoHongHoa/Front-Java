@@ -16,7 +16,7 @@ class PayPalCheckoutButton extends Component {
     total = (total / 23205).toFixed(2);
     return (
       <PayPalButtons
-        className="btn btn-primary col-12 mt-3"
+        className="btn btn-primary col-12"
         style={{
           color: "silver",
           layout: "horizontal",

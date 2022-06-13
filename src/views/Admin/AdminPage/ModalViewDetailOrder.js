@@ -20,6 +20,17 @@ class ModalViewDetailOrder extends Component {
     let data = {
       orderssId: curentOrder.orderssId,
       status: "đã giao hàng",
+      pay: curentOrder.pay,
+      address: curentOrder.address,
+      telephone: curentOrder.telephone,
+    };
+    this.props.doUpdateStatusOrder(data);
+  };
+  handleChangeStatusPay = (curentOrder) => {
+    let data = {
+      orderssId: curentOrder.orderssId,
+      status: curentOrder.status,
+      pay: "đã thanh toán",
       address: curentOrder.address,
       telephone: curentOrder.telephone,
     };
@@ -66,6 +77,9 @@ class ModalViewDetailOrder extends Component {
           </p>
           <p>
             Trạng thái đơn hàng: <span>{curentOrder.status}</span>{" "}
+          </p>
+          <p>
+            Trạng thái thanh toán: <span>{curentOrder.pay}</span>{" "}
           </p>
           <p>
             Ngày hóa đơn:
@@ -128,6 +142,15 @@ class ModalViewDetailOrder extends Component {
               onClick={() => this.handleChangeStatusOrder(curentOrder)}
             >
               Chuyển trạng thái đơn hàng
+            </Button>
+          )}
+
+          {curentOrder && curentOrder.pay !== "đã thanh toán" && (
+            <Button
+              color="primary"
+              onClick={() => this.handleChangeStatusPay(curentOrder)}
+            >
+              Chuyển trạng thái thanh toán
             </Button>
           )}
 

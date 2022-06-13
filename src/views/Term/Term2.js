@@ -9,12 +9,12 @@ class Term2 extends Component {
     return (
       <React.Fragment>
         <HomeHeader />
-        <div className="container">
-          <div className="row">
-            <NavLink to={"/chinh-sach-bao-mat"} className="col">
+        <div className="container terms">
+          <div className="row head">
+            <NavLink to={"/chinh-sach-bao-mat"} className="col column">
               Chính sách bảo mật
             </NavLink>
-            <NavLink to={"/dieu-khoan-su-dung"} className="col active">
+            <NavLink to={"/dieu-khoan-su-dung"} className="col active column">
               Điều khoản sử dụng
             </NavLink>
           </div>

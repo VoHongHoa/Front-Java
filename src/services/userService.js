@@ -10,7 +10,7 @@ const getUserInfor = () => {
 };
 
 const editUserInfor = (data) => {
-  return axios.post(`/sua-thong-tin/`, data);
+  return axios.post(`user/sua-thong-tin/`, data);
 };
 
 const getAllUser = (currentPage) => {
@@ -37,14 +37,17 @@ const forgotPassword = (data) => {
   console.log(data);
   return axios.post("/quen-mat-khau", data);
 };
-const buyBooks = (data) => {
-  return axios.post("/user/mua-sach", data);
+const buyBooks = (data, user) => {
+  return axios.post("/user/mua-sach", data, user);
 };
 const updateUserRoleByAdmin = (data, userId) => {
   return axios.post(`admin/${userId}`, data);
 };
 const confirmChangeNewPassword = (token, data) => {
   return axios.post(`/cai-dat-mat-khau-moi/${token}`, data);
+};
+const findUserByEmail = (email) => {
+  return axios.get(`/tim-user/${email}`);
 };
 
 export {
@@ -62,4 +65,5 @@ export {
   buyBooks,
   updateUserRoleByAdmin,
   confirmChangeNewPassword,
+  findUserByEmail,
 };

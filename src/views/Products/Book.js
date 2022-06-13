@@ -13,11 +13,13 @@ class Book extends Component {
     super(props);
     this.state = {
       allBooks: [],
+      currentPage: 0,
+      numOfPage: 0,
     };
   }
-  getAllBooksByCate = async (categoryId) => {
+  getAllBooksByCate = async (categoryId, page) => {
     try {
-      let res = await getCateBook(categoryId);
+      let res = await getCateBook(categoryId, page);
       console.log(res);
       if (res && res.length > 0) {
         this.setState({
@@ -29,11 +31,11 @@ class Book extends Component {
     }
   };
   componentDidMount() {
-    this.getAllBooksByCate(this.props.match.params.cateId);
+    this.getAllBooksByCate(this.props.match.params.cateId, 0);
   }
   componentDidUpdate(preProps) {
     if (preProps.match.params !== this.props.match.params) {
-      this.getAllBooksByCate(this.props.match.params.cateId);
+      this.getAllBooksByCate(this.props.match.params.cateId, 0);
     }
   }
   handleAddToCart = (item) => {

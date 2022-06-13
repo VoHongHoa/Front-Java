@@ -43,7 +43,7 @@ class App extends Component {
             <Route path="/book/:id" exact>
               <DetailBook />
             </Route>
-            <Route path="/loai-sach/:cateId" exact>
+            <Route path="/loai-sach/:cateId/:page" exact>
               <Book />
             </Route>
             <Route path="/lienhe" exact>
@@ -76,7 +76,8 @@ class App extends Component {
             </Route>
 
             <Route path="/cart" exact>
-              {isLogin === false ? <Redirect to="/login" /> : <Cart />}
+              {/* {isLogin === false ? <Redirect to="/login" /> : <Cart />} */}
+              <Cart></Cart>
             </Route>
 
             <Route path="/admin" exact>

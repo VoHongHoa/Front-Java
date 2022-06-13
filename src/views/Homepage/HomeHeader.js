@@ -375,7 +375,7 @@ class HomeHeader extends Component {
                     </NavLink>
 
                     <NavLink
-                      to="/user-orders"
+                      to="/order"
                       className="dropdown-item"
                       activeClassName="active"
                       exact

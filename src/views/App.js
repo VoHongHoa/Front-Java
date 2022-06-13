@@ -25,6 +25,7 @@ import Blog from "./Blog/Blog";
 import Book from "./Products/Book";
 import Search from "./Search/Search";
 import ConfirmForgotPassword from "./User/ForgotPassword/ConfirmForgotPassword";
+import Order from "./Order/Order";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,6 +64,9 @@ class App extends Component {
 
             <Route path="/blog" exact>
               <Blog />
+            </Route>
+            <Route path="/order" exact>
+              <Order />
             </Route>
             <Route path="/login" exact>
               {isLogin === true ? <Redirect to="/" /> : <Login />}
@@ -176,14 +180,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -89,7 +89,7 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={index}>
                     <Fade bottom delay={150}>
-                      <div className="card">
+                      <div className="card" style={{ height: "500px" }}>
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -97,7 +97,7 @@ class SectionProduct extends Component {
                                 src={item.image}
                                 className="card-img img-fluid"
                                 width="96"
-                                height="350"
+                                height="200"
                                 alt="item.nameBook"
                               />
                             </div>
@@ -171,22 +171,24 @@ class SectionProduct extends Component {
                 );
               })}
 
-            <div className="pagination">
-              <p>&laquo;</p>
-              {arr &&
-                arr.length &&
-                arr.map((item, index) => {
-                  return (
-                    <p
-                      onClick={() => this.handleChangePage(item)}
-                      className={currentPage === item ? "active" : ""}
-                      key={index}
-                    >
-                      {item}
-                    </p>
-                  );
-                })}
-              <p>&raquo;</p>
+            <div className="pagination mb-2 mt-5">
+              <div>
+                <p>&laquo;</p>
+                {arr &&
+                  arr.length &&
+                  arr.map((item, index) => {
+                    return (
+                      <p
+                        onClick={() => this.handleChangePage(item)}
+                        className={currentPage === item ? "active" : ""}
+                        key={index}
+                      >
+                        {item}
+                      </p>
+                    );
+                  })}
+                <p>&raquo;</p>
+              </div>
             </div>
           </div>
         </div>
@@ -202,7 +204,7 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={item.bookId}>
                     <Fade bottom delay={150}>
-                      <div className="card">
+                      <div className="card" style={{ height: "500px" }}>
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -297,7 +299,7 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={item.nameBook}>
                     <Fade bottom delay={150}>
-                      <div className="card">
+                      <div className="card" style={{ height: "500px" }}>
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">

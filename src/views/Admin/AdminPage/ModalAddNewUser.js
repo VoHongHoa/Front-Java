@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import "./ModalAddNewUser.scss";
 import { getAllCategoriesBooksRedux } from "../../../store/actions/CategoriesAction";
 import { ROLE_OPTIONS } from "../../../constants/constants";
 var mediumRegex = new RegExp(
-  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_+])(?=.{8,})"
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
 );
 var phoneRegex = new RegExp("^(?=.*[0-9])");
 
@@ -113,8 +112,6 @@ class ModalAddNewBook extends Component {
         },
       };
       this.props.doAddNewUser(data);
-    } else {
-      toast.error("Vui lòng điền thông tin");
     }
     if (this.state.action === "EDIT_USER") {
       let data = {

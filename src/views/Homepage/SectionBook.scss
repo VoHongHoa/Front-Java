@@ -22,7 +22,8 @@
     flex: 1 1 auto;
     padding: 0 1.25rem;
     text-align: center;
-    .name{
+
+    .name {
         font-weight: 600;
         font-size: large;
         color: black;
@@ -60,24 +61,34 @@
 a {
     text-decoration: none !important
 }
-.hide{
+
+.hide {
     display: none;
     padding: 0 1.25rem;
     text-align: center;
     padding: 10px 0;
 }
-.show{
+
+.show {
     display: block;
 }
-.card:hover{
-    .hide{
+
+.card:hover {
+    .hide {
         display: block;
     }
-    .show{
+
+    .show {
         display: none;
     }
 }
-.btn:hover{
-    font-size:105%;
+
+.btn:hover {
+    font-size: 105%;
     font-weight: 500;
+}
+
+.pagination {
+    display: flex !important;
+    justify-content: center;
 }

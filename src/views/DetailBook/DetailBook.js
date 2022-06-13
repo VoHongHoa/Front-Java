@@ -44,7 +44,7 @@ class DetailBook extends Component {
     }
   }
 
-  handleAddToCart = book => {
+  handleAddToCart = (book) => {
     this.props.addToCart(book);
   };
 
@@ -52,11 +52,11 @@ class DetailBook extends Component {
     this.props.history.push("/");
   };
 
-  handleReturnCate = cateId => {
+  handleReturnCate = () => {
     this.props.history.push("/");
   };
 
-  getAllReviews = async bookId => {
+  getAllReviews = async (bookId) => {
     try {
       let res = await getComment(bookId);
       //console.log(res);
@@ -68,7 +68,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = event => {
+  handleOnchangeInput = (event) => {
     this.setState({
       newReview: event.target.value,
     });
@@ -123,7 +123,6 @@ class DetailBook extends Component {
         console.log(res);
       } catch (e) {
         console.log(e);
-        toast.error("Lỗi server");
       }
     }
   };
@@ -134,7 +133,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async item => {
+  handledeleteComment = async (item) => {
     //onsole.log(item);
     try {
       let data = {
@@ -150,11 +149,10 @@ class DetailBook extends Component {
       }
     } catch (e) {
       console.log(e);
-      toast.error("Lỗi server");
     }
   };
 
-  handleOpenModaleditComment = async item => {
+  handleOpenModaleditComment = async (item) => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -182,10 +180,9 @@ class DetailBook extends Component {
       }
     } catch (e) {
       console.log(e);
-      toast.error("Lỗi server");
     }
   };
-  handleVoterating = numOfStar => {
+  handleVoterating = (numOfStar) => {
     this.setState({ numOfStar: numOfStar });
   };
 
@@ -271,7 +268,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={event => this.handleOnchangeInput(event)}
+                onChange={(event) => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -423,15 +420,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return { addToCart: item => dispatch(addToCart(item)) };
+const mapDispatchToProps = (dispatch) => {
+  return { addToCart: (item) => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

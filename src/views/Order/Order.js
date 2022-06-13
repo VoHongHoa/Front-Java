@@ -43,7 +43,7 @@ class Order extends Component {
     let allOrder = this.state.allOrder;
     for (let i = 0; i < allOrder.length; i++) {
       let Detail = await getDetailOrderById(allOrder[i].orderssId);
-      console.log("check detail: ", Detail);
+      // console.log("check detail: ", Detail);
       this.setState({
         detailOrder: [...this.state.detailOrder, Detail],
       });
@@ -51,7 +51,7 @@ class Order extends Component {
   };
   render() {
     let { allOrder, detailOrder } = this.state;
-    console.log("check again: ", detailOrder);
+    // console.log("check again: ", detailOrder);
     return (
       <React.Fragment>
         <div className="mb-2">

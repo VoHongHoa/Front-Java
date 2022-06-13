@@ -200,7 +200,7 @@ class HomeHeader extends Component {
                         key={index + 1000}
                         onClick={() => this.handleSearchByKeyword(item)}
                       >
-                        {item}
+                        <i className="fa-solid fa-book"></i> {item}
                       </p>
                     );
                   })}

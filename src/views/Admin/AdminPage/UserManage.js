@@ -98,7 +98,7 @@ class UserManage extends Component {
   handleDeleteUser = async (userId) => {
     try {
       let res;
-      if (this.checkAdminOrLibrarian()) {
+      if (this.checkAdminOrSeller()) {
         res = await deleteUser(userId);
       } else {
         res = await deleteUserByLibrarian(userId);
@@ -177,7 +177,7 @@ class UserManage extends Component {
       let data = {
         keyword: event.target.value,
       };
-      if (this.checkAdminOrLibrarian()) {
+      if (this.checkAdminOrSeller()) {
         res = await searchUser(data);
       } else {
         res = await searchUserBySeller(data);

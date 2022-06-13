@@ -25,6 +25,7 @@ import Blog from "./Blog/Blog";
 import Book from "./Products/Book";
 import Search from "./Search/Search";
 import ConfirmForgotPassword from "./User/ForgotPassword/ConfirmForgotPassword";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Order from "./Order/Order";
 class App extends Component {
   constructor(props) {
@@ -36,159 +37,163 @@ class App extends Component {
     let { isLogin, userInfor } = this.props;
     return (
       <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route path="/" exact>
-              <HomePage />
-            </Route>
-            <Route path="/book/:id" exact>
-              <DetailBook />
-            </Route>
-            <Route path="/loai-sach/:cateId/:page" exact>
-              <Book />
-            </Route>
-            <Route path="/lienhe" exact>
-              <Contact />
-            </Route>
-            <Route path="/quydinh" exact>
-              <Term />
-            </Route>
+        <PayPalScriptProvider
+          options={{ "client-id": process.env.REACT_APP_CLIENT_ID_PAYPAL }}
+        >
+          <div className="App">
+            <Switch>
+              <Route path="/" exact>
+                <HomePage />
+              </Route>
+              <Route path="/book/:id" exact>
+                <DetailBook />
+              </Route>
+              <Route path="/loai-sach/:cateId/:page" exact>
+                <Book />
+              </Route>
+              <Route path="/lienhe" exact>
+                <Contact />
+              </Route>
+              <Route path="/quydinh" exact>
+                <Term />
+              </Route>
 
-            <Route path="/tim-kiem" exact>
-              <Search />
-            </Route>
+              <Route path="/tim-kiem" exact>
+                <Search />
+              </Route>
 
-            <Route path="/cai-dat-mat-khau-moi/:email/:token" exact>
-              <ConfirmForgotPassword />
-            </Route>
+              <Route path="/cai-dat-mat-khau-moi/:email/:token" exact>
+                <ConfirmForgotPassword />
+              </Route>
 
-            <Route path="/blog" exact>
-              <Blog />
-            </Route>
-            <Route path="/order" exact>
-              <Order />
-            </Route>
-            <Route path="/login" exact>
-              {isLogin === true ? <Redirect to="/" /> : <Login />}
-            </Route>
-            <Route path="/sign-up" exact>
-              {isLogin === true ? <Redirect to="/" /> : <SignUp />}
-            </Route>
+              <Route path="/blog" exact>
+                <Blog />
+              </Route>
+              <Route path="/order" exact>
+                <Order />
+              </Route>
+              <Route path="/login" exact>
+                {isLogin === true ? <Redirect to="/" /> : <Login />}
+              </Route>
+              <Route path="/sign-up" exact>
+                {isLogin === true ? <Redirect to="/" /> : <SignUp />}
+              </Route>
 
-            <Route path="/profile" exact>
-              {isLogin === false ? <Redirect to="/login" /> : <Profile />}
-            </Route>
+              <Route path="/profile" exact>
+                {isLogin === false ? <Redirect to="/login" /> : <Profile />}
+              </Route>
 
-            <Route path="/cart" exact>
-              {/* {isLogin === false ? <Redirect to="/login" /> : <Cart />} */}
-              <Cart></Cart>
-            </Route>
+              <Route path="/cart" exact>
+                {/* {isLogin === false ? <Redirect to="/login" /> : <Cart />} */}
+                <Cart></Cart>
+              </Route>
 
-            <Route path="/admin" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              userInfor.role.nameRole === "ADMIN" ? (
-                <Adminpage />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
-            <Route path="/admin/user" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "SELLER") ? (
-                <UserManage />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
+              <Route path="/admin" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                userInfor.role.nameRole === "ADMIN" ? (
+                  <Adminpage />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
+              <Route path="/admin/user" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                (userInfor.role.nameRole === "ADMIN" ||
+                  userInfor.role.nameRole === "SELLER") ? (
+                  <UserManage />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
 
-            <Route path="/admin/categories" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "SELLER") ? (
-                <CategoriesBooks />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
+              <Route path="/admin/categories" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                (userInfor.role.nameRole === "ADMIN" ||
+                  userInfor.role.nameRole === "SELLER") ? (
+                  <CategoriesBooks />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
 
-            <Route path="/admin/order" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "SELLER") ? (
-                <ManageOrder />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
+              <Route path="/admin/order" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                (userInfor.role.nameRole === "ADMIN" ||
+                  userInfor.role.nameRole === "SELLER") ? (
+                  <ManageOrder />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
 
-            <Route path="/admin/books" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              (userInfor.role.nameRole === "ADMIN" ||
-                userInfor.role.nameRole === "SELLER") ? (
-                <BooksManage />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
+              <Route path="/admin/books" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                (userInfor.role.nameRole === "ADMIN" ||
+                  userInfor.role.nameRole === "SELLER") ? (
+                  <BooksManage />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
 
-            <Route path="/admin/blog" exact>
-              {isLogin === true &&
-              userInfor.role &&
-              userInfor.role.nameRole &&
-              userInfor.role.nameRole === "ADMIN" ? (
-                <BlogManage />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
+              <Route path="/admin/blog" exact>
+                {isLogin === true &&
+                userInfor.role &&
+                userInfor.role.nameRole &&
+                userInfor.role.nameRole === "ADMIN" ? (
+                  <BlogManage />
+                ) : (
+                  <Redirect to="/login" />
+                )}
+              </Route>
 
-            <Route path="/changepassword" exact>
-              {isLogin === false ? (
-                <Redirect to="/login" />
-              ) : (
-                <ChangePassword />
-              )}
-            </Route>
-            <Route path="/forgotpassword" exact>
-              <ForgotPassword />
-            </Route>
-          </Switch>
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-        </div>
+              <Route path="/changepassword" exact>
+                {isLogin === false ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <ChangePassword />
+                )}
+              </Route>
+              <Route path="/forgotpassword" exact>
+                <ForgotPassword />
+              </Route>
+            </Switch>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
+          </div>
+        </PayPalScriptProvider>
       </BrowserRouter>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

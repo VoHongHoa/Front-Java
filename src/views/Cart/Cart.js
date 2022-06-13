@@ -13,6 +13,7 @@ import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
 import _ from "lodash";
+import PayPalCheckoutButton from "../../components/PayPalCheckoutButton";
 var phoneRegex = new RegExp("^(?=.*[0-9])");
 class Cart extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class Cart extends Component {
       errPhone: true,
       email: "",
       errEmail: true,
+      statusPayment: "chưa thanh toán",
     };
   }
   componentDidMount() {
@@ -97,7 +99,7 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleBorrowBooks = async () => {
+  handleBuyBooks = async () => {
     let cart = [];
     if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
       for (let index = 0; index < this.state.allItemInCart.length; index++) {
@@ -119,6 +121,7 @@ class Cart extends Component {
       let data = {
         cartBooks: cart,
         user: user,
+        pay: this.state.statusPayment,
       };
       console.log(data);
       let res;
@@ -137,6 +140,30 @@ class Cart extends Component {
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");
     }
+  };
+  checkInput = () => {
+    let isValid = true;
+    if (this.state.errPhone === false) {
+      toast.error("Nhập số điện thoại");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.errEmail === false) {
+      toast.error("Nhập email");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.address === "") {
+      toast.error("Nhập địa chỉ nhận hàng");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.fullName === "") {
+      toast.error("Nhập tên khách hàng");
+      isValid = false;
+      return isValid;
+    }
+    return isValid;
   };
   handleOnchangeInput = (event, id) => {
     let copyState = { ...this.state };
@@ -182,6 +209,11 @@ class Cart extends Component {
         });
       }
     }
+  };
+  changePayment = () => {
+    this.setState({
+      statusPayment: "đã thanh toán",
+    });
   };
   render() {
     //console.log(this.state.allItemInCart);
@@ -424,10 +456,16 @@ class Cart extends Component {
                               type="button"
                               className="btn btn-dark btn-block btn-lg"
                               data-mdb-ripple-color="dark"
-                              onClick={() => this.handleBorrowBooks()}
+                              onClick={() => this.handleBuyBooks()}
                             >
                               Mua sách
                             </button>
+                            <PayPalCheckoutButton
+                              total={total}
+                              handleBuyBooks={this.handleBuyBooks}
+                              checkInput={this.checkInput}
+                              changePayment={this.changePayment}
+                            />
                           </div>
                         </div>
                       )}

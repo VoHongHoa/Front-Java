@@ -219,6 +219,7 @@ class OrderManage extends Component {
                 <th scope="col">Tống số sách</th>
                 <th scope="col">Ngày hóa đơn</th>
                 <th scope="col">Trạng thái</th>
+                <th scope="col">Trạng thái thanh toán</th>
                 <th scope="col">Hành động</th>
               </tr>
             </thead>
@@ -235,6 +236,7 @@ class OrderManage extends Component {
                       <td>{item.totalBook}</td>
                       <td>{moment(item.orderssDate).format("MM/DD/YYYY")}</td>
                       <td>{item.status}</td>
+                      <td>{item.pay}</td>
                       <td className="">
                         <i
                           className="fa-solid fa-eye"

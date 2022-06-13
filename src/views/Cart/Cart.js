@@ -8,7 +8,7 @@ import {
   deleteItem,
 } from "../../store/actions/AppAction";
 import { toast } from "react-toastify";
-import { buyBooks } from "../../services/userService";
+import { buyBooks, buyBooksByGuest } from "../../services/userService";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
@@ -121,7 +121,13 @@ class Cart extends Component {
         user: user,
       };
       console.log(data);
-      let res = await buyBooks(data);
+      let res;
+      if (this.props.isLogin === true) {
+        res = await buyBooks(data);
+      } else {
+        res = await buyBooksByGuest(data);
+      }
+
       console.log(res);
       if (res && res.length > 0) {
         toast.success("Mua sách thành công");

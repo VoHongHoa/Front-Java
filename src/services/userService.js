@@ -49,6 +49,9 @@ const confirmChangeNewPassword = (token, data) => {
 const findUserByEmail = (email) => {
   return axios.get(`/tim-user/${email}`);
 };
+const buyBooksByGuest = (data) => {
+  return axios.post("/mua-sach", data);
+};
 
 export {
   handleSignUp,
@@ -66,4 +69,5 @@ export {
   updateUserRoleByAdmin,
   confirmChangeNewPassword,
   findUserByEmail,
+  buyBooksByGuest,
 };

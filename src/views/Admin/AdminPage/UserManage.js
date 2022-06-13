@@ -7,6 +7,8 @@ import {
   getAllUserByLibrarian,
   deleteUserByLibrarian,
   updateUserRoleByAdmin,
+  searchUser,
+  searchUserBySeller,
 } from "../../../services/userService";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import { toast } from "react-toastify";
@@ -26,9 +28,11 @@ class UserManage extends Component {
       currentUserEdit: {},
       action: "",
       isOpenPopup: false,
+      keyword: "",
+      action: "",
     };
   }
-  checkAdminOrLibrarian = () => {
+  checkAdminOrSeller = () => {
     let isValid = true; // admin: true , seller: false
     if (
       this.props.userInfor &&
@@ -41,7 +45,7 @@ class UserManage extends Component {
   getUserPaging = async (currentPage) => {
     try {
       let res;
-      if (this.checkAdminOrLibrarian()) {
+      if (this.checkAdminOrSeller()) {
         res = await getAllUser(currentPage);
       } else {
         res = await getAllUserByLibrarian(currentPage);
@@ -157,6 +161,37 @@ class UserManage extends Component {
       currentUserEdit: item,
     });
   };
+  handleOnchangeInput = async (event) => {
+    this.setState({
+      keyword: event.target.value,
+      action: "SEARCH",
+    });
+    try {
+      let res;
+      if (event.target.value === "") {
+        this.getUserPaging(0);
+        this.setState({
+          action: "",
+        });
+      }
+      let data = {
+        keyword: event.target.value,
+      };
+      if (this.checkAdminOrLibrarian()) {
+        res = await searchUser(data);
+      } else {
+        res = await searchUserBySeller(data);
+      }
+      //console.log(res);
+      if (res) {
+        this.setState({
+          allUser: res,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     let { numOfPage, allUser, currentPage } = this.state;
     let arr = [];
@@ -176,9 +211,22 @@ class UserManage extends Component {
               className="btn btn-primary"
               onClick={() => this.handleOpenModal()}
             >
-              Thêm mới
+              <i className="fa-solid fa-plus"></i> Thêm mới
             </button>
           )}
+
+        <div className="col-12 mb-3 mt-3">
+          <label htmlFor="search">
+            <b>Tìm kiếm người dùng</b>
+          </label>
+          <input
+            type="text"
+            className="form-control mt-2"
+            placeholder="Tìm kiếm người dùng"
+            name="search"
+            onChange={(event) => this.handleOnchangeInput(event)}
+          />
+        </div>
 
         <div className="container">
           <table className="table table-striped">
@@ -197,7 +245,7 @@ class UserManage extends Component {
                 allUser.map((item, index) => {
                   return (
                     <tr key={item.userId}>
-                      <th scope="row">{index}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{item.fullName}</td>
                       <td>{item.email}</td>
                       <td>{item.role.nameRole ? item.role.nameRole : ""}</td>
@@ -224,23 +272,25 @@ class UserManage extends Component {
             </tbody>
           </table>
 
-          <div className="pagination">
-            <p>&laquo;</p>
-            {arr &&
-              arr.length &&
-              arr.map((item, index) => {
-                return (
-                  <p
-                    onClick={() => this.handleChangePage(item)}
-                    className={currentPage === item ? "active" : ""}
-                    key={index}
-                  >
-                    {item}
-                  </p>
-                );
-              })}
-            <p>&raquo;</p>
-          </div>
+          {this.state.action !== "SEARCH" && (
+            <div className="pagination">
+              <p>&laquo;</p>
+              {arr &&
+                arr.length &&
+                arr.map((item, index) => {
+                  return (
+                    <p
+                      onClick={() => this.handleChangePage(item)}
+                      className={currentPage === item ? "active" : ""}
+                      key={index}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
+              <p>&raquo;</p>
+            </div>
+          )}
         </div>
         <ModalAddNewUser
           isOpenModal={this.state.isOpenModal}

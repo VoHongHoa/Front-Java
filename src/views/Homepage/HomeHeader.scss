@@ -391,6 +391,39 @@
         d: path("M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z");
     }
 
+    .seacrh-container {
+        width: 300px;
+
+
+        .search-result {
+            width: 300px;
+            position: absolute;
+            z-index: 2000;
+            background-color: #e5e5e5;
+            height: 300px;
+            overflow-y: scroll;
+
+            p {
+                padding: 3px;
+                border: 1px solid black;
+                cursor: pointer;
+
+                &:hover {
+                    color: blue;
+                }
+            }
+
+        }
+
+        .no-result {
+            display: none;
+        }
+
+
+    }
+
+
+
 
     @media (min-width: 1200px) {
         .form-inline .input-group {

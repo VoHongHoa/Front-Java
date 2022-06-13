@@ -32,6 +32,9 @@ const getSearchBook = (data) => {
 const ratingBook = (data) => {
   return axios.post(`/danh-gia-sach/${data.bookId}/${data.star}`);
 };
+const keywordSearch = (data) => {
+  return axios.post("/search/book", data);
+};
 export {
   addNewBook,
   getAllBooksPaging,
@@ -44,4 +47,5 @@ export {
   getAllBooksPagingBySeller,
   getSearchBook,
   ratingBook,
+  keywordSearch,
 };

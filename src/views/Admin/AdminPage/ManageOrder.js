@@ -195,13 +195,13 @@ class OrderManage extends Component {
       <div className="container">
         <AdminHeader></AdminHeader>
         <h2 className="title mt-3 mb-3">Quản lý đơn hàng</h2>
-        <div className="col-6 mb-3">
+        <div className="col-12 mb-3">
           <label htmlFor="search">
             <b>Tìm kiếm hóa đơn</b>
           </label>
           <input
             type="text"
-            className="form-control"
+            className="form-control mt-2"
             placeholder="Tìm kiếm hóa đơn"
             name="search"
             onChange={(event) => this.handleOnchangeInput(event)}

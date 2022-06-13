@@ -155,7 +155,7 @@ class ModalAddNewBook extends Component {
     }
   };
   handleOnchangePhoneNumber = (event) => {
-    console.log(event.target.value.charAt(0));
+    // console.log(event.target.value.charAt(0));
     let phoneNumber = event.target.value;
     this.setState({
       phoneNumber: phoneNumber,

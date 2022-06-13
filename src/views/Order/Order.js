@@ -50,6 +50,7 @@ class Order extends Component {
   };
   render() {
     let Orders = this.state;
+    console.log("Check orders: ", Orders);
     return (
       <React.Fragment>
         <div className="mb-2">

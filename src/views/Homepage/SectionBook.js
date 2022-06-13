@@ -19,7 +19,7 @@ class SectionProduct extends Component {
       currentPage: 0,
     };
   }
-  getAllBook = async (currentPage) => {
+  getAllBook = async currentPage => {
     try {
       let res = await getBookHomePage(currentPage);
       console.log(res);
@@ -52,17 +52,17 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
-  handleDetailBook = (item) => {
+  handleDetailBook = item => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     //console.log(item);
     this.props.addToCart(item);
   };
   componentDidMount() {
     this.getAllBook(this.state.currentPage);
   }
-  handleChangePage = (item) => {
+  handleChangePage = item => {
     this.getAllBook(item);
     this.setState({
       currentPage: item,
@@ -268,7 +268,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
+                        <Fade className="showhide" top delay={-300}>
                           <h3 className="hide mb-0 font-weight-semibold">
                             {formatPrice(item.price)}
                           </h3>
@@ -363,7 +363,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
+                        <Fade top delay={-300}>
                           <h3 className="hide mb-0 font-weight-semibold">
                             {formatPrice(item.price)}
                           </h3>
@@ -386,16 +386,16 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default withRouter(

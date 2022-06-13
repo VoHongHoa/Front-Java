@@ -14,10 +14,14 @@ const deleteCategories = (idCategory) => {
 const getDataCategories = () => {
   return axios.get("/category");
 };
+const editCategoy = (data) => {
+  return axios.post("/admin/sua-loai-sach", data);
+};
 export {
   getAllCategoriesBooks,
   addNewCategoriesBooks,
   deleteCategories,
   getDataCategories,
   getAllCategoriesBooksByLibrarian,
+  editCategoy,
 };

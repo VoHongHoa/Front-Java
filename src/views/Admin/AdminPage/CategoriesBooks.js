@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   addNewCategoriesBooks,
   deleteCategories,
+  editCategoy,
   getAllCategoriesBooks,
   getAllCategoriesBooksByLibrarian,
 } from "../../../services/CategoriesBooksService";
@@ -19,6 +20,8 @@ class CategoriesBooks extends Component {
       currentPage: 0,
       numOfCategories: 0,
       numOfPage: 0,
+      action: "",
+      currentItem: {},
     };
   }
   getCategoriesPaging = async (currentPage) => {
@@ -119,6 +122,36 @@ class CategoriesBooks extends Component {
       }
     }
   };
+  handleChooseCate = async (item) => {
+    console.log(item);
+    this.setState({
+      action: "EDIT_CATEGORY",
+      newCategories: item.nameCate,
+      currentItem: item,
+    });
+  };
+  handleEditCategoriesBook = async () => {
+    try {
+      let data = {
+        categoryId: this.state.currentItem.categoryId,
+        nameCate: this.state.newCategories,
+      };
+      //console.log(data);
+      let res = await editCategoy(data);
+      console.log(res);
+      if (res === "successful") {
+        this.getCategoriesPaging(0);
+        toast.success("Chỉnh sửa thành công");
+        this.setState({
+          action: "",
+          newCategories: "",
+          currentItem: "",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     let { numOfPage, allCategories, currentPage } = this.state;
     let arr = [];
@@ -139,12 +172,21 @@ class CategoriesBooks extends Component {
                 value={this.state.newCategories}
                 onChange={(event) => this.handleOnchangeInput(event)}
               />
-              <button
-                className="btn btn-primary mt-2"
-                onClick={() => this.handleAddNewCategoriesBook()}
-              >
-                Thêm mới
-              </button>
+              {this.state.action === "EDIT_CATEGORY" ? (
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={() => this.handleEditCategoriesBook()}
+                >
+                  Lưu
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={() => this.handleAddNewCategoriesBook()}
+                >
+                  Thêm mới
+                </button>
+              )}
             </div>
           )}
 
@@ -171,6 +213,11 @@ class CategoriesBooks extends Component {
                       {this.props.userInfor &&
                         this.props.userInfor.role.nameRole === "ADMIN" && (
                           <td>
+                            <i
+                              className="fas fa-pencil"
+                              style={{ margin: "3px", cursor: "pointer" }}
+                              onClick={() => this.handleChooseCate(item)}
+                            ></i>
                             <i
                               className="fas fa-trash "
                               onClick={() =>

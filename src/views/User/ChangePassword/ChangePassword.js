@@ -5,13 +5,19 @@ import { toast } from "react-toastify";
 import { changePassword } from "../../../services/userService";
 import { logOutSuccess } from "../../../store/actions/AppAction";
 import "./ChangePassword.scss";
+var mediumRegex = new RegExp(
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+);
 class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       curentPassword: "",
       newPassword: "",
+      errPass: true,
       repeatNewPassword: "",
+      errRepeat: true,
+      isShowPassword: false,
     };
   }
   componentDidMount() {}
@@ -26,27 +32,54 @@ class ChangePassword extends Component {
       ...copyState,
     });
   };
+  handleOnchangePassword = (event) => {
+    if (mediumRegex.test(event.target.value) === true) {
+      this.setState({
+        newPassword: event.target.value,
+        passErr: true,
+      });
+    } else {
+      this.setState({
+        passErr: false,
+      });
+    }
+  };
+  handleOnchangeRepeat = (event) => {
+    if (this.state.newPassword !== event.target.value) {
+      this.setState({
+        rpPassErr: false,
+      });
+    } else {
+      this.setState({
+        rpPassErr: true,
+        repeatNewPassword: event.target.value,
+      });
+    }
+  };
   handleChangePassword = async () => {
     try {
-      if (this.state.newPassword !== this.state.repeatNewPassword) {
-        toast.error("Mật khẩu mới và lặp lại mật khẩu không trùng nhau!!! ");
-      } else {
+      if (this.state.newPassword === this.state.repeatNewPassword) {
         let data = {
           oldPassword: this.state.curentPassword,
           newPassword: this.state.newPassword,
         };
         let res = await changePassword(data);
         //console.log(res);
-        if (res) {
+        if (res !== "mat khau cu sai") {
           toast.success("Thay đổi mật khẩu thành công! Vui lòng đăng nhập lại");
           this.props.logOutUser();
         } else {
-          toast.error("Thay đổi không thành công!");
+          toast.error("Mật khẩu cũ không chính xác!");
         }
       }
     } catch (e) {
       toast.error("Lỗi sever!");
     }
+  };
+  handleShowHidePassword = () => {
+    this.setState({
+      isShowPassword: !this.state.isShowPassword,
+    });
   };
   render() {
     return (
@@ -61,7 +94,7 @@ class ChangePassword extends Component {
               <b>Mật khẩu hiện tại</b>
             </label>
             <input
-              type="password"
+              type={this.state.isShowPassword === true ? "text" : "password"}
               placeholder="Mật khẩu hiện tại"
               onChange={(event) =>
                 this.handleOnchangeInput(event, "curentPassword")
@@ -72,36 +105,57 @@ class ChangePassword extends Component {
             />
           </div>
 
-          <div className="form-group mt-2">
+          <div className="col-12 passwordInput mt-2">
             <label htmlFor="psw">
-              <b>Mật khẩu mới</b>
+              <b>Mật khẩu</b>
             </label>
             <input
-              type="password"
-              placeholder="Mật khẩu mới"
-              onChange={(event) =>
-                this.handleOnchangeInput(event, "newPassword")
-              }
+              type={this.state.isShowPassword === true ? "text" : "password"}
+              placeholder="Nhập mật khẩu"
               className="form-control"
               name="psw"
-              required
+              onChange={(event) => this.handleOnchangePassword(event)}
             />
+            <span
+              className={this.state.passErr === false ? "notice" : "no-notice"}
+            >
+              Mật khẩu có ít nhất 8 kí tự có chứa ít nhất: 1 kí tự in hoa, 1 kí
+              tự thường, 1 kí tự đặc biệt!
+            </span>
           </div>
 
-          <div className="form-group mt-2">
-            <label htmlFor="psw">
-              <b>Nhập lại mật khẩu mới</b>
+          <div className="col-12 pswRepeat mt-2">
+            <label htmlFor="psw-repeat">
+              <b>Nhập lại mật khẩu</b>
             </label>
             <input
-              type="password"
-              placeholder="Nhập lại mật khẩu mới"
-              onChange={(event) =>
-                this.handleOnchangeInput(event, "repeatNewPassword")
-              }
+              type={this.state.isShowPassword === true ? "text" : "password"}
+              placeholder="Nhập lại mật khẩu"
               className="form-control"
-              name="psw"
+              name="psw-repeat"
+              onChange={(event) => this.handleOnchangeRepeat(event)}
               required
             />
+            <span
+              className={
+                this.state.rpPassErr === false ? "notice" : "no-notice"
+              }
+            >
+              Mật khẩu không trùng khớp!
+            </span>
+          </div>
+
+          <div className="form-check mt-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value={this.state.isShowPassword}
+              id="rememberPasswordCheck"
+              onChange={() => this.handleShowHidePassword()}
+            />
+            <label className="form-check-label" htmlFor="rememberPasswordCheck">
+              Hiển thị mật khẩu
+            </label>
           </div>
 
           <button type="submit" onClick={() => this.handleChangePassword()}>

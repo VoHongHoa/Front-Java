@@ -152,6 +152,13 @@ class CategoriesBooks extends Component {
       console.log(e);
     }
   };
+  handleCancelEdit = () => {
+    this.setState({
+      action: "",
+      newCategories: "",
+      currentItem: "",
+    });
+  };
   render() {
     let { numOfPage, allCategories, currentPage } = this.state;
     let arr = [];
@@ -173,12 +180,20 @@ class CategoriesBooks extends Component {
                 onChange={(event) => this.handleOnchangeInput(event)}
               />
               {this.state.action === "EDIT_CATEGORY" ? (
-                <button
-                  className="btn btn-primary mt-2"
-                  onClick={() => this.handleEditCategoriesBook()}
-                >
-                  Lưu
-                </button>
+                <div style={{ display: "flex", gap: "5px" }}>
+                  <button
+                    className="btn btn-primary mt-2"
+                    onClick={() => this.handleEditCategoriesBook()}
+                  >
+                    Lưu
+                  </button>
+                  <button
+                    className="btn btn-danger mt-2"
+                    onClick={() => this.handleCancelEdit()}
+                  >
+                    Hủy
+                  </button>
+                </div>
               ) : (
                 <button
                   className="btn btn-primary mt-2"
@@ -219,7 +234,8 @@ class CategoriesBooks extends Component {
                               onClick={() => this.handleChooseCate(item)}
                             ></i>
                             <i
-                              className="fas fa-trash "
+                              className="fas fa-trash"
+                              style={{ margin: "3px", cursor: "pointer" }}
                               onClick={() =>
                                 this.handleDeleteCategories(item.categoryId)
                               }

@@ -9,8 +9,6 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../constants/format";
 import { getDetailOrderById } from "../../services/OrderService";
-import { map } from "lodash";
-import { PageItem } from "react-bootstrap";
 
 class Order extends Component {
   constructor(props) {

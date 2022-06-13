@@ -8,11 +8,12 @@ import {
   deleteItem,
 } from "../../store/actions/AppAction";
 import { toast } from "react-toastify";
-import { buyBooks } from "../../services/userService";
+import { buyBooks, buyBooksByGuest } from "../../services/userService";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
 import _ from "lodash";
+import PayPalCheckoutButton from "../../components/PayPalCheckoutButton";
 var phoneRegex = new RegExp("^(?=.*[0-9])");
 class Cart extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class Cart extends Component {
       errPhone: true,
       email: "",
       errEmail: true,
+      statusPayment: "chưa thanh toán",
     };
   }
   componentDidMount() {
@@ -97,7 +99,7 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleBorrowBooks = async () => {
+  handleBuyBooks = async () => {
     let cart = [];
     if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
       for (let index = 0; index < this.state.allItemInCart.length; index++) {
@@ -119,9 +121,16 @@ class Cart extends Component {
       let data = {
         cartBooks: cart,
         user: user,
+        pay: this.state.statusPayment,
       };
       console.log(data);
-      let res = await buyBooks(data);
+      let res;
+      if (this.props.isLogin === true) {
+        res = await buyBooks(data);
+      } else {
+        res = await buyBooksByGuest(data);
+      }
+
       console.log(res);
       if (res && res.length > 0) {
         toast.success("Mua sách thành công");
@@ -131,6 +140,30 @@ class Cart extends Component {
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");
     }
+  };
+  checkInput = () => {
+    let isValid = true;
+    if (this.state.errPhone === false) {
+      toast.error("Nhập số điện thoại");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.errEmail === false) {
+      toast.error("Nhập email");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.address === "") {
+      toast.error("Nhập địa chỉ nhận hàng");
+      isValid = false;
+      return isValid;
+    }
+    if (this.state.fullName === "") {
+      toast.error("Nhập tên khách hàng");
+      isValid = false;
+      return isValid;
+    }
+    return isValid;
   };
   handleOnchangeInput = (event, id) => {
     let copyState = { ...this.state };
@@ -176,6 +209,11 @@ class Cart extends Component {
         });
       }
     }
+  };
+  changePayment = () => {
+    this.setState({
+      statusPayment: "đã thanh toán",
+    });
   };
   render() {
     //console.log(this.state.allItemInCart);
@@ -292,16 +330,16 @@ class Cart extends Component {
                       {allItemInCart && allItemInCart.length > 0 && (
                         <div className="col-lg-4 bg-grey">
                           <div className="p-5">
-                            <h3 className="fw-bold mb-5 mt-2 pt-1">Hóa đơn</h3>
+                            <h3 className="fw-bold mb-2 pt-1">Hóa đơn</h3>
                             <hr className="my-4" />
 
-                            <div className="d-flex justify-content-between mb-4">
+                            <div className="d-flex justify-content-between mb-2">
                               <h5 className="text-uppercase">
                                 {allItemInCart.length} sách
                               </h5>
                             </div>
 
-                            <div className="mb-4 pb-2">
+                            <div className="mb-2 pb-2">
                               <label
                                 className="form-label"
                                 htmlFor="form3Examplea2"
@@ -312,7 +350,7 @@ class Cart extends Component {
                                 type="text"
                                 id="form3Examplea2"
                                 placeholder="Nhập họ và tên"
-                                className="form-control form-control-lg"
+                                className="form-control"
                                 value={this.state.fullName}
                                 onChange={(event) =>
                                   this.handleOnchangeInput(event, "fullName")
@@ -320,7 +358,7 @@ class Cart extends Component {
                               />
                             </div>
 
-                            <div className="mb-4 pb-2">
+                            <div className="mb-2 pb-2">
                               <label
                                 className="form-label"
                                 htmlFor="form3Examplea2"
@@ -329,7 +367,7 @@ class Cart extends Component {
                               </label>
                               <input
                                 type="text"
-                                className="form-control form-control-lg"
+                                className="form-control"
                                 placeholder="Nhập email"
                                 name="email"
                                 onChange={(event) =>
@@ -350,7 +388,7 @@ class Cart extends Component {
 
                             {/* <h5 className="text-uppercase mb-3">Give code</h5> */}
 
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <div className="form-outline">
                                 <label
                                   className="form-label"
@@ -362,7 +400,7 @@ class Cart extends Component {
                                   type="text"
                                   id="form3Examplea2"
                                   placeholder="Nhập địa chỉ"
-                                  className="form-control form-control-lg"
+                                  className="form-control"
                                   value={this.state.address}
                                   onChange={(event) =>
                                     this.handleOnchangeInput(event, "address")
@@ -371,7 +409,7 @@ class Cart extends Component {
                               </div>
                             </div>
 
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <div className="form-outline">
                                 <label
                                   className="form-label"
@@ -382,7 +420,7 @@ class Cart extends Component {
                                 <input
                                   type="text"
                                   placeholder="Nhập số điện thoại"
-                                  className="form-control form-control-lg"
+                                  className="form-control"
                                   name="phonenumber"
                                   onChange={(event) =>
                                     this.handleOnchangePhoneNumber(event)
@@ -416,12 +454,19 @@ class Cart extends Component {
 
                             <button
                               type="button"
-                              className="btn btn-dark btn-block btn-lg"
+                              className="btn btn-primary btn-block btn-lg"
                               data-mdb-ripple-color="dark"
-                              onClick={() => this.handleBorrowBooks()}
+                              onClick={() => this.handleBuyBooks()}
                             >
-                              Mua sách
+                              Thanh toán khi nhận sách
                             </button>
+                            <p className="mt-2">OR</p>
+                            <PayPalCheckoutButton
+                              total={total}
+                              handleBuyBooks={this.handleBuyBooks}
+                              checkInput={this.checkInput}
+                              changePayment={this.changePayment}
+                            />
                           </div>
                         </div>
                       )}

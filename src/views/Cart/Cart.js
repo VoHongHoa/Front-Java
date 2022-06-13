@@ -13,6 +13,7 @@ import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
 import _ from "lodash";
+var phoneRegex = new RegExp("^(?=.*[0-9])");
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,10 @@ class Cart extends Component {
       allItemInCart: [],
       fullName: "",
       address: "",
-      telephone: "",
+      phoneNumber: "",
+      errPhone: true,
+      email: "",
+      errEmail: true,
     };
   }
   componentDidMount() {
@@ -31,8 +35,9 @@ class Cart extends Component {
       console.log(this.props.userInfor);
       this.setState({
         fullName: this.props.userInfor.fullName,
+        email: this.props.userInfor.email,
         address: this.props.userInfor.address,
-        telephone: this.props.userInfor.telephone,
+        phoneNumber: this.props.userInfor.telephone,
       });
     }
   }
@@ -103,17 +108,19 @@ class Cart extends Component {
         cart.push(obj);
       }
       let user = {};
-      if (this.props.isLogin === false) {
-        user = {
-          fullName: this.state.fullName,
-          address: this.state.address,
-          telephone: this.state.telephone,
-        };
-      }
+
+      user = {
+        fullName: this.state.fullName,
+        address: this.state.address,
+        telephone: this.state.phoneNumber,
+        email: this.state.email,
+      };
+
       let data = {
         cartBooks: cart,
         user: user,
       };
+      console.log(data);
       let res = await buyBooks(data);
       console.log(res);
       if (res && res.length > 0) {
@@ -131,6 +138,44 @@ class Cart extends Component {
     this.setState({
       ...copyState,
     });
+  };
+  handleOnchangeEmail = (event) => {
+    let email = event.target.value;
+    this.setState({
+      email: email,
+    });
+    if (email.includes("@gmail.com")) {
+      this.setState({
+        errEmail: true,
+      });
+    } else {
+      this.setState({
+        errEmail: false,
+      });
+    }
+  };
+  handleOnchangePhoneNumber = (event) => {
+    // console.log(event.target.value.charAt(0));
+    let phoneNumber = event.target.value;
+    this.setState({
+      phoneNumber: phoneNumber,
+    });
+    if (phoneNumber.length !== 10 || phoneNumber.charAt(0) !== "0") {
+      this.setState({
+        errPhone: false,
+      });
+    } else {
+      if (phoneRegex.test(phoneNumber)) {
+        this.setState({
+          errPhone: true,
+          phoneNumber: phoneNumber,
+        });
+      } else {
+        this.setState({
+          errPhone: false,
+        });
+      }
+    }
   };
   render() {
     //console.log(this.state.allItemInCart);
@@ -254,10 +299,7 @@ class Cart extends Component {
                               <h5 className="text-uppercase">
                                 {allItemInCart.length} sách
                               </h5>
-                              {/* <h5>€ 132.00</h5> */}
                             </div>
-
-                            {/* <h5 class="text-uppercase mb-3">Shipping</h5> */}
 
                             <div className="mb-4 pb-2">
                               <label
@@ -269,12 +311,41 @@ class Cart extends Component {
                               <input
                                 type="text"
                                 id="form3Examplea2"
+                                placeholder="Nhập họ và tên"
                                 className="form-control form-control-lg"
                                 value={this.state.fullName}
                                 onChange={(event) =>
                                   this.handleOnchangeInput(event, "fullName")
                                 }
                               />
+                            </div>
+
+                            <div className="mb-4 pb-2">
+                              <label
+                                className="form-label"
+                                htmlFor="form3Examplea2"
+                              >
+                                Email
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                placeholder="Nhập email"
+                                name="email"
+                                onChange={(event) =>
+                                  this.handleOnchangeEmail(event)
+                                }
+                                value={this.state.email}
+                              />
+                              <span
+                                className={
+                                  this.state.errEmail === false
+                                    ? "notice"
+                                    : "no-notice"
+                                }
+                              >
+                                Email phải có định dạng: *@gmail.com
+                              </span>
                             </div>
 
                             {/* <h5 className="text-uppercase mb-3">Give code</h5> */}
@@ -290,6 +361,7 @@ class Cart extends Component {
                                 <textarea
                                   type="text"
                                   id="form3Examplea2"
+                                  placeholder="Nhập địa chỉ"
                                   className="form-control form-control-lg"
                                   value={this.state.address}
                                   onChange={(event) =>
@@ -303,19 +375,35 @@ class Cart extends Component {
                               <div className="form-outline">
                                 <label
                                   className="form-label"
-                                  htmlFor="form3Examplea2"
+                                  htmlFor="phonenumber"
                                 >
                                   Số điện thoại
                                 </label>
                                 <input
                                   type="text"
-                                  id="form3Examplea2"
+                                  placeholder="Nhập số điện thoại"
                                   className="form-control form-control-lg"
-                                  value={this.state.telephone}
+                                  name="phonenumber"
                                   onChange={(event) =>
-                                    this.handleOnchangeInput(event, "telephone")
+                                    this.handleOnchangePhoneNumber(event)
                                   }
+                                  value={this.state.phoneNumber}
+                                  readOnly={
+                                    this.state.action === "EDIT_USER"
+                                      ? true
+                                      : false
+                                  }
+                                  required
                                 />
+                                <span
+                                  className={
+                                    this.state.errPhone === false
+                                      ? "notice"
+                                      : "no-notice"
+                                  }
+                                >
+                                  Số điện thoại không hợp lệ
+                                </span>
                               </div>
                             </div>
 

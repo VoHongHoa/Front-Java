@@ -102,12 +102,19 @@ class Cart extends Component {
         obj.total = this.state.allItemInCart[index].price * obj.quantity;
         cart.push(obj);
       }
-      let user = {
-        fullName: this.state.fullName,
-        address: this.state.address,
-        telephone: this.state.telephone,
+      let user = {};
+      if (this.props.isLogin === false) {
+        user = {
+          fullName: this.state.fullName,
+          address: this.state.address,
+          telephone: this.state.telephone,
+        };
+      }
+      let data = {
+        cartBooks: cart,
+        user: user,
       };
-      let res = await buyBooks(cart, user);
+      let res = await buyBooks(data);
       console.log(res);
       if (res && res.length > 0) {
         toast.success("Mua sách thành công");

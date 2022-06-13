@@ -37,8 +37,8 @@ const forgotPassword = (data) => {
   console.log(data);
   return axios.post("/quen-mat-khau", data);
 };
-const buyBooks = (data, user) => {
-  return axios.post("/user/mua-sach", data, user);
+const buyBooks = (data) => {
+  return axios.post("/user/mua-sach", data);
 };
 const updateUserRoleByAdmin = (data, userId) => {
   return axios.post(`admin/${userId}`, data);

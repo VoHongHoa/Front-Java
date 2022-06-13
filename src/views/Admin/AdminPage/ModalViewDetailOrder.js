@@ -15,7 +15,7 @@ class ModalViewDetailOrder extends Component {
   toggle = () => {
     this.props.toggle();
   };
-  handleChangeStatusOrder = (curentOrder) => {
+  handleChangeStatusOrder = curentOrder => {
     console.log(curentOrder);
     let data = {
       orderssId: curentOrder.orderssId,
@@ -88,6 +88,7 @@ class ModalViewDetailOrder extends Component {
               {detailOrder &&
                 detailOrder.length > 0 &&
                 detailOrder.map((item, index) => {
+                  console.log("Check detail: ", detailOrder);
                   return (
                     <tr key={item.orderssDeId}>
                       <th scope="row">{index + 1}</th>

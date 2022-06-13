@@ -32,66 +32,62 @@ class Order extends Component {
         this.setState({
           allOrder: res,
         });
-        this.pushDetailOrder();
+        this.addDetailOrder();
       }
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server");
     }
   };
-  pushDetailOrder = async () => {
+  addDetailOrder = async () => {
     let allOrder = this.state.allOrder;
-    allOrder.map((item, index) => {
-      let Detail = getDetailOrderById(item.orderssId);
+    for (let i = 0; i < allOrder.length; i++) {
+      let Detail = await getDetailOrderById(allOrder[i].orderssId);
+      console.log("check detail: ", Detail);
       this.setState({
-        detailOrder: this.state.detailOrder.push(Detail),
+        detailOrder: [...this.state.detailOrder, Detail],
       });
-    });
+    }
   };
   render() {
-    let Orders = this.state;
-    console.log("Check orders: ", Orders);
+    let { allOrder, detailOrder } = this.state;
+    console.log("check again: ", detailOrder);
     return (
       <React.Fragment>
         <div className="mb-2">
           <HomeHeader />
         </div>
         <h2>Đơn hàng</h2>
-        {Orders &&
-        Orders.allOrder.length > 0 &&
-        Orders.detailOrder.length > 0 ? (
-          Orders.map((item, index) => {
-            let detailOrder = item.detailOrder;
+        {allOrder.length > 0 && allOrder.length > 0 ? (
+          allOrder.map((item, index) => {
             return (
               <div>
                 <p>
-                  ID đơn hàng: <span>{item.allOrder.orderssId}</span>
+                  ID đơn hàng: <span>{item.orderssId}</span>
                 </p>
                 <p>
-                  Tên khách hàng: <span>{item.allOrder.fullName}</span>{" "}
+                  Tên khách hàng: <span>{item.fullName}</span>{" "}
                 </p>
                 <p>
-                  Số điện thoại: <span>{item.allOrder.telephone}</span>{" "}
+                  Số điện thoại: <span>{item.telephone}</span>{" "}
                 </p>
                 <p>
-                  Địa chỉ: <span>{item.allOrder.address}</span>{" "}
+                  Địa chỉ: <span>{item.address}</span>{" "}
                 </p>
                 <p>
                   Trị giá đơn hàng:{" "}
                   <span style={{ fontWeight: "bold" }}>
-                    {item.allOrder.totalPrice
-                      ? formatPrice(item.allOrder.totalPrice)
-                      : item.allOrder.totalPrice}
+                    {item.totalPrice
+                      ? formatPrice(item.totalPrice)
+                      : item.totalPrice}
                   </span>{" "}
                 </p>
                 <p>
-                  Trạng thái đơn hàng: <span>{item.allOrder.status}</span>{" "}
+                  Trạng thái đơn hàng: <span>{item.status}</span>{" "}
                 </p>
                 <p>
                   Ngày hóa đơn:
-                  <span>
-                    {moment(item.allOrder.orderssDate).format("MM/DD/YYYY")}
-                  </span>
+                  <span>{moment(item.orderssDate).format("MM/DD/YYYY")}</span>
                 </p>
                 <h3 style={{ textAlign: "center" }}>Danh sách sản phẩm</h3>
                 <table className="table table-striped">
@@ -109,17 +105,17 @@ class Order extends Component {
                   <tbody>
                     {detailOrder &&
                       detailOrder.length > 0 &&
-                      detailOrder.map((item, index) => {
+                      detailOrder[index].map((item, index) => {
                         return (
                           <tr key={item.orderssDeId}>
                             <th scope="row">{index + 1}</th>
-                            <td>{item.book.nameBook}</td>
-                            <td>{item.book.author}</td>
+                            <td>{item.book?.nameBook}</td>
+                            <td>{item.book?.author}</td>
                             <td>
                               <div
                                 className="img-product"
                                 style={{
-                                  backgroundImage: `url(${item.book.image})`,
+                                  backgroundImage: `url(${item.book?.image})`,
                                   backgroundRepeat: "none",
                                   backgroundSize: "cover",
                                   width: "50px",
@@ -130,12 +126,12 @@ class Order extends Component {
                             </td>
                             <td>{item.count}</td>
                             <td>
-                              {item?.book && item?.book.price
-                                ? formatPrice(item?.book.price)
-                                : item?.book.price}
+                              {item.book && item.book?.price
+                                ? formatPrice(item.book?.price)
+                                : item.book?.price}
                             </td>
                             <td>
-                              {item?.total
+                              {item.total
                                 ? formatPrice(item.total)
                                 : item.total}
                             </td>

@@ -30,12 +30,13 @@ class HomeHeader extends Component {
       });
     }
   }
+
   // handleOnChangeInput = (event) => {
   //   this.setState({
   //     infoBook: event.target.value,
   //   });
   // };
-  handleOnchangeKeySearch = async (event) => {
+  handleOnchangeKeySearch = async event => {
     this.setState({
       keysearch: event.target.value,
       infoBook: event.target.value,
@@ -61,7 +62,7 @@ class HomeHeader extends Component {
       console.log(e);
     }
   };
-  getProductSearch = (infoBook) => {
+  getProductSearch = infoBook => {
     let data = {
       infoBook: infoBook,
     };
@@ -73,7 +74,7 @@ class HomeHeader extends Component {
     this.props.history.push("/tim-kiem");
     // console.log(this.props);
   };
-  handleSearchByKeyword = async (item) => {
+  handleSearchByKeyword = async item => {
     this.setState({
       keysearch: item,
       infoBook: item,
@@ -143,7 +144,11 @@ class HomeHeader extends Component {
               <NavLink to="/lienhe" exact={true} className="nav-link">
                 Liên hệ
               </NavLink>
-              <NavLink to="/lienhe" exact={true} className="nav-link">
+              <NavLink
+                to="/chinh-sach-bao-mat"
+                exact={true}
+                className="nav-link"
+              >
                 Quy định
               </NavLink>
 
@@ -159,7 +164,7 @@ class HomeHeader extends Component {
                   id="search"
                   className="form-control"
                   placeholder="Tìm kiếm sản phẩm"
-                  onChange={(event) => this.handleOnchangeKeySearch(event)}
+                  onChange={event => this.handleOnchangeKeySearch(event)}
                   value={this.state.keysearch}
                 />
 
@@ -319,7 +324,7 @@ class HomeHeader extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -328,11 +333,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
-    searchBooks: (data) => dispatch(searchBooks(data)),
+    searchBooks: data => dispatch(searchBooks(data)),
   };
 };
 export default withRouter(

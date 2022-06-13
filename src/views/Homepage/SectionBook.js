@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { formatPrice } from "../../constants/format";
 import { addToCart } from "../../store/actions/AppAction";
 import Fade from "react-reveal/Fade";
+import Zoom from "react-reveal/Zoom";
 import { getBookHomePage } from "../../services/HomeService";
 class SectionProduct extends Component {
   constructor(props) {
@@ -17,9 +18,10 @@ class SectionProduct extends Component {
       bookRating: [],
       numOfPage: 0,
       currentPage: 0,
+      windowWidth: window.innerWidth,
     };
   }
-  getAllBook = async (currentPage) => {
+  getAllBook = async currentPage => {
     try {
       let res = await getBookHomePage(currentPage);
       console.log(res);
@@ -52,21 +54,34 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
-  handleDetailBook = (item) => {
+  handleDetailBook = item => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     //console.log(item);
     this.props.addToCart(item);
   };
   componentDidMount() {
     this.getAllBook(this.state.currentPage);
+    this.setState({
+      windowWidth: window.innerWidth,
+    });
   }
-  handleChangePage = (item) => {
+  handleChangePage = item => {
     this.getAllBook(item);
     this.setState({
       currentPage: item,
     });
+  };
+  checkScreen = () => {
+    // this.setState({
+    //   windowWidth: window.innerWidth,
+    // });
+    if (this.state.windowWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
   };
   render() {
     let { bookList, bookOrder, bookRating, numOfPage, currentPage } =
@@ -153,18 +168,35 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
-                          <h3 className="hide mb-0 font-weight-semibold">
-                            {formatPrice(item.price)}
-                          </h3>
-                          <button
-                            type="button"
-                            className="hide btn bg-cart"
-                            onClick={() => this.handleAddToCart(item)}
-                          >
-                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
-                          </button>
-                        </Fade>
+                        {this.checkScreen() ? (
+                          <Fade top delay={-200}>
+                            <h3 className="hide mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="hide btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </Fade>
+                        ) : (
+                          <div className="row">
+                            <h3 className="col mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="col btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </Fade>
                   </div>
@@ -192,10 +224,11 @@ class SectionProduct extends Component {
             </div>
           </div>
         </div>
-
-        <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
-          Danh sách sách bán chạy ở cửa hàng
-        </h2>
+        <Zoom bottom delay={900}>
+          <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
+            Danh sách sách bán chạy ở cửa hàng
+          </h2>
+        </Zoom>
         <div className="container d-flex justify-content-center mt-50 mb-50">
           <div className="row">
             {bookOrder &&
@@ -268,18 +301,35 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
-                          <h3 className="hide mb-0 font-weight-semibold">
-                            {formatPrice(item.price)}
-                          </h3>
-                          <button
-                            type="button"
-                            className="hide btn bg-cart"
-                            onClick={() => this.handleAddToCart(item)}
-                          >
-                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
-                          </button>
-                        </Fade>
+                        {this.checkScreen() ? (
+                          <Fade top delay={-200}>
+                            <h3 className="hide mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="hide btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </Fade>
+                        ) : (
+                          <div className="row">
+                            <h3 className="col mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="col btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </Fade>
                   </div>
@@ -287,10 +337,11 @@ class SectionProduct extends Component {
               })}
           </div>
         </div>
-
-        <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
-          Danh sách sách được đánh giá cao
-        </h2>
+        <Zoom bottom delay={2000}>
+          <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
+            Danh sách sách được đánh giá cao
+          </h2>
+        </Zoom>
         <div className="container d-flex justify-content-center mt-50 mb-50">
           <div className="row">
             {bookRating &&
@@ -363,18 +414,35 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
-                          <h3 className="hide mb-0 font-weight-semibold">
-                            {formatPrice(item.price)}
-                          </h3>
-                          <button
-                            type="button"
-                            className="hide btn bg-cart"
-                            onClick={() => this.handleAddToCart(item)}
-                          >
-                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
-                          </button>
-                        </Fade>
+                        {this.checkScreen() ? (
+                          <Fade top delay={-200}>
+                            <h3 className="hide mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="hide btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </Fade>
+                        ) : (
+                          <div className="row">
+                            <h3 className="col mb-0 font-weight-semibold">
+                              {formatPrice(item.price)}
+                            </h3>
+                            <button
+                              type="button"
+                              className="col btn bg-cart"
+                              onClick={() => this.handleAddToCart(item)}
+                            >
+                              <i className="fa fa-cart-plus mr-2"></i> Add to
+                              cart
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </Fade>
                   </div>
@@ -386,16 +454,16 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default withRouter(

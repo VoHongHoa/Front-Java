@@ -8,12 +8,14 @@ import { getOrder } from "../../services/OrderService";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../constants/format";
+import { getDetailOrderById } from "../../services/OrderService";
 
 class Order extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allOrder: [],
+      detailOrder: [],
     };
   }
   componentDidMount() {
@@ -23,32 +25,46 @@ class Order extends Component {
     let data = {
       keysearch: this.props.userInfor.userId,
     };
-    console.log("ID: ", this.props.userInfor.userId);
     try {
       let res = await getOrder(data);
-      console.log("Check res: ", res);
+      // console.log("Check res: ", res);
       if (res) {
         this.setState({
           allOrder: res,
         });
+        this.addDetailOrder();
       }
     } catch (e) {
       console.log(e);
       toast.error("Lỗi server");
     }
   };
-  render() {
+  addDetailOrder = async () => {
     let allOrder = this.state.allOrder;
+    for (let i = 0; i < allOrder.length; i++) {
+      let Detail = await getDetailOrderById(allOrder[i].orderssId);
+      // console.log("check detail: ", Detail);
+      this.setState({
+        detailOrder: [...this.state.detailOrder, Detail],
+      });
+    }
+  };
+  render() {
+    let { allOrder, detailOrder } = this.state;
+    // console.log("check again: ", detailOrder);
     return (
       <React.Fragment>
         <div className="mb-2">
           <HomeHeader />
         </div>
         <h2>Đơn hàng</h2>
-        {allOrder && allOrder.length > 0 ? (
+        {allOrder.length > 0 && allOrder.length > 0 ? (
           allOrder.map((item, index) => {
             return (
               <div>
+                <p>
+                  ID đơn hàng: <span>{item.orderssId}</span>
+                </p>
                 <p>
                   Tên khách hàng: <span>{item.fullName}</span>{" "}
                 </p>
@@ -86,20 +102,20 @@ class Order extends Component {
                       <th scope="col">Thành tiền</th>
                     </tr>
                   </thead>
-                  {/* <tbody>
+                  <tbody>
                     {detailOrder &&
                       detailOrder.length > 0 &&
-                      detailOrder.map((item, index) => {
+                      detailOrder[index].map((item, index) => {
                         return (
                           <tr key={item.orderssDeId}>
                             <th scope="row">{index + 1}</th>
-                            <td>{item.book.nameBook}</td>
-                            <td>{item.book.author}</td>
+                            <td>{item.book?.nameBook}</td>
+                            <td>{item.book?.author}</td>
                             <td>
                               <div
                                 className="img-product"
                                 style={{
-                                  backgroundImage: `url(${item.book.image})`,
+                                  backgroundImage: `url(${item.book?.image})`,
                                   backgroundRepeat: "none",
                                   backgroundSize: "cover",
                                   width: "50px",
@@ -110,9 +126,9 @@ class Order extends Component {
                             </td>
                             <td>{item.count}</td>
                             <td>
-                              {item.book && item.book.price
-                                ? formatPrice(item.book.price)
-                                : item.book.price}
+                              {item.book && item.book?.price
+                                ? formatPrice(item.book?.price)
+                                : item.book?.price}
                             </td>
                             <td>
                               {item.total
@@ -122,7 +138,7 @@ class Order extends Component {
                           </tr>
                         );
                       })}
-                  </tbody> */}
+                  </tbody>
                 </table>
               </div>
             );

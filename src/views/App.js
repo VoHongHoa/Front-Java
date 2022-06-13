@@ -27,6 +27,7 @@ import Search from "./Search/Search";
 import ConfirmForgotPassword from "./User/ForgotPassword/ConfirmForgotPassword";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Order from "./Order/Order";
+import Term2 from "./Term/Term2";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,8 +55,11 @@ class App extends Component {
               <Route path="/lienhe" exact>
                 <Contact />
               </Route>
-              <Route path="/quydinh" exact>
+              <Route path="/chinh-sach-bao-mat" exact>
                 <Term />
+              </Route>
+              <Route path="/dieu-khoan-su-dung" exact>
+                <Term2 />
               </Route>
 
               <Route path="/tim-kiem" exact>
@@ -186,14 +190,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

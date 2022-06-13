@@ -30,16 +30,13 @@ class HomeHeader extends Component {
       });
     }
   }
-<<<<<<< HEAD
-  handleOnChangeInput = event => {
-=======
+
   // handleOnChangeInput = (event) => {
   //   this.setState({
   //     infoBook: event.target.value,
   //   });
   // };
-  handleOnchangeKeySearch = async (event) => {
->>>>>>> da9027d5171a30cd49236fd15b1837437fe3b045
+  handleOnchangeKeySearch = async event => {
     this.setState({
       keysearch: event.target.value,
       infoBook: event.target.value,
@@ -77,7 +74,7 @@ class HomeHeader extends Component {
     this.props.history.push("/tim-kiem");
     // console.log(this.props);
   };
-  handleSearchByKeyword = async (item) => {
+  handleSearchByKeyword = async item => {
     this.setState({
       keysearch: item,
       infoBook: item,
@@ -167,12 +164,8 @@ class HomeHeader extends Component {
                   id="search"
                   className="form-control"
                   placeholder="Tìm kiếm sản phẩm"
-<<<<<<< HEAD
-                  onChange={event => this.handleOnChangeInput(event)}
-=======
-                  onChange={(event) => this.handleOnchangeKeySearch(event)}
+                  onChange={event => this.handleOnchangeKeySearch(event)}
                   value={this.state.keysearch}
->>>>>>> da9027d5171a30cd49236fd15b1837437fe3b045
                 />
 
                 {/* <Select

@@ -199,7 +199,7 @@ class CategoriesBooks extends Component {
                   className="btn btn-primary mt-2"
                   onClick={() => this.handleAddNewCategoriesBook()}
                 >
-                  Thêm mới
+                  <i className="fa-solid fa-plus"></i> Thêm mới
                 </button>
               )}
             </div>

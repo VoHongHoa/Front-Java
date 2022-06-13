@@ -10,6 +10,7 @@ import {
   deleteBook,
   editBook,
   getAllBooksPagingBySeller,
+  getSearchBook,
 } from "../../../services/BookService";
 import { formatPrice } from "../../../constants/format";
 class BooksManage extends Component {
@@ -23,6 +24,7 @@ class BooksManage extends Component {
       isOpenModal: false,
       action: "",
       currentBook: {},
+      keyword: "",
     };
   }
   getBooksPaging = async (currentPage) => {
@@ -109,6 +111,7 @@ class BooksManage extends Component {
   toggle = () => {
     this.setState({
       isOpenModal: false,
+      action: "",
     });
   };
   doAddNewBook = async (data) => {
@@ -141,6 +144,37 @@ class BooksManage extends Component {
       console.log(e);
     }
   };
+  handleOnchangeInput = async (event) => {
+    this.setState({
+      keyword: event.target.value,
+      action: "SEARCH",
+    });
+    try {
+      let res;
+      if (event.target.value === "") {
+        this.getBooksPaging(0);
+        this.setState({
+          action: "",
+        });
+      }
+      let data = {
+        infoBook: event.target.value,
+      };
+      if (this.checkAdminOrSeller()) {
+        res = await getSearchBook(data);
+      } else {
+        res = await getSearchBook(data);
+      }
+      //console.log(res);
+      if (res) {
+        this.setState({
+          allBooks: res,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     let { numOfPage, allBooks, currentPage } = this.state;
     let arr = [];
@@ -163,9 +197,22 @@ class BooksManage extends Component {
               className="btn btn-primary mt-2"
               onClick={() => this.handleAddNewBook()}
             >
-              Thêm mới
+              <i className="fa-solid fa-plus"></i> Thêm mới
             </button>
           )}
+
+        <div className="col-12 mb-3 mt-3">
+          <label htmlFor="search">
+            <b>Tìm kiếm sách</b>
+          </label>
+          <input
+            type="text"
+            className="form-control mt-2"
+            placeholder="Tìm kiếm sách"
+            name="search"
+            onChange={(event) => this.handleOnchangeInput(event)}
+          />
+        </div>
 
         <div className="container">
           <table className="table table-striped">
@@ -188,7 +235,7 @@ class BooksManage extends Component {
                 allBooks.map((item, index) => {
                   return (
                     <tr key={item.bookId}>
-                      <th scope="row">{index}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{item.nameBook}</td>
                       <td>{item.author}</td>
                       <td>{item.count}</td>
@@ -214,23 +261,25 @@ class BooksManage extends Component {
             </tbody>
           </table>
 
-          <div className="pagination">
-            <p>&laquo;</p>
-            {arr &&
-              arr.length &&
-              arr.map((item, index) => {
-                return (
-                  <p
-                    onClick={() => this.handleChangePage(item)}
-                    className={currentPage === item ? "active" : ""}
-                    key={index}
-                  >
-                    {item}
-                  </p>
-                );
-              })}
-            <p>&raquo;</p>
-          </div>
+          {this.state.action !== "SEARCH" && this.state.action !== "EDIT_BOOK" && (
+            <div className="pagination">
+              <p>&laquo;</p>
+              {arr &&
+                arr.length &&
+                arr.map((item, index) => {
+                  return (
+                    <p
+                      onClick={() => this.handleChangePage(item)}
+                      className={currentPage === item ? "active" : ""}
+                      key={index}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
+              <p>&raquo;</p>
+            </div>
+          )}
         </div>
         <ModalAddNewBook
           isOpenModal={this.state.isOpenModal}

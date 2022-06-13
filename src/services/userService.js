@@ -52,7 +52,12 @@ const findUserByEmail = (email) => {
 const buyBooksByGuest = (data) => {
   return axios.post("/mua-sach", data);
 };
-
+const searchUser = (data) => {
+  return axios.post("/admin/tim-user", data);
+};
+const searchUserBySeller = (data) => {
+  return axios.post("/seller/tim/user", data);
+};
 export {
   handleSignUp,
   handleLogin,
@@ -70,4 +75,6 @@ export {
   confirmChangeNewPassword,
   findUserByEmail,
   buyBooksByGuest,
+  searchUser,
+  searchUserBySeller,
 };

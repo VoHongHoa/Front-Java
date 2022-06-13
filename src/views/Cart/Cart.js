@@ -460,7 +460,7 @@ class Cart extends Component {
                             >
                               Thanh toán khi nhận sách
                             </button>
-                            <p className="mt-2">OR</p>
+                            <p className="mt-2">Hoặc</p>
                             <PayPalCheckoutButton
                               total={total}
                               handleBuyBooks={this.handleBuyBooks}

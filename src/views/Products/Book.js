@@ -59,6 +59,9 @@ class Book extends Component {
       currentPage: item,
     });
   };
+  handleDetailBook = (item) => {
+    this.props.history.push(`/book/${item.bookId}`);
+  };
   render() {
     let { numOfPage, currentPage, allBooks } = this.state;
     let arr = [];
@@ -76,7 +79,7 @@ class Book extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={index}>
                     <Fade bottom delay={150}>
-                      <div className="card">
+                      <div className="card" style={{ height: "500px" }}>
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -84,7 +87,7 @@ class Book extends Component {
                                 src={item.image}
                                 className="card-img img-fluid"
                                 width="96"
-                                height="350"
+                                height="200"
                                 alt="item.nameBook"
                               />
                             </div>
@@ -99,13 +102,45 @@ class Book extends Component {
                                 {item.nameBook}
                               </a>
                             </div>
-                            <div>
-                              <i className="fa fa-star star"></i>
-                              <i className="fa fa-star star"></i>
-                              <i className="fa fa-star star"></i>
-                              <i className="fa fa-star star"></i>
+
+                            {item.rating === 1 && (
+                              <div>
+                                <i className="fa fa-star star"></i>
+                              </div>
+                            )}
+                            {item.rating === 2 && (
+                              <div>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                              </div>
+                            )}
+                            {item.rating === 3 && (
+                              <div>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                              </div>
+                            )}
+                            {item.rating === 4 && (
+                              <div>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                              </div>
+                            )}
+                            {item.rating === 5 && (
+                              <div>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                                <i className="fa fa-star star"></i>
+                              </div>
+                            )}
+                            <div className="text-muted mb-3">
+                              {item.cmt} đánh giá
                             </div>
-                            <div className="text-muted mb-3">34 reviews</div>
                           </div>
                         </div>
                         <Fade top delay={-200}>

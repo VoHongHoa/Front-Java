@@ -12,6 +12,7 @@ import {
   getDetailOrderById,
   getDetailOrderBySeller,
   searchorderByAdmin,
+  searchorderBySeller,
   updateStatusOrder,
   updateStatusOrderBySeller,
 } from "../../../services/OrderService";
@@ -171,7 +172,7 @@ class OrderManage extends Component {
       if (this.checkAdminOrLibrarian()) {
         res = await searchorderByAdmin(data);
       } else {
-        res = await updateStatusOrderBySeller(data);
+        res = await searchorderBySeller(data);
       }
       console.log(res);
       if (res) {

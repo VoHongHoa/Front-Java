@@ -121,6 +121,11 @@ class DetailBook extends Component {
         console.log(data);
         let res = await ratingBook(data);
         console.log(res);
+        if (res === "successful") {
+          this.setState({
+            numOfStar: 0,
+          });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -222,16 +227,15 @@ class DetailBook extends Component {
             <div className="col-xs-12 col-md-8">
               <h3>{book.nameBook}</h3>
               <p className="gia">
-                {" "}
                 Giá:{" "}
-                <p className="detail-price">
+                <span className="detail-price">
                   <CurrencyFormat
                     value={book.price}
                     displayType={"text"}
                     thousandSeparator={true}
                     suffix={"đ"}
                   />
-                </p>
+                </span>
               </p>
               <p className="info">
                 Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}

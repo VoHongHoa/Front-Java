@@ -39,7 +39,7 @@ class Blog extends Component {
       isOpenModal: false,
     });
   };
-  handleOpenModal = item => {
+  handleOpenModal = (item) => {
     this.setState({
       isOpenModal: true,
       currentBlog: item,
@@ -70,6 +70,7 @@ class Blog extends Component {
                   <div
                     className="blog-card container"
                     onClick={() => this.handleOpenModal(item)}
+                    style={{ cursor: "pointer" }}
                   >
                     <p className="card-tittle">{item.title}</p>
                     <div className="row">

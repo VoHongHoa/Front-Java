@@ -12,17 +12,29 @@ import { buyBooks } from "../../services/userService";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
+import _ from "lodash";
 class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allItemInCart: [],
+      fullName: "",
+      address: "",
+      telephone: "",
     };
   }
   componentDidMount() {
     this.setState({
       allItemInCart: this.props.allItemInCart,
     });
+    if (!_.isEmpty(this.props.userInfor)) {
+      console.log(this.props.userInfor);
+      this.setState({
+        fullName: this.props.userInfor.fullName,
+        address: this.props.userInfor.address,
+        telephone: this.props.userInfor.telephone,
+      });
+    }
   }
   componentDidUpdate(prevProps) {
     if (prevProps.allItemInCart !== this.props.allItemInCart) {
@@ -31,20 +43,20 @@ class Cart extends Component {
       });
     }
   }
-  handleOnchangeInput = (event, item) => {
-    let copyState = { ...this.state };
-    let quantity = event.target.value;
-    for (let index = 0; index < copyState.allItemInCart.length; index++) {
-      if (copyState.allItemInCart[index]._id === item._id) {
-        copyState.allItemInCart[index].quantity = quantity;
-        break;
-      }
-    }
-    this.setState({
-      ...copyState,
-    });
-    this.props.changeInputItem(this.state.allItemInCart);
-  };
+  // handleOnchangeInput = (event, item) => {
+  //   let copyState = { ...this.state };
+  //   let quantity = event.target.value;
+  //   for (let index = 0; index < copyState.allItemInCart.length; index++) {
+  //     if (copyState.allItemInCart[index]._id === item._id) {
+  //       copyState.allItemInCart[index].quantity = quantity;
+  //       break;
+  //     }
+  //   }
+  //   this.setState({
+  //     ...copyState,
+  //   });
+  //   this.props.changeInputItem(this.state.allItemInCart);
+  // };
   handleIncreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
@@ -90,7 +102,12 @@ class Cart extends Component {
         obj.total = this.state.allItemInCart[index].price * obj.quantity;
         cart.push(obj);
       }
-      let res = await buyBooks(cart);
+      let user = {
+        fullName: this.state.fullName,
+        address: this.state.address,
+        telephone: this.state.telephone,
+      };
+      let res = await buyBooks(cart, user);
       console.log(res);
       if (res && res.length > 0) {
         toast.success("Mua sách thành công");
@@ -100,6 +117,13 @@ class Cart extends Component {
     } else {
       toast.error("Vui lòng chọn thêm sản phẩm");
     }
+  };
+  handleOnchangeInput = (event, id) => {
+    let copyState = { ...this.state };
+    copyState[id] = event.target.value;
+    this.setState({
+      ...copyState,
+    });
   };
   render() {
     //console.log(this.state.allItemInCart);
@@ -239,14 +263,16 @@ class Cart extends Component {
                                 type="text"
                                 id="form3Examplea2"
                                 className="form-control form-control-lg"
-                                defaultValue={userInfor.fullName}
-                                readOnly
+                                value={this.state.fullName}
+                                onChange={(event) =>
+                                  this.handleOnchangeInput(event, "fullName")
+                                }
                               />
                             </div>
 
                             {/* <h5 className="text-uppercase mb-3">Give code</h5> */}
 
-                            <div className="mb-5">
+                            <div className="mb-4">
                               <div className="form-outline">
                                 <label
                                   className="form-label"
@@ -254,12 +280,34 @@ class Cart extends Component {
                                 >
                                   Địa chỉ
                                 </label>
+                                <textarea
+                                  type="text"
+                                  id="form3Examplea2"
+                                  className="form-control form-control-lg"
+                                  value={this.state.address}
+                                  onChange={(event) =>
+                                    this.handleOnchangeInput(event, "address")
+                                  }
+                                />
+                              </div>
+                            </div>
+
+                            <div className="mb-4">
+                              <div className="form-outline">
+                                <label
+                                  className="form-label"
+                                  htmlFor="form3Examplea2"
+                                >
+                                  Số điện thoại
+                                </label>
                                 <input
                                   type="text"
                                   id="form3Examplea2"
                                   className="form-control form-control-lg"
-                                  defaultValue={userInfor.address}
-                                  readOnly
+                                  value={this.state.telephone}
+                                  onChange={(event) =>
+                                    this.handleOnchangeInput(event, "telephone")
+                                  }
                                 />
                               </div>
                             </div>

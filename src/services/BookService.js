@@ -23,8 +23,8 @@ const editBook = (data, bookId) => {
 const findBooksByBookId = (bookId) => {
   return axios.get(`/xem-chi-tiet-sach/${bookId}`);
 };
-const getCateBook = (CategoryId) => {
-  return axios.get(`/search/${CategoryId}`);
+const getCateBook = (CategoryId, page) => {
+  return axios.get(`/search/${CategoryId}/${page}`);
 };
 const getSearchBook = (data) => {
   return axios.post("/tim-sach/", data);

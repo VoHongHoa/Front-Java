@@ -73,19 +73,6 @@ class Profile extends Component {
     };
     this.props.editUser(data);
   };
-  // handleOnchangeAvatar = async (event) => {
-  //   let filedata = event.target.files;
-  //   let file = filedata[0];
-  //   if (file) {
-  //     let base64 = await CommonUtils.getBase64(file);
-  //     let data = {
-  //       image: base64,
-  //     };
-  //     this.props.editUserAvatar(data);
-  //   } else {
-  //     toast.error("Thay đổi không thành công");
-  //   }
-  // };
 
   handleOnchangeAvatar = async (event) => {
     let filedata = event.target.files;

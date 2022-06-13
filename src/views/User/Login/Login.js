@@ -7,6 +7,7 @@ import "./Login.scss";
 import { handleLoginRedux } from "../../../store/actions/AppAction";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "react-google-login";
+import { findUserByEmail, handleSignUp } from "../../../services/userService";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -58,8 +59,37 @@ class Login extends Component {
       isShowPassword: !this.state.isShowPassword,
     });
   };
-  responseGoogle = (response) => {
+  responseGoogle = async (response) => {
     console.log(response);
+    if (response) {
+      let userInfor = response.profileObj;
+      let res = await findUserByEmail(userInfor.email);
+      console.log(res);
+      if (res.length === 0) {
+        this.setState({
+          userName: userInfor.email,
+          password: process.env.REACT_APP_DEFAULT_GOOGLE_PASSWORD,
+        });
+        let data = {
+          email: userInfor.email,
+          password: process.env.REACT_APP_DEFAULT_GOOGLE_PASSWORD,
+          nameUser: userInfor.email,
+          fullName: userInfor.name,
+          sex: "Nam",
+          image: userInfor.imageUrl,
+        };
+        await handleSignUp(data);
+        this.handleLogin();
+      } else {
+        this.setState({
+          userName: res[0].nameUser,
+          password: process.env.REACT_APP_DEFAULT_GOOGLE_PASSWORD,
+        });
+        this.handleLogin();
+      }
+    } else {
+      toast.error("Đăng nhập không thành công!!");
+    }
   };
   responseFailGoogle = (response) => {
     console.log(response);

@@ -179,10 +179,9 @@ class Login extends Component {
             Hủy
           </button>
           <span className="psw" onClick={() => this.handleForgotPassword()}>
-            Quên <a href="#">mật khẩu?</a>
+            <a href="#">Quên mật khẩu?</a>
           </span>
         </div>
-        , ,
       </div>
     );
   }

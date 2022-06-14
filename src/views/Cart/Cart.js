@@ -64,7 +64,7 @@ class Cart extends Component {
   //   });
   //   this.props.changeInputItem(this.state.allItemInCart);
   // };
-  handleIncreaseQuantity = item => {
+  handleIncreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (copyState.allItemInCart[index].bookId === item.bookId) {
@@ -78,11 +78,11 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleDeleteBook = item => {
+  handleDeleteBook = (item) => {
     this.props.deleteItem(item);
   };
 
-  handleDecreaseQuantity = item => {
+  handleDecreaseQuantity = (item) => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (
@@ -101,50 +101,52 @@ class Cart extends Component {
   };
   handleBuyBooks = async () => {
     let cart = [];
-    if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
-      for (let index = 0; index < this.state.allItemInCart.length; index++) {
-        let obj = {};
-        obj.quantity = this.state.allItemInCart[index].quantity;
-        obj.books = this.state.allItemInCart[index].bookId;
-        obj.total = this.state.allItemInCart[index].price * obj.quantity;
-        cart.push(obj);
-      }
-      let user = {};
+    if (this.checkInput()) {
+      if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
+        for (let index = 0; index < this.state.allItemInCart.length; index++) {
+          let obj = {};
+          obj.quantity = this.state.allItemInCart[index].quantity;
+          obj.books = this.state.allItemInCart[index].bookId;
+          obj.total = this.state.allItemInCart[index].price * obj.quantity;
+          cart.push(obj);
+        }
+        let user = {};
 
-      user = {
-        fullName: this.state.fullName,
-        address: this.state.address,
-        telephone: this.state.phoneNumber,
-        email: this.state.email,
-      };
+        user = {
+          fullName: this.state.fullName,
+          address: this.state.address,
+          telephone: this.state.phoneNumber,
+          email: this.state.email,
+        };
 
-      let data = {
-        cartBooks: cart,
-        user: user,
-        pay: this.state.statusPayment,
-      };
-      console.log(data);
-      let res;
-      if (this.props.isLogin === true) {
-        res = await buyBooks(data);
+        let data = {
+          cartBooks: cart,
+          user: user,
+          pay: this.state.statusPayment,
+        };
+        console.log(data);
+        let res;
+        if (this.props.isLogin === true) {
+          res = await buyBooks(data);
+        } else {
+          res = await buyBooksByGuest(data);
+        }
+
+        console.log(res);
+        if (res && res.length > 0) {
+          toast.success("Mua sách thành công");
+          this.props.deleteCart();
+          this.props.history.push("/");
+        }
       } else {
-        res = await buyBooksByGuest(data);
+        toast.error("Vui lòng chọn thêm sản phẩm");
       }
-
-      console.log(res);
-      if (res && res.length > 0) {
-        toast.success("Mua sách thành công");
-        this.props.deleteCart();
-        this.props.history.push("/");
-      }
-    } else {
-      toast.error("Vui lòng chọn thêm sản phẩm");
     }
   };
   checkInput = () => {
     let isValid = true;
     if (this.state.errPhone === false) {
-      toast.error("Nhập số điện thoại");
+      toast.error("Vui lòng nhập số điện thoại hợp lệ");
       isValid = false;
       return isValid;
     }
@@ -172,7 +174,7 @@ class Cart extends Component {
       ...copyState,
     });
   };
-  handleOnchangeEmail = event => {
+  handleOnchangeEmail = (event) => {
     let email = event.target.value;
     this.setState({
       email: email,
@@ -187,27 +189,34 @@ class Cart extends Component {
       });
     }
   };
-  handleOnchangePhoneNumber = event => {
+  handleOnchangePhoneNumber = (event) => {
     // console.log(event.target.value.charAt(0));
     let phoneNumber = event.target.value;
     this.setState({
       phoneNumber: phoneNumber,
     });
-    if (phoneNumber.length !== 10 || phoneNumber.charAt(0) !== "0") {
-      this.setState({
-        errPhone: false,
-      });
-    } else {
-      if (phoneRegex.test(phoneNumber)) {
-        this.setState({
-          errPhone: true,
-          phoneNumber: phoneNumber,
-        });
-      } else {
+    for (let index = 0; index < phoneNumber.length; index++) {
+      if (
+        phoneNumber.charCodeAt(index) < 48 ||
+        phoneNumber.charCodeAt(index) > 57
+      ) {
         this.setState({
           errPhone: false,
         });
+        break;
+      } else {
+        this.setState({
+          errPhone: true,
+        });
       }
+    }
+    if (
+      event.target.value.length !== 10 ||
+      event.target.value.charAt(0) !== "0"
+    ) {
+      this.setState({
+        errPhone: false,
+      });
     }
   };
   changePayment = () => {
@@ -281,7 +290,7 @@ class Cart extends Component {
                                       value={item.quantity}
                                       type="number"
                                       className="form-control form-control-sm"
-                                      onChange={event =>
+                                      onChange={(event) =>
                                         this.handleOnchangeInput(event, item)
                                       }
                                     />
@@ -349,7 +358,7 @@ class Cart extends Component {
                                 placeholder="Nhập họ và tên"
                                 className="form-control"
                                 value={this.state.fullName}
-                                onChange={event =>
+                                onChange={(event) =>
                                   this.handleOnchangeInput(event, "fullName")
                                 }
                               />
@@ -367,7 +376,7 @@ class Cart extends Component {
                                 className="form-control"
                                 placeholder="Nhập email"
                                 name="email"
-                                onChange={event =>
+                                onChange={(event) =>
                                   this.handleOnchangeEmail(event)
                                 }
                                 value={this.state.email}
@@ -399,7 +408,7 @@ class Cart extends Component {
                                   placeholder="Nhập địa chỉ"
                                   className="form-control"
                                   value={this.state.address}
-                                  onChange={event =>
+                                  onChange={(event) =>
                                     this.handleOnchangeInput(event, "address")
                                   }
                                 />
@@ -419,7 +428,7 @@ class Cart extends Component {
                                   placeholder="Nhập số điện thoại"
                                   className="form-control"
                                   name="phonenumber"
-                                  onChange={event =>
+                                  onChange={(event) =>
                                     this.handleOnchangePhoneNumber(event)
                                   }
                                   value={this.state.phoneNumber}
@@ -479,7 +488,7 @@ class Cart extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -487,10 +496,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: item => dispatch(deleteItem(item)),
-    changeInputItem: allItems => dispatch(changeInputItem(allItems)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
+    changeInputItem: (allItems) => dispatch(changeInputItem(allItems)),
     deleteCart: () => dispatch(deleteCart()),
   };
 };

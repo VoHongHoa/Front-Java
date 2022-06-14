@@ -37,7 +37,7 @@ class DetailBook extends Component {
     let id = this.props.match.params.id;
     this.getDetaiBookById(id);
   }
-  getDetaiBookById = async id => {
+  getDetaiBookById = async (id) => {
     try {
       let res = await findBooksByBookId(id);
       console.log("book:", res);
@@ -52,7 +52,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleAddToCart = book => {
+  handleAddToCart = (book) => {
     this.props.addToCart(book);
   };
 
@@ -66,7 +66,7 @@ class DetailBook extends Component {
     this.props.history.push(`/loai-sach/${cateID}`);
   };
 
-  getAllReviews = async bookId => {
+  getAllReviews = async (bookId) => {
     try {
       let res = await getComment(bookId);
       console.log(res);
@@ -78,7 +78,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = event => {
+  handleOnchangeInput = (event) => {
     this.setState({
       newReview: event.target.value,
     });
@@ -138,6 +138,9 @@ class DetailBook extends Component {
           });
           this.getDetaiBookById(this.props.match.params.id);
         }
+        if (res === "error") {
+          toast.error("Vui lòng đăng nhập");
+        }
       } catch (e) {
         console.log(e);
       }
@@ -150,7 +153,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async item => {
+  handledeleteComment = async (item) => {
     //onsole.log(item);
     try {
       let data = {
@@ -169,7 +172,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOpenModaleditComment = async item => {
+  handleOpenModaleditComment = async (item) => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -199,7 +202,7 @@ class DetailBook extends Component {
       console.log(e);
     }
   };
-  handleVoterating = numOfStar => {
+  handleVoterating = (numOfStar) => {
     this.setState({ numOfStar: numOfStar });
   };
   handleShowActionComment = () => {
@@ -339,7 +342,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={event => this.handleOnchangeInput(event)}
+                onChange={(event) => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -454,14 +457,14 @@ class DetailBook extends Component {
                                       this.handleOpenModaleditComment(item)
                                     }
                                   >
-                                    xóa
+                                    sửa
                                   </span>
                                   <span
                                     onClick={() =>
                                       this.handledeleteComment(item)
                                     }
                                   >
-                                    sửa
+                                    xóa
                                   </span>
                                 </div>
                               )}
@@ -486,15 +489,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return { addToCart: item => dispatch(addToCart(item)) };
+const mapDispatchToProps = (dispatch) => {
+  return { addToCart: (item) => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

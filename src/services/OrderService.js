@@ -1,39 +1,39 @@
 import axios from "../axios";
-const getAllOrder = page => {
+const getAllOrder = (page) => {
   return axios.get(`/admin/xem-tat-ca-Orderss/${page}`);
 };
-const getAllOrderBySeller = page => {
+const getAllOrderBySeller = (page) => {
   return axios.get(`/seller/xem-tat-ca-Orderss/${page}`);
 };
-const deleteOrder = OrderssId => {
+const deleteOrder = (OrderssId) => {
   return axios.delete(`/admin/xoa-Orderss/${OrderssId}`);
 };
-const deleteOrderBySeller = OrderssId => {
+const deleteOrderBySeller = (OrderssId) => {
   return axios.delete(`/seller/xoa-Orderss/${OrderssId}`);
 };
 
-const getDetailOrderById = orderssId => {
-  return axios.post(`/admin/tim-Orderssde/${orderssId}`);
-};
-const userGetDetailOrderById = orderssId => {
+const getDetailOrderById = (orderssId) => {
   return axios.post(`/user/tim-Orderssde/${orderssId}`);
 };
-const getDetailOrderBySeller = orderId => {
-  return axios.post(`/seller/tim-Orderssde/${orderId}`);
+const userGetDetailOrderById = (orderssId) => {
+  return axios.post(`/user/tim-Orderssde/${orderssId}`);
 };
-const updateStatusOrder = data => {
+const getDetailOrderBySeller = (orderssId) => {
+  return axios.post(`/user/tim-Orderssde/${orderssId}`);
+};
+const updateStatusOrder = (data) => {
   return axios.post("/admin/sua-orderss", data);
 };
-const updateStatusOrderBySeller = data => {
+const updateStatusOrderBySeller = (data) => {
   return axios.post("/seller/sua-orderss", data);
 };
-const searchorderByAdmin = data => {
+const searchorderByAdmin = (data) => {
   return axios.post(`/admin/timorderss`, data);
 };
-const searchorderBySeller = data => {
+const searchorderBySeller = (data) => {
   return axios.post(`/seller/timorderss`, data);
 };
-const getOrder = data => {
+const getOrder = (data) => {
   return axios.post(`/user/timorderss`, data);
 };
 

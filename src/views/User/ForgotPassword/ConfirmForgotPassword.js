@@ -4,6 +4,7 @@ import logo from "../../../assets/images/img_avatar2.png";
 import { withRouter } from "react-router";
 import "./ForgotPassword.scss";
 import { confirmChangeNewPassword } from "../../../services/userService";
+import { toast } from "react-toastify";
 var mediumRegex = new RegExp(
   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_+])(?=.{8,})"
 );
@@ -64,6 +65,10 @@ class ConfirmPassword extends Component {
       };
       let res = await confirmChangeNewPassword(this.state.token, data);
       console.log(res);
+      if (res === "successful") {
+        toast.success("Thay đổi thành công!Vui lòng đăng nhập");
+        this.props.history.push("/login");
+      }
     } catch (e) {
       console.log(e);
     }

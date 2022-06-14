@@ -164,7 +164,25 @@ class SignUp extends Component {
     }
   };
   handleOnchangePhoneNumber = (event) => {
-    console.log(event.target.value.charAt(0));
+    //console.log(event.target.value.charAt(0));
+    let phoneNumber = event.target.value;
+    //let isValid = true;
+    for (let index = 0; index < phoneNumber.length; index++) {
+      if (
+        phoneNumber.charCodeAt(index) < 48 ||
+        phoneNumber.charCodeAt(index) > 57
+      ) {
+        this.setState({
+          errPhone: false,
+        });
+        break;
+      } else {
+        this.setState({
+          errPhone: true,
+          phoneNumber: phoneNumber,
+        });
+      }
+    }
     if (
       event.target.value.length !== 10 ||
       event.target.value.charAt(0) !== "0"
@@ -172,17 +190,17 @@ class SignUp extends Component {
       this.setState({
         errPhone: false,
       });
-    } else {
-      if (phoneRegex.test(event.target.value)) {
-        this.setState({
-          errPhone: true,
-          phoneNumber: event.target.value,
-        });
-      } else {
-        this.setState({
-          errPhone: false,
-        });
-      }
+      // } else {
+      //   if (phoneRegex.test(event.target.value)) {
+      //     this.setState({
+      //       errPhone: true,
+      //       phoneNumber: event.target.value,
+      //     });
+      //   } else {
+      //     this.setState({
+      //       errPhone: false,
+      //     });
+      //   }
     }
   };
 

@@ -63,7 +63,7 @@ class DetailBook extends Component {
   handleReturnCate = () => {
     let cateID = this.state.book.category?.categoryId;
     console.log("cateID: ", cateID);
-    this.props.history.push(`/loai-sach/${cateID}/${0}`);
+    this.props.history.push(`/loai-sach/${cateID}`);
   };
 
   getAllReviews = async (bookId) => {
@@ -236,13 +236,11 @@ class DetailBook extends Component {
               | <b>{book.nameBook}</b>
             </p>
           </section>
-          <div className="detail-body row">
-            <img
-              className="detail-img col-xs-6 col-md-4"
-              src={book.image}
-              alt="book-img"
-            />
-            <div className="col-xs-12 col-md-8">
+          <div className="detail-body row justify-content-start">
+            <div className="col-sm-6">
+              <img className="detail-img" src={book.image} alt="book-img" />
+            </div>
+            <div className="col-sm-6">
               <h3>{book.nameBook}</h3>
               <p className="gia">
                 Giá:{" "}
@@ -255,6 +253,13 @@ class DetailBook extends Component {
                   />
                 </span>
               </p>
+              <button
+                type="button col-sm-6"
+                className={"btn-add-detail btn bg-cart"}
+                onClick={() => this.handleAddToCart(book)}
+              >
+                <i className="fa fa-cart-plus mr-2"></i>Add to cart
+              </button>
               <p className="info">
                 Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}
               </p>

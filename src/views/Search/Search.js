@@ -150,7 +150,8 @@ class SectionProduct extends Component {
                             }
                             onClick={() => this.handleAddToCart(item)}
                           >
-                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
+                            <i className="fa fa-cart-plus mr-2"></i> Thêm vào
+                            giỏ hàng
                           </button>
                         </Fade>
                       </div>

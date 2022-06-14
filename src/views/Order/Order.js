@@ -51,17 +51,17 @@ class Order extends Component {
   };
   render() {
     let { allOrder, detailOrder } = this.state;
-    // console.log("check again: ", detailOrder);
+    console.log("check again: ", allOrder);
     return (
       <React.Fragment>
         <div className="mb-2">
           <HomeHeader />
         </div>
-        <h2>Đơn hàng</h2>
-        {allOrder.length > 0 && allOrder.length > 0 ? (
+        <h2>Lịch sử mua hàng</h2>
+        {allOrder && allOrder.length > 0 ? (
           allOrder.map((item, index) => {
             return (
-              <div className="container">
+              <div className="container order-card">
                 <div className="row">
                   <p>
                     ID đơn hàng: <b>{item.orderssId}</b>
@@ -111,7 +111,7 @@ class Order extends Component {
                   <tbody>
                     {detailOrder &&
                       detailOrder.length > 0 &&
-                      detailOrder[index].map((item, index) => {
+                      detailOrder[index]?.map((item, index) => {
                         return (
                           <tr key={item.orderssDeId}>
                             <th scope="row">{index + 1}</th>

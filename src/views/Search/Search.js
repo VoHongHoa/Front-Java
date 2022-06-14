@@ -17,7 +17,7 @@ class SectionProduct extends Component {
   }
 
   componentDidMount() {}
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     this.props.addToCart(item);
   };
   render() {
@@ -108,12 +108,22 @@ class SectionProduct extends Component {
                           </div>
                         </div>
                         <Fade top delay={-200}>
-                          <h3 className="hide mb-0 font-weight-semibold">
+                          <h3
+                            className={
+                              this.checkScreen()
+                                ? "hide price mb-0 font-weight-semibold"
+                                : "price mb-0 font-weight-semibold"
+                            }
+                          >
                             {formatPrice(item.price)}
                           </h3>
                           <button
                             type="button"
-                            className="hide btn bg-cart"
+                            className={
+                              this.checkScreen()
+                                ? "hide btn-add btn bg-cart"
+                                : "btn-add btn bg-cart"
+                            }
                             onClick={() => this.handleAddToCart(item)}
                           >
                             <i className="fa fa-cart-plus mr-2"></i> Add to cart
@@ -131,7 +141,7 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -139,9 +149,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default withRouter(

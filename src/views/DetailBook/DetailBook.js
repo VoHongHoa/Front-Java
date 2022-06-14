@@ -55,7 +55,7 @@ class DetailBook extends Component {
   handleReturnCate = () => {
     let cateID = this.state.book.category?.categoryId;
     console.log("cateID: ", cateID);
-    this.props.history.push(`/loai-sach/${cateID}/${0}`);
+    this.props.history.push(`/loai-sach/${cateID}`);
   };
 
   getAllReviews = async bookId => {

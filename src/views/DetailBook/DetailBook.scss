@@ -6,6 +6,15 @@
         padding: 20px 10px;
         border-radius: 20px;
 
+        .btn-add-detail{
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 10px 60px;
+        }
+        .detail-img{
+            max-width: 100%
+        }
+
         .gia {
             font-weight: 700;
             font-size: 1.5rem;

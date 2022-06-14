@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 class Term2 extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className="container">
         <HomeHeader />
         <section id="sidebar">
           <p>
@@ -103,7 +103,7 @@ class Term2 extends Component {
           </div>
         </div>
         <Footer />
-      </React.Fragment>
+      </div>
     );
   }
 }

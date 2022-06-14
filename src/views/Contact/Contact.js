@@ -15,8 +15,8 @@ import { AiFillPhone } from "react-icons/ai";
 class Contact extends Component {
   render() {
     return (
-      <React.Fragment>
-        <div className="mb-2">
+      <div className="container">
+        <div className="section-header">
           <HomeHeader></HomeHeader>
         </div>
         <section id="sidebar">
@@ -89,7 +89,7 @@ class Contact extends Component {
         <div className="mt-2">
           <Footer />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

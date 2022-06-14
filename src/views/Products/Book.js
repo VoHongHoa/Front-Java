@@ -227,9 +227,11 @@ class Book extends Component {
     let cateName = this.state.allBooks[0]?.category.nameCate;
     return (
       <div className="product-container container">
-        <HomeHeader />
-        <section id="sidebar">
-          <p>
+        <div className="section-header">
+          <HomeHeader></HomeHeader>
+        </div>
+        <div id="sidebar">
+          <p cla>
             <span
               onClick={() => this.handleReturnHome()}
               style={{ cursor: "pointer" }}
@@ -238,7 +240,7 @@ class Book extends Component {
             </span>{" "}
             | <b>{cateName}</b>
           </p>
-        </section>
+        </div>
         <div className="row">
           <div className="filter-container col-2 mt-3">
             <p style={{ textAlign: "center", fontSize: "20px" }}>

@@ -49,8 +49,8 @@ class Blog extends Component {
     let { allBlog } = this.state;
     console.log(allBlog);
     return (
-      <React.Fragment>
-        <div className="mb-2">
+      <div className="container">
+        <div className="section-header">
           <HomeHeader></HomeHeader>
         </div>
         <section id="sidebar">
@@ -94,7 +94,7 @@ class Blog extends Component {
           toggle={this.toggle}
           currentBlog={this.state.currentBlog}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }

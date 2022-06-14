@@ -59,4 +59,15 @@
         }
     }
 
+    .comments-view {
+        .action {
+            display: flex;
+            gap: 3px;
+        }
+
+        .no-show {
+            display: none;
+        }
+    }
+
 }

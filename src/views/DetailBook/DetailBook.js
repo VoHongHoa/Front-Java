@@ -30,21 +30,29 @@ class DetailBook extends Component {
       isOpenModal: false,
       showHide: false,
       numOfStar: 0,
+      isShowEdit: false,
     };
   }
   async componentDidMount() {
     let id = this.props.match.params.id;
-    let res = await findBooksByBookId(id);
-    console.log("book:", res);
-    this.getAllReviews(id);
-    if (res) {
-      this.setState({
-        book: res ? res : {},
-      });
-    }
+    this.getDetaiBookById(id);
   }
+  getDetaiBookById = async (id) => {
+    try {
+      let res = await findBooksByBookId(id);
+      console.log("book:", res);
+      this.getAllReviews(id);
+      if (res) {
+        this.setState({
+          book: res ? res : {},
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  handleAddToCart = book => {
+  handleAddToCart = (book) => {
     this.props.addToCart(book);
   };
 
@@ -58,10 +66,10 @@ class DetailBook extends Component {
     this.props.history.push(`/loai-sach/${cateID}/${0}`);
   };
 
-  getAllReviews = async bookId => {
+  getAllReviews = async (bookId) => {
     try {
       let res = await getComment(bookId);
-      //console.log(res);
+      console.log(res);
       this.setState({
         allReview: res,
       });
@@ -70,7 +78,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = event => {
+  handleOnchangeInput = (event) => {
     this.setState({
       newReview: event.target.value,
     });
@@ -107,6 +115,7 @@ class DetailBook extends Component {
             });
             toast.success("Thêm bình luận thành công!");
             this.getAllReviews(this.props.match.params.id);
+            this.getDetaiBookById(this.props.match.params.id);
           }
         }
       } catch (e) {
@@ -127,6 +136,7 @@ class DetailBook extends Component {
           this.setState({
             numOfStar: 0,
           });
+          this.getDetaiBookById(this.props.match.params.id);
         }
       } catch (e) {
         console.log(e);
@@ -140,7 +150,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async item => {
+  handledeleteComment = async (item) => {
     //onsole.log(item);
     try {
       let data = {
@@ -159,7 +169,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOpenModaleditComment = async item => {
+  handleOpenModaleditComment = async (item) => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -189,21 +199,25 @@ class DetailBook extends Component {
       console.log(e);
     }
   };
-  handleVoterating = numOfStar => {
+  handleVoterating = (numOfStar) => {
     this.setState({ numOfStar: numOfStar });
   };
-
+  handleShowActionComment = () => {
+    this.setState({
+      isShowEdit: !this.state.isShowEdit,
+    });
+  };
   render() {
-    let { book, allReview, isShowComment, numOfStar } = this.state;
+    let { book, allReview, isShowComment, numOfStar, isShowEdit } = this.state;
     let isEmptyObj = Object.keys(book).length === 0;
 
     console.log(book);
     return (
       <React.Fragment>
         <div className="container">
-          <section className="homepage-header-container">
-            <HomeHeader />
-          </section>
+          <div className="section-header">
+            <HomeHeader></HomeHeader>
+          </div>
           <section id="sidebar">
             <p>
               <span
@@ -263,6 +277,56 @@ class DetailBook extends Component {
                 {" "}
                 Số lượng còn lại: <span className="info2">{book.count}</span>
               </p>
+              <p className="info">
+                {" "}
+                Lượt đánh giá: <span className="info2">{book.cmt}</span>
+              </p>
+              <p className="info">
+                Số sao:{" "}
+                <span className="info2">
+                  {book.rating === 1 && (
+                    <div>
+                      <i className="fa fa-star star"></i>
+                    </div>
+                  )}
+                  {book.rating === 2 && (
+                    <div>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                    </div>
+                  )}
+                  {book.rating === 3 && (
+                    <div>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                    </div>
+                  )}
+                  {book.rating === 4 && (
+                    <div>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                    </div>
+                  )}
+                  {book.rating === 5 && (
+                    <div>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                      <i className="fa fa-star star"></i>
+                    </div>
+                  )}
+                </span>
+              </p>
+              <button
+                className="btn btn-primary mt-2"
+                onClick={() => this.handleAddToCart(book)}
+              >
+                <i className="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng
+              </button>
             </div>
           </div>
           <div className="description">
@@ -276,7 +340,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={event => this.handleOnchangeInput(event)}
+                onChange={(event) => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -376,35 +440,30 @@ class DetailBook extends Component {
                                 </span>
                               </div>
 
-                              {/* <small>
-                                {moment(item.updatedAt).format("Do MMMM YYYY")}
-                              </small> */}
-                            </div>
+                              <small>
+                                {moment(item.dayAddt).format("DD/MM/YY")}
+                              </small>
 
+                              <div></div>
+                            </div>
                             {this.props.userInfor &&
                               this.props.userInfor.userId ===
                                 item.user.userId && (
-                                <div className="action d-flex justify-content-between mt-2 align-items-center">
-                                  <div className="reply px-4">
-                                    <small
-                                      onClick={() =>
-                                        this.handledeleteComment(item)
-                                      }
-                                    >
-                                      Xóa
-                                    </small>
-                                    <span className="dots"></span>
-                                    <small
-                                      onClick={() =>
-                                        this.handleOpenModaleditComment(item)
-                                      }
-                                    >
-                                      Sửa
-                                    </small>
-                                  </div>
-                                  <div className="icons align-items-center">
-                                    <i className="fa fa-check-circle-o check-icon text-primary"></i>
-                                  </div>
+                                <div className="action">
+                                  <span
+                                    onClick={() =>
+                                      this.handleOpenModaleditComment(item)
+                                    }
+                                  >
+                                    xóa
+                                  </span>
+                                  <span
+                                    onClick={() =>
+                                      this.handledeleteComment(item)
+                                    }
+                                  >
+                                    sửa
+                                  </span>
                                 </div>
                               )}
                           </div>
@@ -428,15 +487,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return { addToCart: item => dispatch(addToCart(item)) };
+const mapDispatchToProps = (dispatch) => {
+  return { addToCart: (item) => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

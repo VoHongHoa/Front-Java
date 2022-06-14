@@ -12,8 +12,10 @@ class Term extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <HomeHeader />
+      <div className="container">
+        <div className="section-header">
+          <HomeHeader></HomeHeader>
+        </div>
         <section id="sidebar">
           <p>
             <span
@@ -136,7 +138,7 @@ class Term extends Component {
           </div>
         </div>
         <Footer />
-      </React.Fragment>
+      </div>
     );
   }
 }

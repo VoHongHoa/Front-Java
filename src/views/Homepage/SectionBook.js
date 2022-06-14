@@ -176,7 +176,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
+                        <Fade top delay={-300}>
                           <h3
                             className={
                               this.checkScreen()
@@ -251,7 +251,7 @@ class SectionProduct extends Component {
                               />
                             </div>
                           </div>
-                          <div className="card-body show bg-light text-center">
+                          <div className="card-body bg-light text-center">
                             <div className="mb-2">
                               <a
                                 href="#"
@@ -261,49 +261,50 @@ class SectionProduct extends Component {
                                 {item.nameBook}
                               </a>
                             </div>
-
-                            {item.rating === 1 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
+                            <div className="show">
+                              {item.rating === 1 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 2 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 3 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 4 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 5 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              <div className="text-muted mb-3">
+                                {item.cmt} đánh giá
                               </div>
-                            )}
-                            {item.rating === 2 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 3 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 4 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 5 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            <div className="text-muted mb-3">
-                              {item.cmt} đánh giá
                             </div>
                           </div>
                         </div>
                         {this.checkScreen() ? (
-                          <Fade top delay={-200}>
+                          <Fade top delay={-300}>
                             <h3
                               className={
                                 this.checkScreen()
@@ -374,7 +375,7 @@ class SectionProduct extends Component {
                               />
                             </div>
                           </div>
-                          <div className="card-body show bg-light text-center">
+                          <div className="card-body bg-light text-center">
                             <div className="mb-2">
                               <a
                                 href="#"
@@ -384,49 +385,50 @@ class SectionProduct extends Component {
                                 {item.nameBook}
                               </a>
                             </div>
-
-                            {item.rating === 1 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
+                            <div className="show">
+                              {item.rating === 1 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 2 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 3 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 4 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 5 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              <div className="text-muted mb-3">
+                                {item.cmt} đánh giá
                               </div>
-                            )}
-                            {item.rating === 2 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 3 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 4 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 5 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            <div className="text-muted mb-3">
-                              {item.cmt} đánh giá
                             </div>
                           </div>
                         </div>
                         {this.checkScreen() ? (
-                          <Fade top delay={-200}>
+                          <Fade top delay={-300}>
                             <h3
                               className={
                                 this.checkScreen()

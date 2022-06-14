@@ -15,6 +15,9 @@ const deleteOrderBySeller = OrderssId => {
 const getDetailOrderById = orderssId => {
   return axios.post(`/admin/tim-Orderssde/${orderssId}`);
 };
+const userGetDetailOrderById = orderssId => {
+  return axios.post(`/user/tim-Orderssde/${orderssId}`);
+};
 const getDetailOrderBySeller = orderId => {
   return axios.post(`/seller/tim-Orderssde/${orderId}`);
 };
@@ -40,6 +43,7 @@ export {
   deleteOrder,
   deleteOrderBySeller,
   getDetailOrderById,
+  userGetDetailOrderById,
   updateStatusOrder,
   getDetailOrderBySeller,
   updateStatusOrderBySeller,

@@ -8,7 +8,7 @@ import { getOrder } from "../../services/OrderService";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../constants/format";
-import { getDetailOrderById } from "../../services/OrderService";
+import { userGetDetailOrderById } from "../../services/OrderService";
 
 class Order extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class Order extends Component {
   addDetailOrder = async () => {
     let allOrder = this.state.allOrder;
     for (let i = 0; i < allOrder.length; i++) {
-      let Detail = await getDetailOrderById(allOrder[i].orderssId);
+      let Detail = await userGetDetailOrderById(allOrder[i].orderssId);
       // console.log("check detail: ", Detail);
       this.setState({
         detailOrder: [...this.state.detailOrder, Detail],

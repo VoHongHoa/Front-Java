@@ -21,7 +21,7 @@ class Term2 extends Component {
           <div className="content">
             <h2>ĐIỀU KHOẢN SỬ DỤNG</h2>
             <p>
-              Chào mừng quí khách đến mua sắm tại UITBOOK. Sau khi truy cập vào
+              Chào mừng quý khách đến mua sắm tại UITBOOK. Sau khi truy cập vào
               website UITBOOK để tham khảo hoặc mua sắm, quí khách đã đồng ý
               tuân thủ và ràng buộc với những quy định của UITBOOK. Vui lòng xem
               kỹ các quy định và hợp tác với chúng tôi để xây dựng 1 website

@@ -26,8 +26,19 @@ class Book extends Component {
       selectedAuthor: "",
       selectedYearPublish: "",
       filterIns: true,
+      windowWidth: window.innerWidth,
     };
   }
+  checkScreen = () => {
+    // this.setState({
+    //   windowWidth: window.innerWidth,
+    // });
+    if (this.state.windowWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   getAllBooksByCate = async (categoryId, page) => {
     try {
       let res = await getCateBook(categoryId, page);
@@ -61,10 +72,10 @@ class Book extends Component {
       this.getAllBooksByCate(this.props.match.params.cateId, 0);
     }
   }
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     this.props.addToCart(item);
   };
-  handleChangePage = (item) => {
+  handleChangePage = item => {
     this.getAllBooksByCate(this.props.match.params.cateId, item);
     this.setState({
       currentPage: item,
@@ -82,7 +93,7 @@ class Book extends Component {
       console.log(e);
     }
   };
-  setSelectedAuthor = (allAuthor) => {
+  setSelectedAuthor = allAuthor => {
     let arrAuthor = [];
     for (let i = 0; i < allAuthor.length; i++) {
       let objectAuthor = {};
@@ -92,10 +103,10 @@ class Book extends Component {
     }
     return arrAuthor;
   };
-  handleDetailBook = (item) => {
+  handleDetailBook = item => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleOnchangeSelectAuthor = async (event) => {
+  handleOnchangeSelectAuthor = async event => {
     let selectedAuthor = event.target.value;
     this.setState({
       selectedAuthor: selectedAuthor,
@@ -116,7 +127,7 @@ class Book extends Component {
     }
   };
 
-  handleOnchangeSelectYearchPublish = async (event) => {
+  handleOnchangeSelectYearchPublish = async event => {
     let selectedYearPublish = event.target.value;
     this.setState({
       selectedYearPublish: selectedYearPublish,
@@ -182,7 +193,7 @@ class Book extends Component {
                 <div className="title-select">Tác giả: </div>
                 <select
                   className="select-price mt-2"
-                  onChange={(event) => this.handleOnchangeSelectAuthor(event)}
+                  onChange={event => this.handleOnchangeSelectAuthor(event)}
                 >
                   {allAuthor &&
                     allAuthor.length > 0 &&
@@ -201,7 +212,7 @@ class Book extends Component {
                 <div className="title-select">Năm xuất bản: </div>
                 <select
                   className="select-price mt-2"
-                  onChange={(event) =>
+                  onChange={event =>
                     this.handleOnchangeSelectYearchPublish(event)
                   }
                 >
@@ -304,12 +315,22 @@ class Book extends Component {
                             </div>
                           </div>
                           <Fade top delay={-200}>
-                            <h3 className="hide mb-0 font-weight-semibold">
+                            <h3
+                              className={
+                                this.checkScreen()
+                                  ? "hide price mb-0 font-weight-semibold"
+                                  : "price mb-0 font-weight-semibold"
+                              }
+                            >
                               {formatPrice(item.price)}
                             </h3>
                             <button
                               type="button"
-                              className="hide btn bg-cart"
+                              className={
+                                this.checkScreen()
+                                  ? "hide btn-add btn bg-cart"
+                                  : "btn-add btn bg-cart"
+                              }
                               onClick={() => this.handleAddToCart(item)}
                             >
                               <i className="fa fa-cart-plus mr-2"></i> Add to
@@ -347,16 +368,16 @@ class Book extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Book));

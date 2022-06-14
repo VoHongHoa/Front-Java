@@ -35,7 +35,7 @@ class DetailBook extends Component {
   async componentDidMount() {
     let id = this.props.match.params.id;
     let res = await findBooksByBookId(id);
-    //console.log("book:", res);
+    console.log("book:", res);
     this.getAllReviews(id);
     if (res) {
       this.setState({
@@ -44,7 +44,7 @@ class DetailBook extends Component {
     }
   }
 
-  handleAddToCart = (book) => {
+  handleAddToCart = book => {
     this.props.addToCart(book);
   };
 
@@ -53,10 +53,12 @@ class DetailBook extends Component {
   };
 
   handleReturnCate = () => {
-    this.props.history.push("/");
+    let cateID = this.state.book.category?.categoryId;
+    console.log("cateID: ", cateID);
+    this.props.history.push(`/loai-sach/${cateID}/${0}`);
   };
 
-  getAllReviews = async (bookId) => {
+  getAllReviews = async bookId => {
     try {
       let res = await getComment(bookId);
       //console.log(res);
@@ -68,7 +70,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = (event) => {
+  handleOnchangeInput = event => {
     this.setState({
       newReview: event.target.value,
     });
@@ -138,7 +140,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async (item) => {
+  handledeleteComment = async item => {
     //onsole.log(item);
     try {
       let data = {
@@ -157,7 +159,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOpenModaleditComment = async (item) => {
+  handleOpenModaleditComment = async item => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -187,7 +189,7 @@ class DetailBook extends Component {
       console.log(e);
     }
   };
-  handleVoterating = (numOfStar) => {
+  handleVoterating = numOfStar => {
     this.setState({ numOfStar: numOfStar });
   };
 
@@ -214,8 +216,9 @@ class DetailBook extends Component {
                 onClick={() => this.handleReturnCate(book.category?.categoryId)}
                 style={{ cursor: "pointer" }}
               >
+                {" "}
                 | {book.category?.nameCate}
-              </span>
+              </span>{" "}
               | <b>{book.nameBook}</b>
             </p>
           </section>
@@ -273,7 +276,7 @@ class DetailBook extends Component {
 
               <textarea
                 className="form-control"
-                onChange={(event) => this.handleOnchangeInput(event)}
+                onChange={event => this.handleOnchangeInput(event)}
                 value={this.state.newReview}
               ></textarea>
             </div>
@@ -425,15 +428,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { addToCart: (item) => dispatch(addToCart(item)) };
+const mapDispatchToProps = dispatch => {
+  return { addToCart: item => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

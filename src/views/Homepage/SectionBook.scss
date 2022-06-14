@@ -1,6 +1,5 @@
 .card {
     position: relative;
-    display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -67,7 +66,7 @@ a {
     bottom: 40px;
     color: red;
     font-weight: bold;
-    text-align: center;
+    right: 32%;
 }
 .btn-add{
     position: absolute;

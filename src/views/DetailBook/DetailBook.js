@@ -258,7 +258,7 @@ class DetailBook extends Component {
                 className={"btn-add-detail btn bg-cart"}
                 onClick={() => this.handleAddToCart(book)}
               >
-                <i className="fa fa-cart-plus mr-2"></i>Add to cart
+                <i className="fa fa-cart-plus mr-2"></i>Thêm vào giỏ hàng
               </button>
               <p className="info">
                 Nhà xuất bản: <span className="info2">{book.publishCom}</span>{" "}

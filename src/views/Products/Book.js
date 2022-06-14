@@ -226,7 +226,7 @@ class Book extends Component {
     //console.log(this.state);
     let cateName = this.state.allBooks[0]?.category.nameCate;
     return (
-      <div className="product-container">
+      <div className="product-container container">
         <HomeHeader />
         <section id="sidebar">
           <p>
@@ -248,7 +248,7 @@ class Book extends Component {
             <div className="filter">
               <div className="all-availble-price mb-2">
                 <div className="title-select">Giá: </div>
-                <select
+                {/* <select
                   className="select-price mt-2"
                   // onChange={(event) =>
                   //   this.handleOnchangeSelect(event, "selectedPrice")
@@ -257,7 +257,33 @@ class Book extends Component {
                   <option>giá</option>
                   <option>giá</option>
                   <option>giá</option>
-                </select>
+                </select> */}
+                <div
+                  className="soft mt-2"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <button
+                    className={
+                      this.state.filterIns === true
+                        ? "btn btn-primary"
+                        : "btn btn-dark"
+                    }
+                    onClick={() => this.handlefilterPriceIns()}
+                  >
+                    <i className="fa-solid fa-arrow-up-short-wide"></i> tăng
+                  </button>
+                  <button
+                    className={
+                      this.state.filterIns === false
+                        ? "btn btn-primary"
+                        : "btn btn-dark"
+                    }
+                    onClick={() => this.handlefilterPriceDsc()}
+                  >
+                    <i className="fa-solid fa-arrow-down-short-wide"></i>
+                    giảm
+                  </button>
+                </div>
               </div>
               <hr className="my-4" />
               <div className="all-availble-price mb-2">
@@ -299,26 +325,28 @@ class Book extends Component {
                 </select>
               </div>
               <hr className="my-4" />
-              <button
-                className={
-                  this.state.filterIns === true
-                    ? "btn btn-primary"
-                    : "btn btn-dark"
-                }
-                onClick={() => this.handlefilterPriceIns()}
-              >
-                Giá tăng
-              </button>
-              <button
-                className={
-                  this.state.filterIns === false
-                    ? "btn btn-primary"
-                    : "btn btn-dark"
-                }
-                onClick={() => this.handlefilterPriceDsc()}
-              >
-                Giá giảm
-              </button>
+              {/* <div className="soft" style={{ display: "flex" }}>
+                <button
+                  className={
+                    this.state.filterIns === true
+                      ? "btn btn-primary"
+                      : "btn btn-dark"
+                  }
+                  onClick={() => this.handlefilterPriceIns()}
+                >
+                  <i className="fa-solid fa-arrow-up-short-wide"></i> Giá tăng
+                </button>
+                <button
+                  className={
+                    this.state.filterIns === false
+                      ? "btn btn-primary"
+                      : "btn btn-dark"
+                  }
+                  onClick={() => this.handlefilterPriceDsc()}
+                >
+                  <i className="fa-solid fa-arrow-down-short-wide"></i> Giá giảm
+                </button>
+              </div> */}
             </div>
           </div>
           <div className="container d-flex justify-content-center mt-3 mb-3 col-9">
@@ -327,7 +355,14 @@ class Book extends Component {
                 allBooks.length > 0 &&
                 allBooks.map((item, index) => {
                   return (
-                    <div className="col-md-4 mt-2" key={index}>
+                    <div
+                      className={
+                        allBooks.length >= 3
+                          ? "col-md-4 mt-2"
+                          : "col-md-auto mt-2"
+                      }
+                      key={index}
+                    >
                       <Fade bottom delay={150}>
                         <div
                           className="card"

@@ -21,7 +21,7 @@ class SectionProduct extends Component {
       windowWidth: window.innerWidth,
     };
   }
-  getAllBook = async currentPage => {
+  getAllBook = async (currentPage) => {
     try {
       let res = await getBookHomePage(currentPage);
       console.log(res);
@@ -54,10 +54,10 @@ class SectionProduct extends Component {
       toast.error("Lỗi server!!");
     }
   };
-  handleDetailBook = item => {
+  handleDetailBook = (item) => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleAddToCart = item => {
+  handleAddToCart = (item) => {
     //console.log(item);
     this.props.addToCart(item);
   };
@@ -67,7 +67,7 @@ class SectionProduct extends Component {
       windowWidth: window.innerWidth,
     });
   }
-  handleChangePage = item => {
+  handleChangePage = (item) => {
     this.getAllBook(item);
     this.setState({
       currentPage: item,
@@ -102,7 +102,14 @@ class SectionProduct extends Component {
               bookList.length > 0 &&
               bookList.map((item, index) => {
                 return (
-                  <div className="col-md-3 mt-2" key={index}>
+                  <div
+                    className={
+                      bookList.length >= 4
+                        ? "col-sm-3 mt-2"
+                        : "col-sm-auto mt-2"
+                    }
+                    key={index}
+                  >
                     <Fade bottom delay={150}>
                       <div
                         className="card"
@@ -457,16 +464,16 @@ class SectionProduct extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: item => dispatch(addToCart(item)),
+    addToCart: (item) => dispatch(addToCart(item)),
   };
 };
 export default withRouter(

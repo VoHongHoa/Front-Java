@@ -61,14 +61,15 @@ a {
     text-decoration: none !important
 }
 
-.price{
+.price {
     position: absolute;
     bottom: 40px;
     color: red;
     font-weight: bold;
     right: 32%;
 }
-.btn-add{
+
+.btn-add {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -87,6 +88,7 @@ a {
     .hide {
         display: block;
     }
+
     .show {
         display: none;
     }

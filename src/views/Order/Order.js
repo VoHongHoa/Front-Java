@@ -91,12 +91,12 @@ class Order extends Component {
                     </p>
                     <p>
                       Ngày hóa đơn:
-                      <b>{moment(item.orderssDate).format("MM/DD/YYYY")}</b>
+                      <b> {moment(item.orderssDate).format("MM/DD/YYYY")}</b>
                     </p>
                   </div>
                 </div>
-                <h3 style={{ textAlign: "center" }}>Danh sách sản phẩm</h3>
-                <table className="table scroller table-striped">
+                <h4 style={{ textAlign: "center" }}>Danh sách sản phẩm</h4>
+                <table className="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">#</th>

@@ -21,6 +21,9 @@ class SectionProduct extends Component {
   handleAddToCart = item => {
     this.props.addToCart(item);
   };
+  handleDetailBook = item => {
+    this.props.history.push(`/book/${item.bookId}`);
+  };
   checkScreen = () => {
     // this.setState({
     //   windowWidth: window.innerWidth,

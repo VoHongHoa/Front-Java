@@ -165,9 +165,21 @@ class Book extends Component {
       arr.push(i);
     }
     //console.log(this.state);
+    let cateName = this.state.allBooks[0]?.category.nameCate;
     return (
       <div className="product-container">
-        <HomeHeader></HomeHeader>
+        <HomeHeader />
+        <section id="sidebar">
+          <p>
+            <span
+              onClick={() => this.handleReturnHome()}
+              style={{ cursor: "pointer" }}
+            >
+              Trang chủ
+            </span>{" "}
+            | <b>{cateName}</b>
+          </p>
+        </section>
         <div className="row">
           <div className="filter-container col-2 mt-3">
             <p style={{ textAlign: "center", fontSize: "20px" }}>
@@ -250,7 +262,14 @@ class Book extends Component {
                   return (
                     <div className="col-md-4 mt-2" key={index}>
                       <Fade bottom delay={150}>
-                        <div className="card" style={{ height: "500px" }}>
+                        <div
+                          className="card"
+                          style={
+                            this.checkScreen()
+                              ? { height: "500px" }
+                              : { height: "550px" }
+                          }
+                        >
                           <div onClick={() => this.handleDetailBook(item)}>
                             <div className="card-body">
                               <div className="card-img-actions">

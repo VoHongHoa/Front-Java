@@ -238,7 +238,14 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={item.bookId}>
                     <Fade bottom delay={150}>
-                      <div className="card" style={{ height: "500px" }}>
+                      <div
+                        className="card"
+                        style={
+                          this.checkScreen()
+                            ? { height: "500px" }
+                            : { height: "550px" }
+                        }
+                      >
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -303,45 +310,28 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        {this.checkScreen() ? (
-                          <Fade top delay={-300}>
-                            <h3
-                              className={
-                                this.checkScreen()
-                                  ? "hide price mb-0 font-weight-semibold"
-                                  : "price mb-0 font-weight-semibold"
-                              }
-                            >
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className={
-                                this.checkScreen()
-                                  ? "hide btn-add btn bg-cart"
-                                  : "btn-add btn bg-cart"
-                              }
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </Fade>
-                        ) : (
-                          <div className="row">
-                            <h3 className="col mb-0 font-weight-semibold">
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className="col btn bg-cart"
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </div>
-                        )}
+                        <Fade top delay={-300}>
+                          <h3
+                            className={
+                              this.checkScreen()
+                                ? "hide price mb-0 font-weight-semibold"
+                                : "price mb-0 font-weight-semibold"
+                            }
+                          >
+                            {formatPrice(item.price)}
+                          </h3>
+                          <button
+                            type="button"
+                            className={
+                              this.checkScreen()
+                                ? "hide btn-add btn bg-cart"
+                                : "btn-add btn bg-cart"
+                            }
+                            onClick={() => this.handleAddToCart(item)}
+                          >
+                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
+                          </button>
+                        </Fade>
                       </div>
                     </Fade>
                   </div>
@@ -362,7 +352,14 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={item.nameBook}>
                     <Fade bottom delay={150}>
-                      <div className="card" style={{ height: "500px" }}>
+                      <div
+                        className="card"
+                        style={
+                          this.checkScreen()
+                            ? { height: "500px" }
+                            : { height: "550px" }
+                        }
+                      >
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -427,45 +424,28 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        {this.checkScreen() ? (
-                          <Fade top delay={-300}>
-                            <h3
-                              className={
-                                this.checkScreen()
-                                  ? "hide price mb-0 font-weight-semibold"
-                                  : "price mb-0 font-weight-semibold"
-                              }
-                            >
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className={
-                                this.checkScreen()
-                                  ? "hide btn-add btn bg-cart"
-                                  : "btn-add btn bg-cart"
-                              }
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </Fade>
-                        ) : (
-                          <div className="row">
-                            <h3 className="col mb-0 font-weight-semibold">
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className="col btn bg-cart"
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </div>
-                        )}
+                        <Fade top delay={-300}>
+                          <h3
+                            className={
+                              this.checkScreen()
+                                ? "hide price mb-0 font-weight-semibold"
+                                : "price mb-0 font-weight-semibold"
+                            }
+                          >
+                            {formatPrice(item.price)}
+                          </h3>
+                          <button
+                            type="button"
+                            className={
+                              this.checkScreen()
+                                ? "hide btn-add btn bg-cart"
+                                : "btn-add btn bg-cart"
+                            }
+                            onClick={() => this.handleAddToCart(item)}
+                          >
+                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
+                          </button>
+                        </Fade>
                       </div>
                     </Fade>
                   </div>

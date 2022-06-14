@@ -9,6 +9,17 @@ class Term2 extends Component {
     return (
       <React.Fragment>
         <HomeHeader />
+        <section id="sidebar">
+          <p>
+            <span
+              onClick={() => this.handleReturnHome()}
+              style={{ cursor: "pointer" }}
+            >
+              Trang chủ
+            </span>{" "}
+            | <b>Điều khoản sử dụng</b>
+          </p>
+        </section>
         <div className="container terms">
           <div className="row head">
             <NavLink to={"/chinh-sach-bao-mat"} className="col column">

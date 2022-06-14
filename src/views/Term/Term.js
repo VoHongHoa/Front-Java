@@ -3,12 +3,28 @@ import "./Term.scss";
 import HomeHeader from "../Homepage/HomeHeader";
 import Footer from "../Homepage/Footer";
 import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Term extends Component {
+  handleReturnHome = () => {
+    this.props.history.push("/");
+  };
+
   render() {
     return (
       <React.Fragment>
         <HomeHeader />
+        <section id="sidebar">
+          <p>
+            <span
+              onClick={() => this.handleReturnHome()}
+              style={{ cursor: "pointer" }}
+            >
+              Trang chủ
+            </span>{" "}
+            | <b>Chính sách bảo mật</b>
+          </p>
+        </section>
         <div className="container terms">
           <div className="row head">
             <NavLink to={"/chinh-sach-bao-mat"} className="col column active">
@@ -125,4 +141,4 @@ class Term extends Component {
   }
 }
 
-export default Term;
+export default withRouter(Term);

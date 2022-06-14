@@ -61,36 +61,42 @@ class Order extends Component {
         {allOrder.length > 0 && allOrder.length > 0 ? (
           allOrder.map((item, index) => {
             return (
-              <div>
-                <p>
-                  ID đơn hàng: <span>{item.orderssId}</span>
-                </p>
-                <p>
-                  Tên khách hàng: <span>{item.fullName}</span>{" "}
-                </p>
-                <p>
-                  Số điện thoại: <span>{item.telephone}</span>{" "}
-                </p>
-                <p>
-                  Địa chỉ: <span>{item.address}</span>{" "}
-                </p>
-                <p>
-                  Trị giá đơn hàng:{" "}
-                  <span style={{ fontWeight: "bold" }}>
-                    {item.totalPrice
-                      ? formatPrice(item.totalPrice)
-                      : item.totalPrice}
-                  </span>{" "}
-                </p>
-                <p>
-                  Trạng thái đơn hàng: <span>{item.status}</span>{" "}
-                </p>
-                <p>
-                  Ngày hóa đơn:
-                  <span>{moment(item.orderssDate).format("MM/DD/YYYY")}</span>
-                </p>
+              <div className="container">
+                <div className="row">
+                  <p>
+                    ID đơn hàng: <b>{item.orderssId}</b>
+                  </p>
+                  <div className="col-sm-6">
+                    <p>
+                      Tên khách hàng: <span>{item.fullName}</span>{" "}
+                    </p>
+                    <p>
+                      Số điện thoại: <span>{item.telephone}</span>{" "}
+                    </p>
+                    <p>
+                      Địa chỉ: <span>{item.address}</span>{" "}
+                    </p>
+                  </div>
+                  <div className="col-sm-6">
+                    <p>
+                      Trị giá đơn hàng:{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        {item.totalPrice
+                          ? formatPrice(item.totalPrice)
+                          : item.totalPrice}
+                      </span>{" "}
+                    </p>
+                    <p>
+                      Trạng thái đơn hàng: <b>{item.status}</b>{" "}
+                    </p>
+                    <p>
+                      Ngày hóa đơn:
+                      <b>{moment(item.orderssDate).format("MM/DD/YYYY")}</b>
+                    </p>
+                  </div>
+                </div>
                 <h3 style={{ textAlign: "center" }}>Danh sách sản phẩm</h3>
-                <table className="table table-striped">
+                <table className="table scroller table-striped">
                   <thead>
                     <tr>
                       <th scope="col">#</th>

@@ -1,0 +1,29 @@
+.filter {
+    margin-left: 30px;
+
+
+    .all-availble-price {
+        .title-select {
+            font-size: 20px;
+        }
+
+
+        .select-price {
+            border: none;
+            width: 100%;
+            border-bottom: 3px solid #2196f3;
+            outline: none;
+
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .filter-container {
+        width: 100%;
+
+        .filter {
+            margin-left: 0;
+        }
+    }
+}

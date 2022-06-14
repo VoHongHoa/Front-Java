@@ -35,6 +35,12 @@ const ratingBook = (data) => {
 const keywordSearch = (data) => {
   return axios.post("/search/book", data);
 };
+const fetchDataFilter = () => {
+  return axios.get("data-filter");
+};
+const getBookFilter = (data, page) => {
+  return axios.post(`/search/${page}`, data);
+};
 export {
   addNewBook,
   getAllBooksPaging,
@@ -48,4 +54,6 @@ export {
   getSearchBook,
   ratingBook,
   keywordSearch,
+  fetchDataFilter,
+  getBookFilter,
 };

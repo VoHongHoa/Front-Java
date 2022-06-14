@@ -223,10 +223,7 @@ class Cart extends Component {
     return (
       <div className="CartContainer">
         <HomeHeader />
-        <section
-          className="h-100 h-custom"
-          style={{ backgroundColor: "#d2c9ff" }}
-        >
+        <section className="container" style={{ backgroundColor: "#d2c9ff" }}>
           <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col-12">

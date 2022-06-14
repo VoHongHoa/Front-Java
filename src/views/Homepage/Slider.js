@@ -14,7 +14,7 @@ class Slider extends Component {
     return (
       <div
         id="carouselExampleIndicators"
-        className="carousel slide"
+        className="carousel slide container"
         data-ride="carousel"
       >
         <ol className="carousel-indicators">

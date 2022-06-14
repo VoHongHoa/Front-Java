@@ -1,12 +1,12 @@
 .homepage-container {
     .section-header {
-        position: fixed;
+        position: sticky;
         top: 0;
         z-index: 1000;
-        width: 100%;
+
     }
 
-    .slider {
-        margin-top: 60px;
-    }
+    // .slider {
+    //     margin-top: 60px;
+    // }
 }

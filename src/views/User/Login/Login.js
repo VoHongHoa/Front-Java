@@ -146,7 +146,7 @@ class Login extends Component {
           >
             Đăng nhập
           </button>
-          <p style={{ textAlign: "center" }}>OR</p>
+          <p style={{ textAlign: "center" }}>Hoặc</p>
 
           <GoogleLogin
             clientId="1000261381053-acnpjvmhm485p7aal87iicf70bvdm04a.apps.googleusercontent.com"
@@ -157,7 +157,7 @@ class Login extends Component {
                 className=" btn btn-primary button-login-google"
                 style={{ cursor: "pointer" }}
               >
-                Đăng nhập bằng Google
+                <i className="fa-brands fa-google"></i> Đăng nhập bằng Google
               </button>
             )}
             buttonText="Login"

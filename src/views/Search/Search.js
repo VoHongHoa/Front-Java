@@ -34,8 +34,10 @@ class SectionProduct extends Component {
   render() {
     let { searchBooks } = this.props;
     return (
-      <div className="search container-fluid">
-        <HomeHeader />
+      <div className="search container">
+        <div className="section-header">
+          <HomeHeader></HomeHeader>
+        </div>
         <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
           Kết quả tìm kiếm
         </h2>

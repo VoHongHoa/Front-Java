@@ -49,7 +49,7 @@ class App extends Component {
               <Route path="/book/:id" exact>
                 <DetailBook />
               </Route>
-              <Route path="/loai-sach/:cateId/:page" exact>
+              <Route path="/loai-sach/:cateId" exact>
                 <Book />
               </Route>
               <Route path="/lienhe" exact>
@@ -190,14 +190,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

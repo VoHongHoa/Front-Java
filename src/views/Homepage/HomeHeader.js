@@ -6,9 +6,7 @@ import "./HomeHeader.scss";
 import { logOutSuccess, searchBooks } from "../../store/actions/AppAction";
 import { getAllCategoriesBooksRedux } from "../../store/actions/CategoriesAction";
 import defaultAvatar from "../../assets/images/avatar.jpg";
-import { BsSearch } from "react-icons/bs";
 import { keywordSearch } from "../../services/BookService";
-import { async } from "@firebase/util";
 class HomeHeader extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +34,7 @@ class HomeHeader extends Component {
   //     infoBook: event.target.value,
   //   });
   // };
-  handleOnchangeKeySearch = async event => {
+  handleOnchangeKeySearch = async (event) => {
     this.setState({
       keysearch: event.target.value,
       infoBook: event.target.value,
@@ -62,7 +60,7 @@ class HomeHeader extends Component {
       console.log(e);
     }
   };
-  getProductSearch = infoBook => {
+  getProductSearch = (infoBook) => {
     let data = {
       infoBook: infoBook,
     };
@@ -74,7 +72,7 @@ class HomeHeader extends Component {
     this.props.history.push("/tim-kiem");
     // console.log(this.props);
   };
-  handleSearchByKeyword = async item => {
+  handleSearchByKeyword = async (item) => {
     this.setState({
       keysearch: item,
       infoBook: item,
@@ -87,7 +85,7 @@ class HomeHeader extends Component {
   };
   render() {
     let { allCategoriesBooks, allRecommendKeysearch } = this.state;
-    console.log(allRecommendKeysearch);
+    //console.log(allCategoriesBooks);
     return (
       <div className="header-container">
         <nav className="navbar navbar-expand-xl navbar-light bg-light">
@@ -131,7 +129,7 @@ class HomeHeader extends Component {
                         <NavLink
                           className="dropdown-item"
                           role="presentation"
-                          to={`/loai-sach/${item.categoryId}/${0}`}
+                          to={`/loai-sach/${item.categoryId}`}
                           exact
                           key={item.categoryId}
                         >
@@ -164,7 +162,7 @@ class HomeHeader extends Component {
                   id="search"
                   className="form-control"
                   placeholder="Tìm kiếm sản phẩm"
-                  onChange={event => this.handleOnchangeKeySearch(event)}
+                  onChange={(event) => this.handleOnchangeKeySearch(event)}
                   value={this.state.keysearch}
                 />
 
@@ -324,7 +322,7 @@ class HomeHeader extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -333,11 +331,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleLogOutRedux: () => dispatch(logOutSuccess()),
     getAllCategoriesBooksRedux: () => dispatch(getAllCategoriesBooksRedux()),
-    searchBooks: data => dispatch(searchBooks(data)),
+    searchBooks: (data) => dispatch(searchBooks(data)),
   };
 };
 export default withRouter(

@@ -194,7 +194,8 @@ class DetailBook extends Component {
   render() {
     let { book, allReview, isShowComment, numOfStar } = this.state;
     let isEmptyObj = Object.keys(book).length === 0;
-    //console.log(allReview);
+
+    console.log(book);
     return (
       <React.Fragment>
         <div className="container">

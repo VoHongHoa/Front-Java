@@ -6,8 +6,6 @@ import { withRouter } from "react-router";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../constants/format";
 import { addToCart } from "../../store/actions/AppAction";
-import Fade from "react-reveal/Fade";
-import Zoom from "react-reveal/Zoom";
 import { getBookHomePage } from "../../services/HomeService";
 class SectionProduct extends Component {
   constructor(props) {
@@ -110,7 +108,7 @@ class SectionProduct extends Component {
                     }
                     key={index}
                   >
-                    <Fade bottom delay={150}>
+                    <div className="fade-in">
                       <div
                         className="card"
                         style={
@@ -183,7 +181,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-300}>
+                        <div className="fade-in">
                           <h3
                             className={
                               this.checkScreen()
@@ -205,9 +203,9 @@ class SectionProduct extends Component {
                             <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                             giỏ hàng
                           </button>
-                        </Fade>
+                        </div>
                       </div>
-                    </Fade>
+                    </div>
                   </div>
                 );
               })}
@@ -233,11 +231,11 @@ class SectionProduct extends Component {
             </div>
           </div>
         </div>
-        <Zoom bottom delay={900}>
+        <div className="fade-in">
           <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
             Danh sách sách bán chạy ở cửa hàng
           </h2>
-        </Zoom>
+        </div>
         <div className="container d-flex justify-content-center mt-50 mb-50">
           <div className="row">
             {bookOrder &&
@@ -245,7 +243,7 @@ class SectionProduct extends Component {
               bookOrder.map((item, index) => {
                 return (
                   <div className="col-md-3 mt-2" key={item.bookId}>
-                    <Fade bottom delay={150}>
+                    <div className="fade-in">
                       <div
                         className="card"
                         style={
@@ -318,7 +316,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-300}>
+                        <div className="fade-in">
                           <h3
                             className={
                               this.checkScreen()
@@ -340,19 +338,19 @@ class SectionProduct extends Component {
                             <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                             giỏ hàng
                           </button>
-                        </Fade>
+                        </div>
                       </div>
-                    </Fade>
+                    </div>
                   </div>
                 );
               })}
           </div>
         </div>
-        <Zoom bottom delay={2000}>
+        <div className="fade-in">
           <h2 className="mt-3 mb-3" style={{ textAlign: "center" }}>
             Danh sách sách được đánh giá cao
           </h2>
-        </Zoom>
+        </div>
         <div className="container d-flex justify-content-center mt-50 mb-50">
           <div className="row">
             {bookRating &&
@@ -360,7 +358,7 @@ class SectionProduct extends Component {
               bookRating.map((item, index) => {
                 return (
                   <div className="col-md-3 mt-2" key={item.nameBook}>
-                    <Fade bottom delay={150}>
+                    <div className="fade-in">
                       <div
                         className="card"
                         style={
@@ -433,7 +431,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-300}>
+                        <div className="fade-in">
                           <h3
                             className={
                               this.checkScreen()
@@ -455,9 +453,9 @@ class SectionProduct extends Component {
                             <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                             giỏ hàng
                           </button>
-                        </Fade>
+                        </div>
                       </div>
-                    </Fade>
+                    </div>
                   </div>
                 );
               })}

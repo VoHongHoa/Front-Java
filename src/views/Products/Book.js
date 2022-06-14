@@ -10,7 +10,6 @@ import {
   getCateBook,
 } from "../../services/BookService";
 import Footer from "../Homepage/Footer";
-import Fade from "react-reveal/Fade";
 import { formatPrice } from "../../constants/format";
 class Book extends Component {
   constructor(props) {
@@ -365,7 +364,7 @@ class Book extends Component {
                       }
                       key={index}
                     >
-                      <Fade bottom delay={150}>
+                      <div className="fade-in">
                         <div
                           className="card"
                           style={
@@ -438,7 +437,7 @@ class Book extends Component {
                               </div>
                             </div>
                           </div>
-                          <Fade top delay={-200}>
+                          <div className="fade-in">
                             <h3
                               className={
                                 this.checkScreen()
@@ -460,9 +459,9 @@ class Book extends Component {
                               <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                               giỏ hàng
                             </button>
-                          </Fade>
+                          </div>
                         </div>
-                      </Fade>
+                      </div>
                     </div>
                   );
                 })}

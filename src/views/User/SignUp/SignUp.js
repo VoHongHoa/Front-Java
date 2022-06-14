@@ -7,6 +7,7 @@ import "./SignUp.scss";
 import { toast } from "react-toastify";
 import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { NavLink } from "react-router-dom";
 var mediumRegex = new RegExp(
   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
 );
@@ -62,7 +63,7 @@ class SignUp extends Component {
       ...copyState,
     });
   };
-  handleOnchangeImage = async (event) => {
+  handleOnchangeImage = async event => {
     let filedata = event.target.files;
     let file = filedata[0];
     //console.log(file);
@@ -71,12 +72,12 @@ class SignUp extends Component {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
-        (snapshot) => {},
-        (err) => {
+        snapshot => {},
+        err => {
           console.log(err);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(url => {
             console.log("check url", url);
             this.setState({
               img: url,
@@ -127,7 +128,7 @@ class SignUp extends Component {
       toast.error("Lỗi đăng kí!!");
     }
   };
-  handleOnchangePassword = (event) => {
+  handleOnchangePassword = event => {
     if (mediumRegex.test(event.target.value) === true) {
       this.setState({
         password: event.target.value,
@@ -139,7 +140,7 @@ class SignUp extends Component {
       });
     }
   };
-  handleOnchangeRepeat = (event) => {
+  handleOnchangeRepeat = event => {
     if (this.state.password !== event.target.value) {
       this.setState({
         rpPassErr: false,
@@ -151,7 +152,7 @@ class SignUp extends Component {
       });
     }
   };
-  handleOnchangeEmail = (event) => {
+  handleOnchangeEmail = event => {
     if (event.target.value.includes("@gmail.com")) {
       this.setState({
         email: event.target.value,
@@ -163,7 +164,7 @@ class SignUp extends Component {
       });
     }
   };
-  handleOnchangePhoneNumber = (event) => {
+  handleOnchangePhoneNumber = event => {
     //console.log(event.target.value.charAt(0));
     let phoneNumber = event.target.value;
     //let isValid = true;
@@ -225,7 +226,7 @@ class SignUp extends Component {
               className="form-control"
               placeholder="Nhập email"
               name="email"
-              onChange={(event) => this.handleOnchangeEmail(event)}
+              onChange={event => this.handleOnchangeEmail(event)}
             />
             <span
               className={this.state.errEmail === false ? "notice" : "no-notice"}
@@ -243,7 +244,7 @@ class SignUp extends Component {
               placeholder="Nhập họ và tên"
               name="fullName"
               required
-              onChange={(event) => this.handleOnchangeInput(event, "fullName")}
+              onChange={event => this.handleOnchangeInput(event, "fullName")}
             />
           </div>
           <div className="col-6 nameInput mt-2">
@@ -255,7 +256,7 @@ class SignUp extends Component {
               placeholder="Nhập tên đăng nhập"
               className="form-control"
               name="username"
-              onChange={(event) => this.handleOnchangeInput(event, "userName")}
+              onChange={event => this.handleOnchangeInput(event, "userName")}
               required
             />
           </div>
@@ -281,7 +282,7 @@ class SignUp extends Component {
               placeholder="Nhập mật khẩu"
               className="form-control"
               name="psw"
-              onChange={(event) => this.handleOnchangePassword(event)}
+              onChange={event => this.handleOnchangePassword(event)}
             />
             <span
               className={this.state.passErr === false ? "notice" : "no-notice"}
@@ -300,7 +301,7 @@ class SignUp extends Component {
               placeholder="Nhập lại mật khẩu"
               className="form-control"
               name="psw-repeat"
-              onChange={(event) => this.handleOnchangeRepeat(event)}
+              onChange={event => this.handleOnchangeRepeat(event)}
               required
             />
             <span
@@ -320,7 +321,7 @@ class SignUp extends Component {
               placeholder="Nhập địa chỉ"
               className="form-control"
               name="address"
-              onChange={(event) => this.handleOnchangeInput(event, "address")}
+              onChange={event => this.handleOnchangeInput(event, "address")}
               required
             />
           </div>
@@ -333,7 +334,7 @@ class SignUp extends Component {
               placeholder="Nhập số điện thoại"
               className="form-control"
               name="phonenumber"
-              onChange={(event) => this.handleOnchangePhoneNumber(event)}
+              onChange={event => this.handleOnchangePhoneNumber(event)}
               required
             />
             <span
@@ -350,7 +351,7 @@ class SignUp extends Component {
               type="file"
               className="form-control"
               htmlFor="imgavatar"
-              onChange={(event) => {
+              onChange={event => {
                 this.handleOnchangeImage(event);
               }}
             />
@@ -371,38 +372,41 @@ class SignUp extends Component {
         </div>
 
         <p>
-          Các quy định của của hàng{" "}
-          <a href="/regulation" style={{ color: "dodgerblue" }}>
-            Terms & Privacy
+          Các quy định của của hàng:{" "}
+          <a href="/chinh-sach-bao-mat" style={{ color: "dodgerblue" }}>
+            Quy định và Bảo mật
           </a>
           .
         </p>
 
-        <div className="clearfix">
+        <div className="clearfix row">
           <button
             type="submit"
-            className="signupbtn"
+            className="signupbtn col-sm-6"
             onClick={() => this.handleSignUpUser()}
           >
             Đăng kí
           </button>
           <button
             type="button"
-            className="cancelSignUpbtn"
+            className="cancelSignUpbtn col-sm-6"
             onClick={() => this.handleCancelSignUp()}
           >
             Hủy
           </button>
         </div>
+        <div className="link-to-login">
+          Bạn đã có tài khoản? <NavLink to={"/login"}>Đăng nhập</NavLink>
+        </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));

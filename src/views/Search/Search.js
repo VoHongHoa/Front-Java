@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { addToCart } from "../../store/actions/AppAction";
-import Fade from "react-reveal/Fade";
 import Footer from "../Homepage/Footer";
 import HomeHeader from "../Homepage/HomeHeader";
 import { formatPrice } from "../../constants/format";
@@ -58,7 +57,7 @@ class SectionProduct extends Component {
                     }
                     key={index}
                   >
-                    <Fade bottom delay={150}>
+                    <div className="fade-in">
                       <div
                         className="card"
                         style={
@@ -131,7 +130,7 @@ class SectionProduct extends Component {
                             </div>
                           </div>
                         </div>
-                        <Fade top delay={-200}>
+                        <div className="fade-in">
                           <h3
                             className={
                               this.checkScreen()
@@ -153,9 +152,9 @@ class SectionProduct extends Component {
                             <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                             giỏ hàng
                           </button>
-                        </Fade>
+                        </div>
                       </div>
-                    </Fade>
+                    </div>
                   </div>
                 );
               })}

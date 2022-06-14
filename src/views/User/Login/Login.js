@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import "./Login.scss";
 import { handleLoginRedux } from "../../../store/actions/AppAction";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { findUserByEmail, handleSignUp } from "../../../services/userService";
 class Login extends Component {
@@ -59,7 +60,7 @@ class Login extends Component {
       isShowPassword: !this.state.isShowPassword,
     });
   };
-  responseGoogle = async (response) => {
+  responseGoogle = async response => {
     console.log(response);
     if (response) {
       let userInfor = response.profileObj;
@@ -91,7 +92,7 @@ class Login extends Component {
       toast.error("Đăng nhập không thành công!!");
     }
   };
-  responseFailGoogle = (response) => {
+  responseFailGoogle = response => {
     console.log(response);
   };
   render() {
@@ -109,7 +110,7 @@ class Login extends Component {
             placeholder="Nhập tên đăng nhập"
             className="form-control"
             name="uname"
-            onChange={(event) => this.handleOnchangeInput(event, "userName")}
+            onChange={event => this.handleOnchangeInput(event, "userName")}
             required
           />
           <div className="form-group mt-2">
@@ -119,7 +120,7 @@ class Login extends Component {
             <input
               type={this.state.isShowPassword === true ? "text" : "password"}
               placeholder="Nhập mật khẩu"
-              onChange={(event) => this.handleOnchangeInput(event, "password")}
+              onChange={event => this.handleOnchangeInput(event, "password")}
               className="form-control"
               name="psw"
               required
@@ -150,7 +151,7 @@ class Login extends Component {
 
           <GoogleLogin
             clientId="1000261381053-acnpjvmhm485p7aal87iicf70bvdm04a.apps.googleusercontent.com"
-            render={(renderProps) => (
+            render={renderProps => (
               <button
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
@@ -169,6 +170,9 @@ class Login extends Component {
             <input type="checkbox" checked="checked" name="remember" />
             Lưu thông tin
           </label> */}
+          <div className="link-to-signup">
+            Bạn chưa có tài khoản? <NavLink to={"/sign-up"}>Đăng ký</NavLink>
+          </div>
         </div>
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
           <button
@@ -178,6 +182,7 @@ class Login extends Component {
           >
             Hủy
           </button>
+
           <span className="psw" onClick={() => this.handleForgotPassword()}>
             <a href="#">Quên mật khẩu?</a>
           </span>
@@ -186,11 +191,11 @@ class Login extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { handleLoginRedux: (data) => dispatch(handleLoginRedux(data)) };
+const mapDispatchToProps = dispatch => {
+  return { handleLoginRedux: data => dispatch(handleLoginRedux(data)) };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

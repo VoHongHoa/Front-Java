@@ -56,17 +56,28 @@
 
         .star {
             i {
-                color: black;
+                color: rgb(155, 155, 155);
                 cursor: pointer;
 
                 &.active {
-                    color: yellow;
+                    color: red;
                     cursor: pointer;
                 }
             }
 
         }
     }
+    .comment{
+        .add-comment{
+            width: 90%;
+            margin: 0 auto;
+            .form-groud{
+                .form-control{
+                    border-radius: 15px;
+                }
+            }
+        }
+    }  
 
     .comments-view {
         .action {
@@ -79,4 +90,12 @@
         }
     }
 
+}
+
+.text-primary{
+    font-size: 16px;
+    margin-right: 30px;
+}
+.form-check-input{
+    font-size: 20px;
 }

@@ -37,7 +37,7 @@ class DetailBook extends Component {
     let id = this.props.match.params.id;
     this.getDetaiBookById(id);
   }
-  getDetaiBookById = async (id) => {
+  getDetaiBookById = async id => {
     try {
       let res = await findBooksByBookId(id);
       console.log("book:", res);
@@ -52,7 +52,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleAddToCart = (book) => {
+  handleAddToCart = book => {
     this.props.addToCart(book);
   };
 
@@ -66,7 +66,7 @@ class DetailBook extends Component {
     this.props.history.push(`/loai-sach/${cateID}`);
   };
 
-  getAllReviews = async (bookId) => {
+  getAllReviews = async bookId => {
     try {
       let res = await getComment(bookId);
       console.log(res);
@@ -78,7 +78,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOnchangeInput = (event) => {
+  handleOnchangeInput = event => {
     this.setState({
       newReview: event.target.value,
     });
@@ -153,7 +153,7 @@ class DetailBook extends Component {
     });
   };
 
-  handledeleteComment = async (item) => {
+  handledeleteComment = async item => {
     //onsole.log(item);
     try {
       let data = {
@@ -172,7 +172,7 @@ class DetailBook extends Component {
     }
   };
 
-  handleOpenModaleditComment = async (item) => {
+  handleOpenModaleditComment = async item => {
     this.setState({
       curentReview: item,
       isOpenModal: true,
@@ -202,7 +202,7 @@ class DetailBook extends Component {
       console.log(e);
     }
   };
-  handleVoterating = (numOfStar) => {
+  handleVoterating = numOfStar => {
     this.setState({ numOfStar: numOfStar });
   };
   handleShowActionComment = () => {
@@ -337,58 +337,70 @@ class DetailBook extends Component {
           </div>
           <div className="comment">
             <h2>Nhận xét và đánh giá</h2>
-            <div className="form-groud">
-              <label>Thêm nhận xét</label>
+            <div className="add-comment">
+              <div className="form-groud">
+                <label>Thêm nhận xét</label>
 
-              <textarea
-                className="form-control"
-                onChange={(event) => this.handleOnchangeInput(event)}
-                value={this.state.newReview}
-              ></textarea>
+                <textarea
+                  className="form-control"
+                  onChange={event => this.handleOnchangeInput(event)}
+                  value={this.state.newReview}
+                ></textarea>
+              </div>
+
+              <div className="rating">
+                <span>Đánh giá sản phẩm: </span>
+                <div className="star">
+                  <i
+                    className={
+                      1 <= numOfStar
+                        ? "fa fa-star star active"
+                        : "fa fa-star star"
+                    }
+                    onClick={() => this.handleVoterating(1)}
+                  ></i>
+                  <i
+                    className={
+                      2 <= numOfStar
+                        ? "fa fa-star star active"
+                        : "fa fa-star star"
+                    }
+                    onClick={() => this.handleVoterating(2)}
+                  ></i>
+                  <i
+                    className={
+                      3 <= numOfStar
+                        ? "fa fa-star star active"
+                        : "fa fa-star star"
+                    }
+                    onClick={() => this.handleVoterating(3)}
+                  ></i>
+                  <i
+                    className={
+                      4 <= numOfStar
+                        ? "fa fa-star star active"
+                        : "fa fa-star star"
+                    }
+                    onClick={() => this.handleVoterating(4)}
+                  ></i>
+                  <i
+                    className={
+                      5 <= numOfStar
+                        ? "fa fa-star star active"
+                        : "fa fa-star star"
+                    }
+                    onClick={() => this.handleVoterating(5)}
+                  ></i>
+                </div>
+              </div>
+              <button
+                className="btn btn-primary mb-2 mt-2"
+                onClick={() => this.handleAddNewReview()}
+              >
+                Thêm đánh giá
+              </button>
             </div>
           </div>
-          <div className="rating">
-            <span>Đánh giá sản phẩm: </span>
-            <div className="star">
-              <i
-                className={
-                  1 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
-                }
-                onClick={() => this.handleVoterating(1)}
-              ></i>
-              <i
-                className={
-                  2 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
-                }
-                onClick={() => this.handleVoterating(2)}
-              ></i>
-              <i
-                className={
-                  3 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
-                }
-                onClick={() => this.handleVoterating(3)}
-              ></i>
-              <i
-                className={
-                  4 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
-                }
-                onClick={() => this.handleVoterating(4)}
-              ></i>
-              <i
-                className={
-                  5 <= numOfStar ? "fa fa-star star active" : "fa fa-star star"
-                }
-                onClick={() => this.handleVoterating(5)}
-              ></i>
-            </div>
-          </div>
-          <button
-            className="btn btn-primary mb-2 mt-2"
-            onClick={() => this.handleAddNewReview()}
-          >
-            Thêm đánh giá
-          </button>
-
           <div className="container mt-5">
             <div className="row  d-flex justify-content-center">
               <div className="col-md-8">
@@ -489,15 +501,15 @@ class DetailBook extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     userInfor: state.user.userInfor,
     isLogin: state.user.isLogin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { addToCart: (item) => dispatch(addToCart(item)) };
+const mapDispatchToProps = dispatch => {
+  return { addToCart: item => dispatch(addToCart(item)) };
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DetailBook)

@@ -7,7 +7,7 @@ export const getAllCategoriesBooksRedux = () => {
       let res = await getDataCategories();
       //console.log(res);
       if (res) {
-        dispatch(getAllCategoriesBooksSuccess(res.categoriesList));
+        dispatch(getAllCategoriesBooksSuccess(res.categoryList));
       } else {
         dispatch(getAllCategoriesBooksFailed());
       }

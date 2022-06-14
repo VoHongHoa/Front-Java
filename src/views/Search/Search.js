@@ -34,7 +34,14 @@ class SectionProduct extends Component {
               searchBooks.length > 0 &&
               searchBooks.map((item, index) => {
                 return (
-                  <div className="col-md-3 mt-2" key={index}>
+                  <div
+                    className={
+                      searchBooks.length >= 4
+                        ? "col-sm-3 mt-2"
+                        : "col-sm-auto mt-2"
+                    }
+                    key={index}
+                  >
                     <Fade bottom delay={150}>
                       <div className="card">
                         <div onClick={() => this.handleDetailBook(item)}>

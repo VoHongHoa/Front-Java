@@ -25,8 +25,10 @@ class Book extends Component {
       allPublish: [],
       selectedAuthor: "",
       selectedYearPublish: "",
-      filterIns: true,
+      filterIns: "",
+      // filterDsc: false,
       windowWidth: window.innerWidth,
+      action: "",
     };
   }
   checkScreen = () => {
@@ -63,6 +65,28 @@ class Book extends Component {
       console.log(e);
     }
   };
+  getAllBookFilter = async (data, page) => {
+    try {
+      let res = await getBookFilter(data, page);
+      console.log(res);
+      let numOfPage = 0;
+      if (res.count % process.env.REACT_APP_PAGING_LIMIT_PRODUCT === 0) {
+        numOfPage = res.count / process.env.REACT_APP_PAGING_LIMIT_PRODUCT;
+      } else {
+        numOfPage =
+          (res.count -
+            (res.count % process.env.REACT_APP_PAGING_LIMIT_PRODUCT)) /
+            process.env.REACT_APP_PAGING_LIMIT_PRODUCT +
+          1;
+      }
+      this.setState({
+        allBooks: res.bookList,
+        numOfPage: numOfPage,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   componentDidMount() {
     this.getAllBooksByCate(this.props.match.params.cateId, 0);
     this.getDataFilter();
@@ -72,11 +96,25 @@ class Book extends Component {
       this.getAllBooksByCate(this.props.match.params.cateId, 0);
     }
   }
-  handleAddToCart = item => {
+  handleAddToCart = (item) => {
     this.props.addToCart(item);
   };
-  handleChangePage = item => {
-    this.getAllBooksByCate(this.props.match.params.cateId, item);
+  handleChangePage = (item) => {
+    if (this.state.action === "FILTER") {
+      let data = {
+        tacgia: this.state.selectedAuthor,
+        namsb: this.state.selectedYearPublish,
+        giathap: "",
+        giacao: "",
+        ma: this.state.filterIns,
+        loai: this.props.match.params.cateId,
+      };
+      this.getAllBookFilter(data, item);
+      console.log(data, item);
+    } else {
+      this.getAllBooksByCate(this.props.match.params.cateId, item);
+    }
+
     this.setState({
       currentPage: item,
     });
@@ -93,8 +131,12 @@ class Book extends Component {
       console.log(e);
     }
   };
-  setSelectedAuthor = allAuthor => {
+  setSelectedAuthor = (allAuthor) => {
     let arrAuthor = [];
+    let obj = {};
+    obj.label = "Tất cả";
+    obj.value = "";
+    arrAuthor.push(obj);
     for (let i = 0; i < allAuthor.length; i++) {
       let objectAuthor = {};
       objectAuthor.label = allAuthor[i];
@@ -103,13 +145,15 @@ class Book extends Component {
     }
     return arrAuthor;
   };
-  handleDetailBook = item => {
+  handleDetailBook = (item) => {
     this.props.history.push(`/book/${item.bookId}`);
   };
-  handleOnchangeSelectAuthor = async event => {
+  handleOnchangeSelectAuthor = async (event) => {
     let selectedAuthor = event.target.value;
     this.setState({
       selectedAuthor: selectedAuthor,
+      action: "FILTER",
+      currentPage: 0,
     });
     let data = {
       tacgia: selectedAuthor,
@@ -117,20 +161,18 @@ class Book extends Component {
       giathap: "",
       giacao: "",
       ma: this.state.filterIns,
+      loai: this.props.match.params.cateId,
     };
     console.log(data);
-    try {
-      let res = await getBookFilter(data, 0);
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
+    this.getAllBookFilter(data, 0);
   };
 
-  handleOnchangeSelectYearchPublish = async event => {
+  handleOnchangeSelectYearchPublish = async (event) => {
     let selectedYearPublish = event.target.value;
     this.setState({
       selectedYearPublish: selectedYearPublish,
+      action: "FILTER",
+      currentPage: 0,
     });
     let data = {
       tacgia: this.state.selectedAuthor,
@@ -138,24 +180,41 @@ class Book extends Component {
       giathap: "",
       giacao: "",
       ma: this.state.filterIns,
+      loai: this.props.match.params.cateId,
     };
     console.log(data);
-    try {
-      let res = await getBookFilter(data, 0);
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
+    this.getAllBookFilter(data, 0);
   };
   handlefilterPriceIns = () => {
     this.setState({
       filterIns: true,
+      // filterDsc: this.state.filterIns,
     });
+
+    let data = {
+      tacgia: this.state.selectedAuthor,
+      namsb: this.state.selectedYearPublish,
+      giathap: "",
+      giacao: "",
+      ma: true,
+      loai: this.props.match.params.cateId,
+    };
+    this.getAllBookFilter(data, this.state.currentPage);
   };
   handlefilterPriceDsc = () => {
     this.setState({
       filterIns: false,
     });
+
+    let data = {
+      tacgia: this.state.selectedAuthor,
+      namsb: this.state.selectedYearPublish,
+      giathap: "",
+      giacao: "",
+      ma: false,
+      loai: this.props.match.params.cateId,
+    };
+    this.getAllBookFilter(data, this.state.currentPage);
   };
   render() {
     let { numOfPage, currentPage, allBooks, allAuthor, allPublish } =
@@ -167,7 +226,7 @@ class Book extends Component {
     //console.log(this.state);
     let cateName = this.state.allBooks[0]?.category.nameCate;
     return (
-      <div className="product-container">
+      <div className="product-container container">
         <HomeHeader />
         <section id="sidebar">
           <p>
@@ -189,7 +248,7 @@ class Book extends Component {
             <div className="filter">
               <div className="all-availble-price mb-2">
                 <div className="title-select">Giá: </div>
-                <select
+                {/* <select
                   className="select-price mt-2"
                   // onChange={(event) =>
                   //   this.handleOnchangeSelect(event, "selectedPrice")
@@ -198,14 +257,40 @@ class Book extends Component {
                   <option>giá</option>
                   <option>giá</option>
                   <option>giá</option>
-                </select>
+                </select> */}
+                <div
+                  className="soft mt-2"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <button
+                    className={
+                      this.state.filterIns === true
+                        ? "btn btn-primary"
+                        : "btn btn-dark"
+                    }
+                    onClick={() => this.handlefilterPriceIns()}
+                  >
+                    <i className="fa-solid fa-arrow-up-short-wide"></i> tăng
+                  </button>
+                  <button
+                    className={
+                      this.state.filterIns === false
+                        ? "btn btn-primary"
+                        : "btn btn-dark"
+                    }
+                    onClick={() => this.handlefilterPriceDsc()}
+                  >
+                    <i className="fa-solid fa-arrow-down-short-wide"></i>
+                    giảm
+                  </button>
+                </div>
               </div>
               <hr className="my-4" />
               <div className="all-availble-price mb-2">
                 <div className="title-select">Tác giả: </div>
                 <select
                   className="select-price mt-2"
-                  onChange={event => this.handleOnchangeSelectAuthor(event)}
+                  onChange={(event) => this.handleOnchangeSelectAuthor(event)}
                 >
                   {allAuthor &&
                     allAuthor.length > 0 &&
@@ -224,7 +309,7 @@ class Book extends Component {
                 <div className="title-select">Năm xuất bản: </div>
                 <select
                   className="select-price mt-2"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.handleOnchangeSelectYearchPublish(event)
                   }
                 >
@@ -240,18 +325,28 @@ class Book extends Component {
                 </select>
               </div>
               <hr className="my-4" />
-              <button
-                className="btn btn-primary"
-                onClick={() => this.handlefilterPriceIns()}
-              >
-                Giá tăng
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => this.handlefilterPriceDsc()}
-              >
-                Giá giảm
-              </button>
+              {/* <div className="soft" style={{ display: "flex" }}>
+                <button
+                  className={
+                    this.state.filterIns === true
+                      ? "btn btn-primary"
+                      : "btn btn-dark"
+                  }
+                  onClick={() => this.handlefilterPriceIns()}
+                >
+                  <i className="fa-solid fa-arrow-up-short-wide"></i> Giá tăng
+                </button>
+                <button
+                  className={
+                    this.state.filterIns === false
+                      ? "btn btn-primary"
+                      : "btn btn-dark"
+                  }
+                  onClick={() => this.handlefilterPriceDsc()}
+                >
+                  <i className="fa-solid fa-arrow-down-short-wide"></i> Giá giảm
+                </button>
+              </div> */}
             </div>
           </div>
           <div className="container d-flex justify-content-center mt-3 mb-3 col-9">
@@ -260,7 +355,14 @@ class Book extends Component {
                 allBooks.length > 0 &&
                 allBooks.map((item, index) => {
                   return (
-                    <div className="col-md-4 mt-2" key={index}>
+                    <div
+                      className={
+                        allBooks.length >= 3
+                          ? "col-md-4 mt-2"
+                          : "col-md-auto mt-2"
+                      }
+                      key={index}
+                    >
                       <Fade bottom delay={150}>
                         <div
                           className="card"
@@ -388,16 +490,16 @@ class Book extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: item => dispatch(addToCart(item)),
+    addToCart: (item) => dispatch(addToCart(item)),
   };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Book));

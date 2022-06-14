@@ -44,7 +44,7 @@ class CategoriesBooks extends Component {
       }
       this.setState({
         numOfCategories: res.count,
-        allCategories: res.categoriesList,
+        allCategories: res.categoryList,
         numOfPage: numOfPage,
       });
     } else {

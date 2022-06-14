@@ -16,8 +16,19 @@ class Book extends Component {
       currentPage: 0,
       numOfPage: 0,
       numofBooks: 0,
+      windowWidth: window.innerWidth,
     };
   }
+  checkScreen = () => {
+    // this.setState({
+    //   windowWidth: window.innerWidth,
+    // });
+    if (this.state.windowWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   getAllBooksByCate = async (categoryId, page) => {
     try {
       let res = await getCateBook(categoryId, page);
@@ -50,16 +61,16 @@ class Book extends Component {
       this.getAllBooksByCate(this.props.match.params.cateId, 0);
     }
   }
-  handleAddToCart = (item) => {
+  handleAddToCart = item => {
     this.props.addToCart(item);
   };
-  handleChangePage = (item) => {
+  handleChangePage = item => {
     this.getAllBooksByCate(this.props.match.params.cateId, item);
     this.setState({
       currentPage: item,
     });
   };
-  handleDetailBook = (item) => {
+  handleDetailBook = item => {
     this.props.history.push(`/book/${item.bookId}`);
   };
   render() {
@@ -144,12 +155,22 @@ class Book extends Component {
                           </div>
                         </div>
                         <Fade top delay={-200}>
-                          <h3 className="hide mb-0 font-weight-semibold">
+                          <h3
+                            className={
+                              this.checkScreen()
+                                ? "hide price mb-0 font-weight-semibold"
+                                : "price mb-0 font-weight-semibold"
+                            }
+                          >
                             {formatPrice(item.price)}
                           </h3>
                           <button
                             type="button"
-                            className="hide btn bg-cart"
+                            className={
+                              this.checkScreen()
+                                ? "hide btn-add btn bg-cart"
+                                : "btn-add btn bg-cart"
+                            }
                             onClick={() => this.handleAddToCart(item)}
                           >
                             <i className="fa fa-cart-plus mr-2"></i> Add to cart
@@ -184,16 +205,16 @@ class Book extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: item => dispatch(addToCart(item)),
   };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Book));

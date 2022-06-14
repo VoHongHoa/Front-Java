@@ -104,7 +104,14 @@ class SectionProduct extends Component {
                 return (
                   <div className="col-md-3 mt-2" key={index}>
                     <Fade bottom delay={150}>
-                      <div className="card" style={{ height: "500px" }}>
+                      <div
+                        className="card"
+                        style={
+                          this.checkScreen()
+                            ? { height: "500px" }
+                            : { height: "550px" }
+                        }
+                      >
                         <div onClick={() => this.handleDetailBook(item)}>
                           <div className="card-body">
                             <div className="card-img-actions">
@@ -117,7 +124,7 @@ class SectionProduct extends Component {
                               />
                             </div>
                           </div>
-                          <div className="card-body show bg-light text-center">
+                          <div className="card-body bg-light text-center">
                             <div className="mb-2">
                               <a
                                 href="#"
@@ -127,76 +134,70 @@ class SectionProduct extends Component {
                                 {item.nameBook}
                               </a>
                             </div>
-
-                            {item.rating === 1 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
+                            <div className="show">
+                              {item.rating === 1 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 2 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 3 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 4 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              {item.rating === 5 && (
+                                <div>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                  <i className="fa fa-star star"></i>
+                                </div>
+                              )}
+                              <div className="text-muted mb-3">
+                                {item.cmt} đánh giá
                               </div>
-                            )}
-                            {item.rating === 2 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 3 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 4 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            {item.rating === 5 && (
-                              <div>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                                <i className="fa fa-star star"></i>
-                              </div>
-                            )}
-                            <div className="text-muted mb-3">
-                              {item.cmt} đánh giá
                             </div>
                           </div>
                         </div>
-                        {this.checkScreen() ? (
-                          <Fade top delay={-200}>
-                            <h3 className="hide mb-0 font-weight-semibold">
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className="hide btn bg-cart"
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </Fade>
-                        ) : (
-                          <div className="row">
-                            <h3 className="col mb-0 font-weight-semibold">
-                              {formatPrice(item.price)}
-                            </h3>
-                            <button
-                              type="button"
-                              className="col btn bg-cart"
-                              onClick={() => this.handleAddToCart(item)}
-                            >
-                              <i className="fa fa-cart-plus mr-2"></i> Add to
-                              cart
-                            </button>
-                          </div>
-                        )}
+                        <Fade top delay={-200}>
+                          <h3
+                            className={
+                              this.checkScreen()
+                                ? "hide price mb-0 font-weight-semibold"
+                                : "price mb-0 font-weight-semibold"
+                            }
+                          >
+                            {formatPrice(item.price)}
+                          </h3>
+                          <button
+                            type="button"
+                            className={
+                              this.checkScreen()
+                                ? "hide btn-add btn bg-cart"
+                                : "btn-add btn bg-cart"
+                            }
+                            onClick={() => this.handleAddToCart(item)}
+                          >
+                            <i className="fa fa-cart-plus mr-2"></i> Add to cart
+                          </button>
+                        </Fade>
                       </div>
                     </Fade>
                   </div>
@@ -303,12 +304,22 @@ class SectionProduct extends Component {
                         </div>
                         {this.checkScreen() ? (
                           <Fade top delay={-200}>
-                            <h3 className="hide mb-0 font-weight-semibold">
+                            <h3
+                              className={
+                                this.checkScreen()
+                                  ? "hide price mb-0 font-weight-semibold"
+                                  : "price mb-0 font-weight-semibold"
+                              }
+                            >
                               {formatPrice(item.price)}
                             </h3>
                             <button
                               type="button"
-                              className="hide btn bg-cart"
+                              className={
+                                this.checkScreen()
+                                  ? "hide btn-add btn bg-cart"
+                                  : "btn-add btn bg-cart"
+                              }
                               onClick={() => this.handleAddToCart(item)}
                             >
                               <i className="fa fa-cart-plus mr-2"></i> Add to
@@ -416,12 +427,22 @@ class SectionProduct extends Component {
                         </div>
                         {this.checkScreen() ? (
                           <Fade top delay={-200}>
-                            <h3 className="hide mb-0 font-weight-semibold">
+                            <h3
+                              className={
+                                this.checkScreen()
+                                  ? "hide price mb-0 font-weight-semibold"
+                                  : "price mb-0 font-weight-semibold"
+                              }
+                            >
                               {formatPrice(item.price)}
                             </h3>
                             <button
                               type="button"
-                              className="hide btn bg-cart"
+                              className={
+                                this.checkScreen()
+                                  ? "hide btn-add btn bg-cart"
+                                  : "btn-add btn bg-cart"
+                              }
                               onClick={() => this.handleAddToCart(item)}
                             >
                               <i className="fa fa-cart-plus mr-2"></i> Add to

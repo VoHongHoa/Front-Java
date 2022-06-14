@@ -399,20 +399,26 @@
             width: 300px;
             position: absolute;
             z-index: 2000;
-            background-color: #e5e5e5;
-            height: 300px;
-            overflow-y: scroll;
-
+            background-color: #e5e5e500;
+            max-height: 390px;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
             p {
                 padding: 3px;
-                border: 1px solid black;
+                background: white;
                 cursor: pointer;
-
+                margin: 0 0;
                 &:hover {
                     color: blue;
+                    background: rgb(217, 217, 217);
                 }
             }
 
+        }
+        .search-result::-webkit-scrollbar { 
+            width: 0 !important;
+            display: none; 
         }
 
         .no-result {

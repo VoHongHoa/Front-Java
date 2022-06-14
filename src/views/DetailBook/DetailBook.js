@@ -138,6 +138,9 @@ class DetailBook extends Component {
           });
           this.getDetaiBookById(this.props.match.params.id);
         }
+        if (res === "error") {
+          toast.error("Vui lòng đăng nhập");
+        }
       } catch (e) {
         console.log(e);
       }

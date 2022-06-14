@@ -101,44 +101,46 @@ class Cart extends Component {
   };
   handleBuyBooks = async () => {
     let cart = [];
-    if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
-      for (let index = 0; index < this.state.allItemInCart.length; index++) {
-        let obj = {};
-        obj.quantity = this.state.allItemInCart[index].quantity;
-        obj.books = this.state.allItemInCart[index].bookId;
-        obj.total = this.state.allItemInCart[index].price * obj.quantity;
-        cart.push(obj);
-      }
-      let user = {};
+    if (this.checkInput()) {
+      if (this.state.allItemInCart && this.state.allItemInCart.length > 0) {
+        for (let index = 0; index < this.state.allItemInCart.length; index++) {
+          let obj = {};
+          obj.quantity = this.state.allItemInCart[index].quantity;
+          obj.books = this.state.allItemInCart[index].bookId;
+          obj.total = this.state.allItemInCart[index].price * obj.quantity;
+          cart.push(obj);
+        }
+        let user = {};
 
-      user = {
-        fullName: this.state.fullName,
-        address: this.state.address,
-        telephone: this.state.phoneNumber,
-        email: this.state.email,
-      };
+        user = {
+          fullName: this.state.fullName,
+          address: this.state.address,
+          telephone: this.state.phoneNumber,
+          email: this.state.email,
+        };
 
-      let data = {
-        cartBooks: cart,
-        user: user,
-        pay: this.state.statusPayment,
-      };
-      console.log(data);
-      let res;
-      if (this.props.isLogin === true) {
-        res = await buyBooks(data);
+        let data = {
+          cartBooks: cart,
+          user: user,
+          pay: this.state.statusPayment,
+        };
+        console.log(data);
+        let res;
+        if (this.props.isLogin === true) {
+          res = await buyBooks(data);
+        } else {
+          res = await buyBooksByGuest(data);
+        }
+
+        console.log(res);
+        if (res && res.length > 0) {
+          toast.success("Mua sách thành công");
+          this.props.deleteCart();
+          this.props.history.push("/");
+        }
       } else {
-        res = await buyBooksByGuest(data);
+        toast.error("Vui lòng chọn thêm sản phẩm");
       }
-
-      console.log(res);
-      if (res && res.length > 0) {
-        toast.success("Mua sách thành công");
-        this.props.deleteCart();
-        this.props.history.push("/");
-      }
-    } else {
-      toast.error("Vui lòng chọn thêm sản phẩm");
     }
   };
   checkInput = () => {

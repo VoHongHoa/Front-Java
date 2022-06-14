@@ -4,6 +4,7 @@ import logo from "../../../assets/images/img_avatar2.png";
 import { withRouter } from "react-router";
 import { forgotPassword } from "../../../services/userService";
 import "./ForgotPassword.scss";
+import { toast } from "react-toastify";
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,11 @@ class ForgotPassword extends Component {
       };
       let res = await forgotPassword(data);
       console.log(res);
+      if (res === "successful") {
+        toast.success("Vui lòng kiểm tra email của bạn");
+      } else {
+        toast.error("Không tìm thấy email của bạn");
+      }
     } catch (e) {
       console.log(e);
     }

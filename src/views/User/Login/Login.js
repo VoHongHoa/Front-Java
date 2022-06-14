@@ -182,7 +182,6 @@ class Login extends Component {
             Quên <a href="#">mật khẩu?</a>
           </span>
         </div>
-        , ,
       </div>
     );
   }

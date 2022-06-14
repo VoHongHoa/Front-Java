@@ -13,12 +13,23 @@ class SectionProduct extends Component {
     super(props);
     this.state = {
       allBooks: [],
+      windowWidth: window.innerWidth,
     };
   }
 
   componentDidMount() {}
   handleAddToCart = item => {
     this.props.addToCart(item);
+  };
+  checkScreen = () => {
+    // this.setState({
+    //   windowWidth: window.innerWidth,
+    // });
+    if (this.state.windowWidth > 768) {
+      return true;
+    } else {
+      return false;
+    }
   };
   render() {
     let { searchBooks } = this.props;

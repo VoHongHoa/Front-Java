@@ -36,13 +36,13 @@ class UserManage extends Component {
     let isValid = true; // admin: true , seller: false
     if (
       this.props.userInfor &&
-      this.props.userInfor.role.nameRole === "SELLER"
+      this.props.userInfor.role?.nameRole === "SELLER"
     ) {
       isValid = false;
     }
     return isValid;
   };
-  getUserPaging = async (currentPage) => {
+  getUserPaging = async currentPage => {
     try {
       let res;
       if (this.checkAdminOrSeller()) {
@@ -79,7 +79,7 @@ class UserManage extends Component {
   componentDidMount() {
     this.getUserPaging(0);
   }
-  handleChangePage = (item) => {
+  handleChangePage = item => {
     this.getUserPaging(item);
     this.setState({
       currentPage: item,
@@ -95,7 +95,7 @@ class UserManage extends Component {
       isOpenPopup: false,
     });
   };
-  handleDeleteUser = async (userId) => {
+  handleDeleteUser = async userId => {
     try {
       let res;
       if (this.checkAdminOrSeller()) {
@@ -123,7 +123,7 @@ class UserManage extends Component {
       action: "ADD_NEW_USER",
     });
   };
-  doAddNewUser = async (data) => {
+  doAddNewUser = async data => {
     let res = await handleSignUp(data);
     if (res) {
       this.setState({
@@ -148,20 +148,20 @@ class UserManage extends Component {
       toast.error("Chỉnh sửa thất bại");
     }
   };
-  handleEditUser = (item) => {
+  handleEditUser = item => {
     this.setState({
       action: "EDIT_USER",
       isOpenModal: true,
       currentUserEdit: item,
     });
   };
-  handleOpenPopup = (item) => {
+  handleOpenPopup = item => {
     this.setState({
       isOpenPopup: true,
       currentUserEdit: item,
     });
   };
-  handleOnchangeInput = async (event) => {
+  handleOnchangeInput = async event => {
     this.setState({
       keyword: event.target.value,
       action: "SEARCH",
@@ -206,7 +206,7 @@ class UserManage extends Component {
           Quản lý người dùng
         </h2>
         {this.props.userInfor &&
-          this.props.userInfor.role.nameRole === "ADMIN" && (
+          this.props.userInfor.role?.nameRole === "ADMIN" && (
             <button
               className="btn btn-primary"
               onClick={() => this.handleOpenModal()}
@@ -224,7 +224,7 @@ class UserManage extends Component {
             className="form-control mt-2"
             placeholder="Tìm kiếm người dùng"
             name="search"
-            onChange={(event) => this.handleOnchangeInput(event)}
+            onChange={event => this.handleOnchangeInput(event)}
           />
         </div>
 
@@ -248,10 +248,10 @@ class UserManage extends Component {
                       <th scope="row">{index + 1}</th>
                       <td>{item.fullName}</td>
                       <td>{item.email}</td>
-                      <td>{item.role.nameRole ? item.role.nameRole : ""}</td>
+                      <td>{item.role?.nameRole ? item.role?.nameRole : ""}</td>
                       <td className="">
                         {this.props.userInfor &&
-                          this.props.userInfor.role.nameRole === "ADMIN" && (
+                          this.props.userInfor.role?.nameRole === "ADMIN" && (
                             <i
                               className="fas fa-pencil"
                               style={{ margin: "3px", cursor: "pointer" }}
@@ -310,11 +310,11 @@ class UserManage extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return { userInfor: state.user.userInfor };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 export default withRouter(

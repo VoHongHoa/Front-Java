@@ -11,6 +11,7 @@ import {
 } from "../../services/BookService";
 import Footer from "../Homepage/Footer";
 import { formatPrice } from "../../constants/format";
+import { Fade } from "react-reveal";
 class Book extends Component {
   constructor(props) {
     super(props);
@@ -241,7 +242,7 @@ class Book extends Component {
           </p>
         </div>
         <div className="row">
-          <div className="filter-container col-2 mt-3">
+          <div className="filter-container filter-box col-2 mt-3">
             <p style={{ textAlign: "center", fontSize: "20px" }}>
               Lọc sản phẩm
             </p>
@@ -364,7 +365,7 @@ class Book extends Component {
                       }
                       key={index}
                     >
-                      <div className="fade-in">
+                      <Fade bottom delay={150}>
                         <div
                           className="card"
                           style={
@@ -437,7 +438,7 @@ class Book extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="fade-in">
+                          <Fade top delay={-300}>
                             <h3
                               className={
                                 this.checkScreen()
@@ -459,9 +460,9 @@ class Book extends Component {
                               <i className="fa fa-cart-plus mr-2"></i> Thêm vào
                               giỏ hàng
                             </button>
-                          </div>
+                          </Fade>
                         </div>
-                      </div>
+                      </Fade>
                     </div>
                   );
                 })}

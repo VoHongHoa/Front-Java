@@ -93,13 +93,15 @@ class Book extends Component {
   componentDidUpdate(preProps) {
     if (preProps.match.params !== this.props.match.params) {
       this.getAllBooksByCate(this.props.match.params.cateId, 0);
-      this.getDataFilter(this.props.match.params.cateId);
       this.setState({
         currentPage: 0,
         filterIns: "",
+        allAuthor: [],
+        allPublish: [],
         selectedAuthor: "",
         selectedYearPublish: "",
       });
+      this.getDataFilter(this.props.match.params.cateId);
     }
   }
   handleAddToCart = (item) => {

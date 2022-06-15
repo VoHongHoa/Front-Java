@@ -145,12 +145,12 @@ class Cart extends Component {
   };
   checkInput = () => {
     let isValid = true;
-    if (this.state.errPhone === false) {
+    if (this.state.errPhone === false && this.state.phoneNumber === "") {
       toast.error("Vui lòng nhập số điện thoại hợp lệ");
       isValid = false;
       return isValid;
     }
-    if (this.state.errEmail === false) {
+    if (this.state.errEmail === false && this.state.email === "") {
       toast.error("Nhập email");
       isValid = false;
       return isValid;

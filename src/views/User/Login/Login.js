@@ -60,7 +60,7 @@ class Login extends Component {
       isShowPassword: !this.state.isShowPassword,
     });
   };
-  responseGoogle = async response => {
+  responseGoogle = async (response) => {
     console.log(response);
     if (response) {
       let userInfor = response.profileObj;
@@ -92,7 +92,7 @@ class Login extends Component {
       toast.error("Đăng nhập không thành công!!");
     }
   };
-  responseFailGoogle = response => {
+  responseFailGoogle = (response) => {
     console.log(response);
   };
   render() {
@@ -110,7 +110,7 @@ class Login extends Component {
             placeholder="Nhập tên đăng nhập"
             className="form-control"
             name="uname"
-            onChange={event => this.handleOnchangeInput(event, "userName")}
+            onChange={(event) => this.handleOnchangeInput(event, "userName")}
             required
           />
           <div className="form-group mt-2">
@@ -120,7 +120,7 @@ class Login extends Component {
             <input
               type={this.state.isShowPassword === true ? "text" : "password"}
               placeholder="Nhập mật khẩu"
-              onChange={event => this.handleOnchangeInput(event, "password")}
+              onChange={(event) => this.handleOnchangeInput(event, "password")}
               className="form-control"
               name="psw"
               required
@@ -151,7 +151,7 @@ class Login extends Component {
 
           <GoogleLogin
             clientId="1000261381053-acnpjvmhm485p7aal87iicf70bvdm04a.apps.googleusercontent.com"
-            render={renderProps => (
+            render={(renderProps) => (
               <button
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
@@ -171,7 +171,7 @@ class Login extends Component {
             Lưu thông tin
           </label> */}
           <div className="link-to-signup">
-            Bạn chưa có tài khoản? <NavLink to={"/sign-up"}>Đăng ký</NavLink>
+            Bạn chưa có tài khoản? <NavLink to={"/sign-up"}>Đăng kí</NavLink>
           </div>
         </div>
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
@@ -191,11 +191,11 @@ class Login extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
 
-const mapDispatchToProps = dispatch => {
-  return { handleLoginRedux: data => dispatch(handleLoginRedux(data)) };
+const mapDispatchToProps = (dispatch) => {
+  return { handleLoginRedux: (data) => dispatch(handleLoginRedux(data)) };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

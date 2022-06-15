@@ -43,7 +43,7 @@ class Footer extends Component {
                 </ul>
               </div>
               <div className="col-md-6 item text">
-                <h3>UITBOOKS</h3>
+                <h3>uitbook</h3>
                 <p>
                   Praesent sed lobortis mi. Suspendisse vel placerat ligula.
                   Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam
@@ -73,10 +73,10 @@ class Footer extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

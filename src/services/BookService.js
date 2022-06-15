@@ -35,7 +35,7 @@ const ratingBook = (data) => {
 const keywordSearch = (data) => {
   return axios.post("/search/book", data);
 };
-const fetchDataFilter = () => {
+const fetchDataFilter = (categoryId) => {
   return axios.get(`data-filter/${categoryId}`);
 };
 const getBookFilter = (data, page) => {

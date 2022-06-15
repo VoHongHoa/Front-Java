@@ -219,6 +219,9 @@ class Book extends Component {
     };
     this.getAllBookFilter(data, this.state.currentPage);
   };
+  handleReturnHome = () => {
+    this.props.history.push("/");
+  };
   render() {
     let { numOfPage, currentPage, allBooks, allAuthor, allPublish } =
       this.state;

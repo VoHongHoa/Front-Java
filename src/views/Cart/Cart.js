@@ -38,8 +38,14 @@ class Cart extends Component {
       this.setState({
         fullName: this.props.userInfor.fullName,
         email: this.props.userInfor.email,
-        address: this.props.userInfor.address,
-        phoneNumber: this.props.userInfor.telephone,
+        address:
+          this.props.userInfor.address === null
+            ? ""
+            : this.props.userInfor.address,
+        phoneNumber:
+          this.props.userInfor.telephone === null
+            ? ""
+            : this.props.userInfor.telephone,
       });
     }
   }

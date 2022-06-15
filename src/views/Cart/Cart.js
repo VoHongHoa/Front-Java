@@ -70,7 +70,7 @@ class Cart extends Component {
   //   });
   //   this.props.changeInputItem(this.state.allItemInCart);
   // };
-  handleIncreaseQuantity = (item) => {
+  handleIncreaseQuantity = item => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (copyState.allItemInCart[index].bookId === item.bookId) {
@@ -84,11 +84,11 @@ class Cart extends Component {
     });
     this.props.changeInputItem(this.state.allItemInCart);
   };
-  handleDeleteBook = (item) => {
+  handleDeleteBook = item => {
     this.props.deleteItem(item);
   };
 
-  handleDecreaseQuantity = (item) => {
+  handleDecreaseQuantity = item => {
     let copyState = { ...this.state };
     for (let index = 0; index < copyState.allItemInCart.length; index++) {
       if (
@@ -180,7 +180,7 @@ class Cart extends Component {
       ...copyState,
     });
   };
-  handleOnchangeEmail = (event) => {
+  handleOnchangeEmail = event => {
     let email = event.target.value;
     this.setState({
       email: email,
@@ -195,7 +195,7 @@ class Cart extends Component {
       });
     }
   };
-  handleOnchangePhoneNumber = (event) => {
+  handleOnchangePhoneNumber = event => {
     // console.log(event.target.value.charAt(0));
     let phoneNumber = event.target.value;
     this.setState({
@@ -296,7 +296,7 @@ class Cart extends Component {
                                       value={item.quantity}
                                       type="number"
                                       className="form-control form-control-sm"
-                                      onChange={(event) =>
+                                      onChange={event =>
                                         this.handleOnchangeInput(event, item)
                                       }
                                     />
@@ -364,7 +364,7 @@ class Cart extends Component {
                                 placeholder="Nhập họ và tên"
                                 className="form-control"
                                 value={this.state.fullName}
-                                onChange={(event) =>
+                                onChange={event =>
                                   this.handleOnchangeInput(event, "fullName")
                                 }
                               />
@@ -382,7 +382,7 @@ class Cart extends Component {
                                 className="form-control"
                                 placeholder="Nhập email"
                                 name="email"
-                                onChange={(event) =>
+                                onChange={event =>
                                   this.handleOnchangeEmail(event)
                                 }
                                 value={this.state.email}
@@ -414,7 +414,7 @@ class Cart extends Component {
                                   placeholder="Nhập địa chỉ"
                                   className="form-control"
                                   value={this.state.address}
-                                  onChange={(event) =>
+                                  onChange={event =>
                                     this.handleOnchangeInput(event, "address")
                                   }
                                 />
@@ -434,7 +434,7 @@ class Cart extends Component {
                                   placeholder="Nhập số điện thoại"
                                   className="form-control"
                                   name="phonenumber"
-                                  onChange={(event) =>
+                                  onChange={event =>
                                     this.handleOnchangePhoneNumber(event)
                                   }
                                   value={this.state.phoneNumber}
@@ -466,7 +466,7 @@ class Cart extends Component {
 
                             <button
                               type="button"
-                              className="btn btn-primary btn-block btn-lg"
+                              className="btn btn-primary btn-block btn-lg btn-pay"
                               data-mdb-ripple-color="dark"
                               onClick={() => this.handleBuyBooks()}
                             >
@@ -494,7 +494,7 @@ class Cart extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLogin: state.user.isLogin,
     userInfor: state.user.userInfor,
@@ -502,10 +502,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteItem: (item) => dispatch(deleteItem(item)),
-    changeInputItem: (allItems) => dispatch(changeInputItem(allItems)),
+    deleteItem: item => dispatch(deleteItem(item)),
+    changeInputItem: allItems => dispatch(changeInputItem(allItems)),
     deleteCart: () => dispatch(deleteCart()),
   };
 };

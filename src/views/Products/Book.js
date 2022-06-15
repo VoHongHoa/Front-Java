@@ -96,6 +96,9 @@ class Book extends Component {
       this.getDataFilter(this.props.match.params.cateId);
       this.setState({
         currentPage: 0,
+        filterIns: "",
+        selectedAuthor: "",
+        selectedYearPublish: "",
       });
     }
   }
@@ -191,6 +194,7 @@ class Book extends Component {
   handlefilterPriceIns = () => {
     this.setState({
       filterIns: true,
+      action: "FILTER",
       // filterDsc: this.state.filterIns,
     });
 
@@ -207,6 +211,7 @@ class Book extends Component {
   handlefilterPriceDsc = () => {
     this.setState({
       filterIns: false,
+      action: "FILTER",
     });
 
     let data = {
